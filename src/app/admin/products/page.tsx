@@ -40,8 +40,8 @@ export default function AdminProductsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-heading font-bold">Products</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
+        <h1 className="text-xl sm:text-2xl font-heading font-bold">Products</h1>
         <Link href="/admin/products/new">
           <Button className="gap-2">
             <Plus className="w-4 h-4" /> Add Product
@@ -50,14 +50,14 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Search */}
-      <div className="relative max-w-sm">
+      <div className="relative w-full sm:max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <input
           type="text"
           placeholder="Search products..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-border rounded-lg text-sm"
+          className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg text-sm min-h-[44px]"
         />
       </div>
 

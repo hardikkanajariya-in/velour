@@ -29,7 +29,7 @@ export function ProductSort() {
         id="sort"
         value={currentSort}
         onChange={(e) => handleSort(e.target.value)}
-        className="text-sm border rounded-button px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent/50"
+        className="text-sm border border-border rounded-button px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent/50 min-h-[44px]"
       >
         <option value="">Relevance</option>
         {SORT_OPTIONS.map((opt) => (

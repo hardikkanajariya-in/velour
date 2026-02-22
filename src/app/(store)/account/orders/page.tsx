@@ -67,9 +67,9 @@ export default function OrdersPage() {
             <Link
               key={order.id}
               href={`/account/orders/${order.id}`}
-              className="block p-4 border border-border rounded-card hover:border-accent transition-colors"
+              className="block p-3 sm:p-4 border border-border rounded-card hover:border-accent transition-colors"
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
                 <div>
                   <p className="font-medium">Order #{order.orderNumber}</p>
                   <p className="text-xs text-muted-foreground">{formatDate(order.createdAt)}</p>
@@ -87,11 +87,11 @@ export default function OrdersPage() {
               </div>
 
               {order.items.length > 0 && (
-                <div className="flex gap-2 mt-3 overflow-x-auto">
+                <div className="flex gap-1.5 sm:gap-2 mt-2.5 sm:mt-3 overflow-x-auto scrollbar-none">
                   {order.items.slice(0, 4).map((item) => (
                     <div
                       key={item.id}
-                      className="w-12 h-12 rounded bg-muted flex-shrink-0 overflow-hidden"
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded bg-muted flex-shrink-0 overflow-hidden"
                     >
                       {item.image && (
                         <img
@@ -103,7 +103,7 @@ export default function OrdersPage() {
                     </div>
                   ))}
                   {order.items.length > 4 && (
-                    <div className="w-12 h-12 rounded bg-muted flex-shrink-0 flex items-center justify-center text-xs text-muted-foreground">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded bg-muted flex-shrink-0 flex items-center justify-center text-xs text-muted-foreground">
                       +{order.items.length - 4}
                     </div>
                   )}

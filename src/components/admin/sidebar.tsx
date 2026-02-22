@@ -26,12 +26,23 @@ export function AdminSidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <aside
-      className={cn(
-        'h-screen sticky top-0 bg-primary text-primary-foreground flex flex-col transition-all duration-300',
-        collapsed ? 'w-16' : 'w-64'
+    <>
+      {/* Mobile overlay */}
+      {!collapsed && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setCollapsed(true)}
+        />
       )}
-    >
+      <aside
+        className={cn(
+          'h-screen bg-primary text-primary-foreground flex flex-col transition-all duration-300 z-40',
+          'fixed lg:sticky top-0',
+          collapsed
+            ? 'w-0 lg:w-16 -translate-x-full lg:translate-x-0'
+            : 'w-64 translate-x-0'
+        )}
+      >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10">
         {!collapsed && (
@@ -82,5 +93,6 @@ export function AdminSidebar() {
         </div>
       )}
     </aside>
+    </>
   );
 }

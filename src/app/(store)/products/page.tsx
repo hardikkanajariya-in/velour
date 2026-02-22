@@ -105,17 +105,17 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'Products' }]} />
 
-      <div className="flex items-center justify-between mb-6 mt-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 mt-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-heading font-bold">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold">
             {search ? `Results for "${search}"` : 'All Products'}
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">{total} products found</p>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">{total} products found</p>
         </div>
         <ProductSort />
       </div>
 
-      <div className="flex gap-8">
+      <div className="flex gap-6 lg:gap-8">
         <div className="w-64 shrink-0 hidden lg:block">
           <ProductFilter
             categories={categoryOptions}
@@ -125,13 +125,15 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           />
         </div>
 
-        <div className="flex-1">
-          <ProductFilter
-            categories={categoryOptions}
-            brands={brandOptions}
-            priceRanges={priceRanges}
-            totalProducts={total}
-          />
+        <div className="flex-1 min-w-0">
+          <div className="lg:hidden mb-4">
+            <ProductFilter
+              categories={categoryOptions}
+              brands={brandOptions}
+              priceRanges={priceRanges}
+              totalProducts={total}
+            />
+          </div>
 
           <ProductGrid products={products} />
 

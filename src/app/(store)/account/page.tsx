@@ -36,22 +36,22 @@ export default function AccountPage() {
   return (
     <div className="space-y-8">
       {/* Profile Card */}
-      <div className="flex items-center gap-4 p-6 bg-surface rounded-card">
-        <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center text-accent font-heading font-bold text-xl">
+      <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 bg-surface rounded-card">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-accent/20 flex items-center justify-center text-accent font-heading font-bold text-lg sm:text-xl">
           {user?.image ? (
             <Image src={user.image} alt="" width={64} height={64} className="rounded-full" />
           ) : (
             getInitials(user?.name ?? 'User')
           )}
         </div>
-        <div>
-          <h2 className="text-lg font-heading font-bold">{user?.name ?? 'Welcome'}</h2>
-          <p className="text-sm text-muted-foreground">{user?.email}</p>
+        <div className="min-w-0">
+          <h2 className="text-base sm:text-lg font-heading font-bold truncate">{user?.name ?? 'Welcome'}</h2>
+          <p className="text-xs sm:text-sm text-muted-foreground truncate">{user?.email}</p>
         </div>
       </div>
 
       {/* Quick Links */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {[
           { href: '/account/orders', icon: ShoppingBag, label: 'My Orders' },
           { href: '/account/wishlist', icon: Heart, label: 'Wishlist' },
@@ -61,10 +61,10 @@ export default function AccountPage() {
           <Link
             key={href}
             href={href}
-            className="flex flex-col items-center gap-2 p-4 border border-border rounded-card hover:border-accent transition-colors"
+            className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 border border-border rounded-card hover:border-accent transition-colors min-h-[80px] justify-center"
           >
-            <Icon className="w-6 h-6 text-accent" />
-            <span className="text-sm font-medium">{label}</span>
+            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+            <span className="text-xs sm:text-sm font-medium text-center">{label}</span>
           </Link>
         ))}
       </div>

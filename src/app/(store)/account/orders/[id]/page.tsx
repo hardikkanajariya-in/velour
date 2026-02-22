@@ -69,9 +69,9 @@ export default function OrderDetailPage() {
       </Link>
 
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
         <div>
-          <h2 className="text-lg font-heading font-bold">Order #{order.orderNumber}</h2>
+          <h2 className="text-base sm:text-lg font-heading font-bold">Order #{order.orderNumber}</h2>
           <p className="text-sm text-muted-foreground">Placed on {formatDate(order.createdAt)}</p>
         </div>
         <Badge variant={statusColor as 'default' | 'success' | 'warning' | 'error'}>
@@ -101,13 +101,13 @@ export default function OrderDetailPage() {
 
       {/* Items */}
       <div className="border border-border rounded-card overflow-hidden">
-        <h3 className="text-sm font-medium p-4 border-b border-border bg-surface">
+        <h3 className="text-sm font-medium p-3 sm:p-4 border-b border-border bg-surface">
           Items ({order.items.length})
         </h3>
         <div className="divide-y divide-border">
           {order.items.map((item) => (
-            <div key={item.id} className="flex items-center gap-4 p-4">
-              <div className="w-16 h-16 rounded bg-muted flex-shrink-0 overflow-hidden">
+            <div key={item.id} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded bg-muted flex-shrink-0 overflow-hidden">
                 {item.image && (
                   <img src={item.image} alt={item.productName} className="w-full h-full object-cover" />
                 )}
@@ -125,7 +125,7 @@ export default function OrderDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Shipping Address */}
         <div className="p-4 bg-surface rounded-card">
           <h3 className="text-sm font-medium mb-2 flex items-center gap-2">

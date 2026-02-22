@@ -38,11 +38,11 @@ export function AccountLayoutClient({ children }: { children: React.ReactNode })
   if (!session) return null;
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
-      <h1 className="text-2xl md:text-3xl font-heading font-bold mb-8">My Account</h1>
+    <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-4 sm:py-6">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mb-5 sm:mb-8">My Account</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <nav className="space-y-1">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+        <nav className="flex lg:flex-col gap-1 overflow-x-auto scrollbar-none -mx-4 px-4 lg:mx-0 lg:px-0">
           {accountNav.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -51,7 +51,7 @@ export function AccountLayoutClient({ children }: { children: React.ReactNode })
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors',
+                  'flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm transition-colors whitespace-nowrap min-h-[44px]',
                   isActive
                     ? 'bg-primary text-primary-foreground'
                     : 'hover:bg-muted'
@@ -64,7 +64,7 @@ export function AccountLayoutClient({ children }: { children: React.ReactNode })
           })}
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-red-600 hover:bg-red-50 w-full transition-colors"
+            className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm text-red-600 hover:bg-red-50 w-full transition-colors whitespace-nowrap min-h-[44px]"
           >
             <LogOut className="w-4 h-4" />
             Sign Out

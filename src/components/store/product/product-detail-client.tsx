@@ -109,7 +109,7 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
   }
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
+    <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-4 sm:py-6">
       <Breadcrumb
         items={[
           { label: 'Products', href: '/products' },
@@ -120,13 +120,13 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
         ]}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mt-4 sm:mt-6">
         {/* Gallery */}
         <ProductGallery images={product.images} name={product.name} />
 
         {/* Product Info */}
         <div className="flex flex-col">
-          <div className="flex flex-wrap gap-2 mb-3">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3">
             {product.isNewArrival && <Badge variant="new">New Arrival</Badge>}
             {product.isBestSeller && <Badge variant="hot">Best Seller</Badge>}
             {discount > 0 && <Badge variant="sale">{discount}% OFF</Badge>}
@@ -138,30 +138,30 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
             </p>
           )}
 
-          <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{product.name}</h1>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mb-2">{product.name}</h1>
 
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
             <Rating value={product.averageRating} />
             <span className="text-sm text-muted-foreground">
               ({product.reviewCount} review{product.reviewCount !== 1 ? 's' : ''})
             </span>
           </div>
 
-          <div className="flex items-baseline gap-3 mb-6">
-            <span className="text-2xl font-bold">{formatPrice(price)}</span>
+          <div className="flex items-baseline gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <span className="text-xl sm:text-2xl font-bold">{formatPrice(price)}</span>
             {product.comparePrice && product.comparePrice > price && (
-              <span className="text-lg text-muted-foreground line-through">
+              <span className="text-base sm:text-lg text-muted-foreground line-through">
                 {formatPrice(product.comparePrice)}
               </span>
             )}
           </div>
 
           {product.shortDescription && (
-            <p className="text-muted-foreground mb-6">{product.shortDescription}</p>
+            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">{product.shortDescription}</p>
           )}
 
           {/* Variant Selector */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium">Select Size & Color</span>
               <button
@@ -179,20 +179,20 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
           </div>
 
           {/* Quantity */}
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <span className="text-sm font-medium">Quantity</span>
             <div className="flex items-center border border-border rounded-lg">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-2 hover:bg-muted transition-colors"
+                className="p-2.5 hover:bg-muted transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                 disabled={quantity <= 1}
               >
                 <Minus className="w-4 h-4" />
               </button>
-              <span className="w-10 text-center text-sm font-medium">{quantity}</span>
+              <span className="w-10 sm:w-12 text-center text-sm font-medium">{quantity}</span>
               <button
                 onClick={() => setQuantity(Math.min(10, quantity + 1))}
-                className="p-2 hover:bg-muted transition-colors"
+                className="p-2.5 hover:bg-muted transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <Plus className="w-4 h-4" />
               </button>
@@ -211,7 +211,7 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
           )}
 
           {/* Actions */}
-          <div className="flex gap-3 mb-6">
+          <div className="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
             <Button onClick={handleAddToCart} disabled={!inStock} className="flex-1 gap-2">
               <ShoppingBag className="w-4 h-4" />
               {inStock ? 'Add to Cart' : 'Out of Stock'}
@@ -219,11 +219,11 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
             <Button
               variant={isWishlisted ? 'accent' : 'secondary'}
               onClick={() => toggleWishlist(product.id)}
-              className="px-4"
+              className="px-3 sm:px-4"
             >
               <Heart className={cn('w-5 h-5', isWishlisted && 'fill-current')} />
             </Button>
-            <Button variant="secondary" onClick={handleShare} className="px-4">
+            <Button variant="secondary" onClick={handleShare} className="px-3 sm:px-4 hidden sm:flex">
               <Share2 className="w-5 h-5" />
             </Button>
           </div>
@@ -240,28 +240,28 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
           )}
 
           {/* Trust Badges */}
-          <div className="grid grid-cols-3 gap-4 border-t border-border pt-6">
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 border-t border-border pt-4 sm:pt-6">
             <div className="flex flex-col items-center text-center gap-1">
-              <Truck className="w-5 h-5 text-accent" />
-              <span className="text-xs font-medium">Free Shipping</span>
-              <span className="text-xs text-muted-foreground">{getEstimatedDelivery(5).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
+              <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+              <span className="text-[10px] sm:text-xs font-medium">Free Shipping</span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">{getEstimatedDelivery(5).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
             </div>
             <div className="flex flex-col items-center text-center gap-1">
-              <RotateCcw className="w-5 h-5 text-accent" />
-              <span className="text-xs font-medium">Easy Returns</span>
-              <span className="text-xs text-muted-foreground">15-day policy</span>
+              <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+              <span className="text-[10px] sm:text-xs font-medium">Easy Returns</span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">15-day policy</span>
             </div>
             <div className="flex flex-col items-center text-center gap-1">
-              <Shield className="w-5 h-5 text-accent" />
-              <span className="text-xs font-medium">Secure Payment</span>
-              <span className="text-xs text-muted-foreground">100% protected</span>
+              <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+              <span className="text-[10px] sm:text-xs font-medium">Secure Payment</span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">100% protected</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Tabs: Description / Reviews */}
-      <div className="mt-12">
+      <div className="mt-8 sm:mt-12">
         <Tabs
           tabs={[
             {

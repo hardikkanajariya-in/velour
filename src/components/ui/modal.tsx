@@ -43,25 +43,27 @@ export function Modal({ isOpen, onClose, children, title, size = 'md', className
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
       <div
         className={cn(
-          'relative w-full bg-white rounded-xl shadow-lg overflow-hidden',
+          'relative w-full bg-white shadow-lg overflow-hidden',
+          'rounded-t-2xl sm:rounded-xl',
           'animate-[fadeUp_0.2s_ease-out]',
+          'max-h-[90vh] sm:max-h-[85vh]',
           sizeStyles[size],
           className
         )}
       >
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
-            <h2 className="text-lg font-semibold text-brand-primary">{title}</h2>
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-neutral-200 shrink-0">
+            <h2 className="text-base sm:text-lg font-semibold text-brand-primary pr-2">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1 rounded-md hover:bg-neutral-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-1.5 rounded-md hover:bg-neutral-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
             >
               <X className="h-5 w-5" />
             </button>
@@ -70,12 +72,12 @@ export function Modal({ isOpen, onClose, children, title, size = 'md', className
         {!title && (
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 z-10 p-1 rounded-md hover:bg-neutral-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="absolute top-2 right-2 z-10 p-1.5 rounded-md hover:bg-neutral-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X className="h-5 w-5" />
           </button>
         )}
-        <div className="overflow-y-auto max-h-[80vh]">{children}</div>
+        <div className="overflow-y-auto max-h-[calc(90vh-4rem)] sm:max-h-[calc(85vh-4rem)] p-4 sm:p-6">{children}</div>
       </div>
     </div>
   );

@@ -29,8 +29,8 @@ export function Header() {
   return (
     <>
       {/* Announcement Bar */}
-      <div className="bg-brand-primary text-white text-xs py-2 overflow-hidden">
-        <div className="animate-marquee whitespace-nowrap flex gap-12">
+      <div className="bg-brand-primary text-white text-[11px] sm:text-xs py-1.5 sm:py-2 overflow-hidden">
+        <div className="animate-marquee whitespace-nowrap flex gap-8 sm:gap-12">
           <span>FREE SHIPPING ABOVE ₹1,999</span>
           <span>|</span>
           <span>USE CODE WELCOME10 FOR 10% OFF</span>
@@ -55,17 +55,17 @@ export function Header() {
         )}
       >
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-[72px]">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-[72px]">
             {/* Left: Mobile Menu + Logo */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 sm:gap-3">
               <button
                 onClick={toggleMobileNav}
-                className="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center -ml-2"
                 aria-label="Toggle menu"
               >
                 <Menu className="h-5 w-5" />
               </button>
-              <Link href="/" className="font-heading italic text-2xl font-bold text-brand-primary tracking-wide">
+              <Link href="/" className="font-heading italic text-xl sm:text-2xl font-bold text-brand-primary tracking-wide">
                 {siteConfig.brand.name}
               </Link>
             </div>
@@ -177,31 +177,31 @@ export function Header() {
                   <div className="absolute right-0 top-full w-48 bg-white rounded-lg shadow-dropdown border border-neutral-100 py-2">
                     {session ? (
                       <>
-                        <Link href="/account" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link href="/account" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
                           My Account
                         </Link>
-                        <Link href="/account/orders" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link href="/account/orders" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
                           Orders
                         </Link>
-                        <Link href="/wishlist" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link href="/wishlist" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
                           Wishlist
                         </Link>
                         {session.user?.role === 'ADMIN' && (
-                          <Link href="/admin" className="flex items-center gap-2 px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
+                          <Link href="/admin" className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
                             Admin Panel <ExternalLink className="h-3 w-3" />
                           </Link>
                         )}
                         <hr className="my-1 border-neutral-100" />
-                        <Link href="/api/auth/signout" className="block px-4 py-2 text-sm text-error hover:bg-neutral-50">
+                        <Link href="/api/auth/signout" className="block px-4 py-2.5 text-sm text-error hover:bg-neutral-50">
                           Logout
                         </Link>
                       </>
                     ) : (
                       <>
-                        <Link href="/login" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link href="/auth/login" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
                           Login
                         </Link>
-                        <Link href="/register" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link href="/auth/register" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
                           Create Account
                         </Link>
                       </>

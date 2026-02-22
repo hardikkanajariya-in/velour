@@ -39,7 +39,7 @@ export default function WishlistPage() {
     return (
       <div>
         <h2 className="text-lg font-heading font-bold mb-4">My Wishlist</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
           {[1, 2, 3].map((i) => (
             <Skeleton key={i} className="aspect-[3/4] rounded-card" />
           ))}
@@ -65,7 +65,7 @@ export default function WishlistPage() {
       <h2 className="text-lg font-heading font-bold mb-4">
         My Wishlist ({products.length})
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

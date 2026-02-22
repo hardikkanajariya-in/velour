@@ -60,24 +60,24 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
         </Link>
 
         {/* Badges */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1.5">
+        <div className="absolute top-1.5 sm:top-2 left-1.5 sm:left-2 flex flex-col gap-1 sm:gap-1.5">
           {discount > 0 && (
-            <Badge variant="sale" className="text-[10px]">
+            <Badge variant="sale" className="text-[9px] sm:text-[10px]">
               -{discount}%
             </Badge>
           )}
           {product.isNewArrival && (
-            <Badge variant="new" className="text-[10px]">New</Badge>
+            <Badge variant="new" className="text-[9px] sm:text-[10px]">New</Badge>
           )}
           {isOutOfStock && (
-            <Badge variant="default" className="text-[10px]">
+            <Badge variant="default" className="text-[9px] sm:text-[10px]">
               Sold Out
             </Badge>
           )}
         </div>
 
         {/* Action Buttons */}
-        <div className="absolute top-2 right-2 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+        <div className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 flex flex-col gap-1 sm:gap-1.5 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -107,10 +107,10 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
 
         {/* Quick Add */}
         {!isOutOfStock && (
-          <div className="absolute bottom-0 inset-x-0 p-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+          <div className="absolute bottom-0 inset-x-0 p-2 sm:p-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
             <Link
               href={`/products/${product.slug}`}
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-brand-primary text-white text-sm font-medium rounded-button hover:bg-brand-primary/90 transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-2 sm:py-2.5 bg-brand-primary text-white text-xs sm:text-sm font-medium rounded-button hover:bg-brand-primary/90 transition-colors"
             >
               <ShoppingBag className="h-4 w-4" />
               View Product
@@ -120,23 +120,23 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
       </div>
 
       {/* Info */}
-      <div className="mt-3 space-y-1">
+      <div className="mt-2.5 sm:mt-3 space-y-1 px-0.5">
         {product.brand && (
-          <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+          <p className="text-[10px] sm:text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
             {product.brand.name}
           </p>
         )}
         <Link
           href={`/products/${product.slug}`}
-          className="block text-sm font-medium line-clamp-1 hover:text-brand-accent transition-colors"
+          className="block text-xs sm:text-sm font-medium line-clamp-2 sm:line-clamp-1 hover:text-brand-accent transition-colors leading-snug"
         >
           {product.name}
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold">{formatPrice(price)}</span>
           {hasCompare && (
-            <span className="text-xs text-muted-foreground line-through">
+            <span className="text-[10px] sm:text-xs text-muted-foreground line-through">
               {formatPrice(product.comparePrice!)}
             </span>
           )}
@@ -155,20 +155,20 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
 
         {/* Color Swatches */}
         {product.variants && product.variants.length > 0 && (
-          <div className="flex items-center gap-1 pt-1">
-            {[...new Set(product.variants.map((v) => v.color).filter(Boolean))]
+          <div className="flex items-center gap-1.5 pt-1">
+            {[...new Set(product.variants.map((v) => v.colorHex ?? v.color).filter(Boolean))]
               .slice(0, 4)
-              .map((color) => (
+              .map((color, i) => (
                 <span
-                  key={color}
-                  className="h-3 w-3 rounded-full border border-border"
+                  key={`${color}-${i}`}
+                  className="h-3.5 w-3.5 sm:h-3 sm:w-3 rounded-full border border-border"
                   style={{ backgroundColor: color?.toLowerCase() }}
-                  title={color ?? ''}
+                  title={product.variants.find(v => (v.colorHex ?? v.color) === color)?.color ?? color ?? ''}
                 />
               ))}
-            {[...new Set(product.variants.map((v) => v.color).filter(Boolean))].length > 4 && (
+            {[...new Set(product.variants.map((v) => v.colorHex ?? v.color).filter(Boolean))].length > 4 && (
               <span className="text-[10px] text-muted-foreground">
-                +{[...new Set(product.variants.map((v) => v.color).filter(Boolean))].length - 4}
+                +{[...new Set(product.variants.map((v) => v.colorHex ?? v.color).filter(Boolean))].length - 4}
               </span>
             )}
           </div>

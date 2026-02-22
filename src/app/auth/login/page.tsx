@@ -154,7 +154,7 @@ function LoginForm() {
       </p>
 
       {/* Demo Credentials */}
-      <div className="mt-8 rounded-lg border border-dashed border-brand-primary/30 bg-brand-primary/5 p-4">
+      <div className="mt-6 sm:mt-8 rounded-lg border border-dashed border-brand-primary/30 bg-brand-primary/5 p-3 sm:p-4">
         <p className="text-xs font-semibold uppercase tracking-wider text-brand-primary mb-3 text-center">
           Demo Credentials
         </p>
@@ -162,24 +162,24 @@ function LoginForm() {
           <button
             type="button"
             onClick={() => fillDemoCredentials('admin@velour.in', 'Admin@123')}
-            className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5"
+            className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2.5 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5 min-h-[44px]"
           >
-            <div>
+            <div className="min-w-0">
               <span className="font-medium text-foreground">Admin</span>
-              <span className="ml-2 text-muted-foreground">admin@velour.in</span>
+              <span className="ml-1.5 sm:ml-2 text-muted-foreground text-xs sm:text-sm truncate">admin@velour.in</span>
             </div>
-            <span className="text-xs text-muted-foreground">Click to fill</span>
+            <span className="text-[10px] sm:text-xs text-muted-foreground shrink-0 ml-2">Click to fill</span>
           </button>
           <button
             type="button"
             onClick={() => fillDemoCredentials('customer@test.com', 'Customer@123')}
-            className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5"
+            className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2.5 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5 min-h-[44px]"
           >
-            <div>
+            <div className="min-w-0">
               <span className="font-medium text-foreground">Customer</span>
-              <span className="ml-2 text-muted-foreground">customer@test.com</span>
+              <span className="ml-1.5 sm:ml-2 text-muted-foreground text-xs sm:text-sm truncate">customer@test.com</span>
             </div>
-            <span className="text-xs text-muted-foreground">Click to fill</span>
+            <span className="text-[10px] sm:text-xs text-muted-foreground shrink-0 ml-2">Click to fill</span>
           </button>
         </div>
       </div>

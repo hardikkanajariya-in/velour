@@ -20,8 +20,8 @@ export function OrderSummary({ couponDiscount = 0, couponCode }: OrderSummaryPro
   const remaining = getRemainingForFreeShipping(subtotal);
 
   return (
-    <div className="border rounded-card p-5 space-y-4 sticky top-24">
-      <h3 className="font-semibold text-lg">Order Summary</h3>
+    <div className="border border-border rounded-card p-4 sm:p-5 space-y-4 sticky top-24">
+      <h3 className="font-semibold text-base sm:text-lg">Order Summary</h3>
 
       {/* Items List (compact) */}
       <div className="space-y-2 max-h-48 overflow-y-auto">

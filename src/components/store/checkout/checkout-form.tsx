@@ -129,10 +129,10 @@ export function CheckoutForm({ addressId, total }: CheckoutFormProps) {
             )}
           >
             <div className={cn(
-              'h-4 w-4 rounded-full border-2',
+              'h-5 w-5 rounded-full border-2 shrink-0',
               paymentMethod === 'razorpay' ? 'border-brand-accent bg-brand-accent' : 'border-border'
             )} />
-            <CreditCard className="h-5 w-5 text-muted-foreground" />
+            <CreditCard className="h-5 w-5 text-muted-foreground shrink-0" />
             <div className="flex-1">
               <p className="font-medium text-sm">Pay Online</p>
               <p className="text-xs text-muted-foreground">UPI, Cards, Net Banking, Wallets</p>
@@ -151,10 +151,10 @@ export function CheckoutForm({ addressId, total }: CheckoutFormProps) {
             )}
           >
             <div className={cn(
-              'h-4 w-4 rounded-full border-2',
+              'h-5 w-5 rounded-full border-2 shrink-0',
               paymentMethod === 'cod' ? 'border-brand-accent bg-brand-accent' : 'border-border'
             )} />
-            <Banknote className="h-5 w-5 text-muted-foreground" />
+            <Banknote className="h-5 w-5 text-muted-foreground shrink-0" />
             <div className="flex-1">
               <p className="font-medium text-sm">Cash on Delivery</p>
               <p className="text-xs text-muted-foreground">

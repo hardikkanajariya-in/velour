@@ -136,14 +136,14 @@ export default function CheckoutPage() {
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'Cart', href: '/cart' }, { label: 'Checkout' }]} />
 
-      <h1 className="text-2xl md:text-3xl font-heading font-bold mt-4 mb-8">Checkout</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-5 sm:mb-8">Checkout</h1>
 
       {/* Steps */}
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
         {['Address', 'Payment'].map((label, i) => (
-          <div key={label} className="flex items-center gap-2">
+          <div key={label} className="flex items-center gap-1.5 sm:gap-2">
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold ${
                 step > i + 1
                   ? 'bg-green-500 text-white'
                   : step === i + 1
@@ -156,12 +156,12 @@ export default function CheckoutPage() {
             <span className={`text-sm font-medium ${step >= i + 1 ? '' : 'text-muted-foreground'}`}>
               {label}
             </span>
-            {i < 1 && <div className="w-12 h-px bg-border" />}
+            {i < 1 && <div className="w-8 sm:w-12 h-px bg-border" />}
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         <div className="lg:col-span-2">
           {/* Step 1: Address */}
           {step === 1 && (
@@ -260,7 +260,7 @@ export default function CheckoutPage() {
           <OrderSummary couponDiscount={couponDiscount} couponCode={couponCode || undefined} />
 
           {/* Coupon Input */}
-          <div className="mt-4 p-4 bg-surface rounded-card">
+          <div className="mt-4 p-3 sm:p-4 bg-surface rounded-card">
             <h3 className="text-sm font-medium mb-2">Have a coupon?</h3>
             <div className="flex gap-2">
               <input
@@ -268,7 +268,7 @@ export default function CheckoutPage() {
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                 placeholder="Enter code"
-                className="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
+                className="flex-1 px-3 py-2 border border-border rounded-lg text-sm min-h-[44px]"
               />
               <Button
                 variant="secondary"

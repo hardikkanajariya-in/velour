@@ -79,21 +79,21 @@ export default function FAQPage() {
     <div className="max-w-3xl mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'FAQ' }]} />
 
-      <div className="text-center py-12">
-        <h1 className="text-3xl md:text-4xl font-heading font-bold mb-4">Frequently Asked Questions</h1>
+      <div className="text-center py-8 sm:py-12">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold mb-3 sm:mb-4">Frequently Asked Questions</h1>
         <p className="text-muted-foreground">Find answers to common questions about VELOUR.</p>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {faqSections.map((section) => (
           <div key={section.title}>
-            <h2 className="text-lg font-heading font-bold mb-4">{section.title}</h2>
+            <h2 className="text-base sm:text-lg font-heading font-bold mb-3 sm:mb-4">{section.title}</h2>
             <Accordion items={section.items} />
           </div>
         ))}
       </div>
 
-      <div className="text-center py-12 mt-8 border-t border-border">
+      <div className="text-center py-8 sm:py-12 mt-6 sm:mt-8 border-t border-border">
         <p className="text-muted-foreground mb-2">Still have questions?</p>
         <a href="/contact" className="text-accent hover:underline font-medium">
           Contact Us →

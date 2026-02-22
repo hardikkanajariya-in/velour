@@ -101,8 +101,8 @@ export default function AdminBannersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-heading font-bold">Banners</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
+        <h1 className="text-xl sm:text-2xl font-heading font-bold">Banners</h1>
         <Button className="gap-2" onClick={() => setShowModal(true)}>
           <Plus className="w-4 h-4" /> Add Banner
         </Button>
@@ -113,23 +113,27 @@ export default function AdminBannersPage() {
           <p className="text-center text-muted-foreground py-12">No banners yet</p>
         ) : (
           banners.map((banner) => (
-            <div key={banner.id} className="flex items-center gap-4 p-4 border border-border rounded-card">
-              <GripVertical className="w-5 h-5 text-muted-foreground cursor-grab" />
-              <div className="w-32 h-16 rounded overflow-hidden bg-muted flex-shrink-0">
-                {banner.image && <img src={banner.image} alt="" className="w-full h-full object-cover" />}
+            <div key={banner.id} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 border border-border rounded-card">
+              <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                <GripVertical className="w-5 h-5 text-muted-foreground cursor-grab hidden sm:block" />
+                <div className="w-24 sm:w-32 h-14 sm:h-16 rounded overflow-hidden bg-muted flex-shrink-0">
+                  {banner.image && <img src={banner.image} alt="" className="w-full h-full object-cover" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium truncate text-sm sm:text-base">{banner.title}</p>
+                  {banner.subtitle && <p className="text-xs sm:text-sm text-muted-foreground truncate">{banner.subtitle}</p>}
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium truncate">{banner.title}</p>
-                {banner.subtitle && <p className="text-sm text-muted-foreground truncate">{banner.subtitle}</p>}
+              <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-auto">
+                <button onClick={() => toggleActive(banner.id, banner.isActive)}>
+                  <Badge variant={banner.isActive ? 'success' : 'default'}>
+                    {banner.isActive ? 'Active' : 'Hidden'}
+                  </Badge>
+                </button>
+                <button onClick={() => handleDelete(banner.id)} className="text-red-600 hover:bg-red-50 p-2 rounded">
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
-              <button onClick={() => toggleActive(banner.id, banner.isActive)}>
-                <Badge variant={banner.isActive ? 'success' : 'default'}>
-                  {banner.isActive ? 'Active' : 'Hidden'}
-                </Badge>
-              </button>
-              <button onClick={() => handleDelete(banner.id)} className="text-red-600 hover:bg-red-50 p-2 rounded">
-                <Trash2 className="w-4 h-4" />
-              </button>
             </div>
           ))
         )}

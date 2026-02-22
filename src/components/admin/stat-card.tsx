@@ -12,11 +12,11 @@ interface StatCardProps {
 
 export function StatCard({ title, value, change, changeType = 'neutral', icon, className }: StatCardProps) {
   return (
-    <div className={cn('p-6 bg-background border border-border rounded-card', className)}>
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm text-muted-foreground">{title}</p>
-          <p className="text-2xl font-heading font-bold mt-1">{value}</p>
+    <div className={cn('p-4 sm:p-6 bg-background border border-border rounded-card', className)}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-xs sm:text-sm text-muted-foreground">{title}</p>
+          <p className="text-xl sm:text-2xl font-heading font-bold mt-1 truncate">{value}</p>
           {change && (
             <p
               className={cn(
@@ -31,7 +31,7 @@ export function StatCard({ title, value, change, changeType = 'neutral', icon, c
           )}
         </div>
         {icon && (
-          <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
             {icon}
           </div>
         )}

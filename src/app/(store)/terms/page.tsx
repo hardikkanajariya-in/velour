@@ -11,7 +11,7 @@ export default function TermsPage() {
     <div className="max-w-3xl mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'Terms & Conditions' }]} />
 
-      <h1 className="text-3xl font-heading font-bold mt-6 mb-8">Terms & Conditions</h1>
+      <h1 className="text-2xl sm:text-3xl font-heading font-bold mt-4 sm:mt-6 mb-6 sm:mb-8">Terms & Conditions</h1>
 
       <div className="prose prose-sm max-w-none space-y-6 text-muted-foreground">
         <p>Last updated: {new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}</p>

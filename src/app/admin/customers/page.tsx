@@ -37,7 +37,7 @@ export default function AdminCustomersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-heading font-bold">Customers</h1>
+      <h1 className="text-xl sm:text-2xl font-heading font-bold">Customers</h1>
 
       <DataTable
         columns={[

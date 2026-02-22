@@ -46,12 +46,12 @@ export function Footer() {
     <footer className="bg-brand-primary text-white">
       {/* Trust Badges */}
       <div className="border-b border-white/10">
-        <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+        <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6 sm:py-8">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 sm:gap-6">
             {trustBadges.map((badge) => (
-              <div key={badge.label} className="flex flex-col items-center text-center gap-2">
-                <badge.icon className="h-6 w-6 text-brand-accent" />
-                <span className="text-xs font-medium text-white/80">{badge.label}</span>
+              <div key={badge.label} className="flex flex-col items-center text-center gap-1.5 sm:gap-2">
+                <badge.icon className="h-5 w-5 sm:h-6 sm:w-6 text-brand-accent" />
+                <span className="text-[10px] sm:text-xs font-medium text-white/80">{badge.label}</span>
               </div>
             ))}
           </div>
@@ -59,8 +59,8 @@ export function Footer() {
       </div>
 
       {/* Main Footer */}
-      <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-8 sm:py-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="font-heading italic text-2xl font-bold text-brand-accent">
@@ -148,10 +148,10 @@ export function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-lg font-semibold mb-1">Get 10% off your first order</h3>
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+            <div className="text-center md:text-left">
+              <h3 className="text-base sm:text-lg font-semibold mb-1">Get 10% off your first order</h3>
               <p className="text-sm text-white/60">No spam. Unsubscribe anytime.</p>
             </div>
             <FooterNewsletterForm />
@@ -162,7 +162,7 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-white/50 text-center md:text-left">
             <p>
               &copy; {new Date().getFullYear()} {siteConfig.brand.name}. All rights reserved.{' '}
               {siteConfig.footer.credit.text}{' '}

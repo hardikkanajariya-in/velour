@@ -38,9 +38,9 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
           <div key={index}>
             <button
               onClick={() => toggle(index)}
-              className="flex items-center justify-between w-full py-4 text-left text-sm font-medium text-brand-primary min-h-[44px]"
+              className="flex items-center justify-between w-full px-1 py-4 text-left text-sm font-medium text-brand-primary min-h-[48px] gap-3"
             >
-              {item.title}
+              <span className="flex-1">{item.title}</span>
               <ChevronDown
                 className={cn(
                   'h-4 w-4 text-neutral-500 transition-transform duration-300',
@@ -50,7 +50,7 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
             </button>
             <div className={cn('accordion-content', isOpen && 'open')}>
               <div>
-                <div className="pb-4 text-sm text-neutral-600 leading-relaxed">
+                <div className="px-1 pb-4 text-sm text-neutral-600 leading-relaxed">
                   {item.content}
                 </div>
               </div>

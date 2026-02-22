@@ -96,18 +96,18 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       <div className="border-t border-neutral-200 mt-auto p-4 space-y-2">
         {session ? (
           <>
-            <Link href="/account" onClick={onClose} className="flex items-center gap-3 px-3 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 rounded-md">
+            <Link href="/account" onClick={onClose} className="flex items-center gap-3 px-3 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 rounded-md min-h-[44px]">
               <User className="h-4 w-4" /> My Account
             </Link>
-            <Link href="/wishlist" onClick={onClose} className="flex items-center gap-3 px-3 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 rounded-md">
+            <Link href="/wishlist" onClick={onClose} className="flex items-center gap-3 px-3 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 rounded-md min-h-[44px]">
               <Heart className="h-4 w-4" /> Wishlist
             </Link>
           </>
         ) : (
           <Link
-            href="/login"
+            href="/auth/login"
             onClick={onClose}
-            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-brand-primary hover:bg-neutral-50 rounded-md"
+            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-brand-primary hover:bg-neutral-50 rounded-md min-h-[44px]"
           >
             <LogIn className="h-4 w-4" /> Login / Register
           </Link>

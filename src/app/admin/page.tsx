@@ -89,15 +89,15 @@ export default function AdminDashboard() {
 
       {/* Monthly Revenue Chart (simple bar representation) */}
       {data.monthlyRevenue.length > 0 && (
-        <div className="p-6 bg-background border border-border rounded-card">
-          <h2 className="text-lg font-heading font-bold mb-4">Monthly Revenue</h2>
-          <div className="flex items-end gap-2 h-48">
+        <div className="p-4 sm:p-6 bg-background border border-border rounded-card">
+          <h2 className="text-base sm:text-lg font-heading font-bold mb-3 sm:mb-4">Monthly Revenue</h2>
+          <div className="flex items-end gap-1 sm:gap-2 h-36 sm:h-48 overflow-x-auto scrollbar-none">
             {data.monthlyRevenue.map((item) => {
               const maxRevenue = Math.max(...data.monthlyRevenue.map((r) => r.revenue));
               const height = maxRevenue > 0 ? (item.revenue / maxRevenue) * 100 : 0;
               return (
                 <div key={item.month} className="flex-1 flex flex-col items-center gap-1">
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-[10px] sm:text-xs text-muted-foreground">
                     {formatPrice(item.revenue)}
                   </span>
                   <div
@@ -118,9 +118,9 @@ export default function AdminDashboard() {
       )}
 
       {/* Recent Orders */}
-      <div className="p-6 bg-background border border-border rounded-card">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-heading font-bold">Recent Orders</h2>
+      <div className="p-4 sm:p-6 bg-background border border-border rounded-card">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <h2 className="text-base sm:text-lg font-heading font-bold">Recent Orders</h2>
           <Link href="/admin/orders" className="text-sm text-accent hover:underline">
             View All
           </Link>

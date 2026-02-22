@@ -91,9 +91,9 @@ export default function AdminOrderDetailPage() {
         <ArrowLeft className="w-4 h-4" /> Back to Orders
       </Link>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
         <div>
-          <h1 className="text-2xl font-heading font-bold">Order #{order.orderNumber}</h1>
+          <h1 className="text-xl sm:text-2xl font-heading font-bold">Order #{order.orderNumber}</h1>
           <p className="text-sm text-muted-foreground">{formatDate(order.createdAt)}</p>
         </div>
         <Badge variant={statusColor as 'default' | 'success' | 'warning' | 'error'}>
@@ -102,7 +102,7 @@ export default function AdminOrderDetailPage() {
       </div>
 
       {/* Update Status */}
-      <div className="p-4 bg-background border border-border rounded-card flex items-end gap-4">
+      <div className="p-3 sm:p-4 bg-background border border-border rounded-card flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
         <div className="flex-1">
           <Select
             label="Update Status"
@@ -124,8 +124,8 @@ export default function AdminOrderDetailPage() {
         <h2 className="text-sm font-medium p-4 bg-surface border-b border-border">Items</h2>
         <div className="divide-y divide-border">
           {order.items.map((item) => (
-            <div key={item.id} className="flex items-center gap-4 p-4">
-              <div className="w-12 h-12 rounded bg-muted overflow-hidden flex-shrink-0">
+            <div key={item.id} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded bg-muted overflow-hidden flex-shrink-0">
                 {item.image && <img src={item.image} alt="" className="w-full h-full object-cover" />}
               </div>
               <div className="flex-1 min-w-0">
@@ -140,7 +140,7 @@ export default function AdminOrderDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Customer & Address */}
         <div className="p-4 bg-background border border-border rounded-card space-y-3">
           <h2 className="text-sm font-medium">Customer</h2>

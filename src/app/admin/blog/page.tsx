@@ -192,8 +192,8 @@ export default function AdminBlogPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-heading font-bold">Blog Posts</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
+        <h1 className="text-xl sm:text-2xl font-heading font-bold">Blog Posts</h1>
         <Button variant="primary" onClick={openCreate}>
           <Plus className="w-4 h-4 mr-2" /> New Post
         </Button>

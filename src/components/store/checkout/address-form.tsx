@@ -88,7 +88,7 @@ export function AddressForm({
           <label className="block text-sm font-medium mb-1.5">State</label>
           <select
             {...register('state', { required: 'State is required' })}
-            className="w-full px-3 py-2.5 text-sm border rounded-button focus:outline-none focus:ring-2 focus:ring-brand-accent/50"
+            className="w-full px-3 py-2.5 text-sm border border-border rounded-button focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent min-h-[44px]"
           >
             <option value="">Select State</option>
             {INDIAN_STATES.map((state) => (

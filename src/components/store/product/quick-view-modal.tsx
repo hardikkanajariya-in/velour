@@ -55,8 +55,8 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="">
-      <div className="grid md:grid-cols-2 gap-6">
+    <Modal isOpen={isOpen} onClose={onClose} title="" size="xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Image */}
         <div className="relative aspect-[3/4] rounded-card overflow-hidden bg-muted">
           <Image
@@ -107,19 +107,19 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
           </div>
 
           {/* Quantity */}
-          <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
             <span className="text-sm font-medium">Qty:</span>
-            <div className="flex items-center border rounded-button">
+            <div className="flex items-center border border-border rounded-button">
               <button
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="p-2 hover:bg-muted transition-colors"
+                className="p-2 hover:bg-muted transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
               >
                 <Minus className="h-3.5 w-3.5" />
               </button>
               <span className="w-10 text-center text-sm font-medium">{quantity}</span>
               <button
                 onClick={() => setQuantity((q) => q + 1)}
-                className="p-2 hover:bg-muted transition-colors"
+                className="p-2 hover:bg-muted transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
               >
                 <Plus className="h-3.5 w-3.5" />
               </button>
@@ -146,17 +146,17 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
           </div>
 
           {/* USPs */}
-          <div className="border-t pt-4 space-y-2">
+          <div className="border-t border-border pt-3 sm:pt-4 space-y-2">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Truck className="h-3.5 w-3.5" />
+              <Truck className="h-3.5 w-3.5 shrink-0" />
               Free shipping on orders above ₹1,999
             </div>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <RotateCcw className="h-3.5 w-3.5" />
+              <RotateCcw className="h-3.5 w-3.5 shrink-0" />
               Easy 14-day returns
             </div>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Shield className="h-3.5 w-3.5" />
+              <Shield className="h-3.5 w-3.5 shrink-0" />
               100% authentic products
             </div>
           </div>

@@ -75,8 +75,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'Products', href: '/products' }, { label: category.name }]} />
 
-      <div className="mb-8 mt-4">
-        <h1 className="text-2xl md:text-3xl font-heading font-bold">{category.name}</h1>
+      <div className="mb-6 sm:mb-8 mt-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold">{category.name}</h1>
         {category.description && (
           <p className="text-muted-foreground mt-2 max-w-2xl">{category.description}</p>
         )}
@@ -85,12 +85,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
       {/* Subcategories */}
       {category.children.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
           {category.children.map((child: Category) => (
             <a
               key={child.id}
               href={`/category/${child.slug}`}
-              className="px-4 py-2 border border-border rounded-full text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+              className="px-3 sm:px-4 py-2 border border-border rounded-full text-xs sm:text-sm hover:bg-primary hover:text-primary-foreground transition-colors min-h-[36px] flex items-center"
             >
               {child.name}
             </a>
@@ -98,7 +98,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         </div>
       )}
 
-      <div className="flex items-center justify-end mb-4">
+      <div className="flex items-center justify-end mb-3 sm:mb-4">
         <ProductSort />
       </div>
 

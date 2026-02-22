@@ -71,8 +71,8 @@ export function CartDrawer() {
               {items.map((item) => {
                 const itemPrice = item.product.basePrice + item.variant.additionalPrice;
                 return (
-                  <div key={item.variantId} className="flex gap-3 p-4">
-                    <div className="relative h-24 w-20 shrink-0 rounded-card overflow-hidden bg-muted">
+                  <div key={item.variantId} className="flex gap-3 p-3 sm:p-4">
+                    <div className="relative h-20 w-16 sm:h-24 sm:w-20 shrink-0 rounded-card overflow-hidden bg-muted">
                       {item.product.images[0] ? (
                         <Image
                           src={item.product.images[0].url}
@@ -104,10 +104,10 @@ export function CartDrawer() {
                       <p className="text-sm font-semibold mt-1">{formatPrice(itemPrice)}</p>
 
                       <div className="flex items-center justify-between mt-2">
-                        <div className="flex items-center border rounded-button">
+                        <div className="flex items-center border border-border rounded-button">
                           <button
                             onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                            className="p-1 hover:bg-muted transition-colors"
+                            className="p-1.5 hover:bg-muted transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                             aria-label="Decrease quantity"
                           >
                             <Minus className="h-3 w-3" />
@@ -115,7 +115,7 @@ export function CartDrawer() {
                           <span className="w-8 text-center text-xs font-medium">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                            className="p-1 hover:bg-muted transition-colors"
+                            className="p-1.5 hover:bg-muted transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                             aria-label="Increase quantity"
                           >
                             <Plus className="h-3 w-3" />
@@ -123,7 +123,7 @@ export function CartDrawer() {
                         </div>
                         <button
                           onClick={() => removeItem(item.variantId)}
-                          className="p-1 text-muted-foreground hover:text-red-500 transition-colors"
+                          className="p-1.5 text-muted-foreground hover:text-red-500 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                           aria-label="Remove item"
                         >
                           <Trash2 className="h-4 w-4" />

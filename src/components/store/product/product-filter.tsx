@@ -82,17 +82,17 @@ export function ProductFilter({
     selectedPrice !== '';
 
   const filterContent = (
-    <div className="space-y-1">
+    <div className="space-y-4">
       {/* Active Filters */}
       {hasFilters && (
-        <div className="pb-4 border-b">
+        <div className="pb-4 border-b border-border">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Active Filters
             </span>
             <button
               onClick={clearAll}
-              className="text-xs text-brand-accent hover:underline"
+              className="text-xs text-brand-accent hover:underline min-h-[32px] flex items-center"
             >
               Clear all
             </button>
@@ -103,7 +103,7 @@ export function ProductFilter({
               .map((filter) => (
                 <span
                   key={filter}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-muted rounded-full"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-muted rounded-full"
                 >
                   {filter}
                   <button className="hover:text-brand-accent">
@@ -244,26 +244,31 @@ export function ProductFilter({
 
       {/* Mobile Overlay */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-black/50" onClick={() => setMobileOpen(false)}>
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={() => setMobileOpen(false)}>
           <div
-            className="absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-white p-5 overflow-y-auto"
+            className="absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-white overflow-y-auto overscroll-contain flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
               <h3 className="font-semibold">Filters</h3>
-              <button onClick={() => setMobileOpen(false)}>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-1.5 hover:bg-neutral-100 rounded-md min-w-[44px] min-h-[44px] flex items-center justify-center"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
-            {filterContent}
+            <div className="flex-1 overflow-y-auto p-4">
+              {filterContent}
+            </div>
           </div>
         </div>
       )}
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:block">
-        <div className="sticky top-24 space-y-1">
-          <div className="flex items-center justify-between mb-4">
+        <div className="sticky top-24 space-y-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="font-semibold">
               Filters
               {totalProducts > 0 && (

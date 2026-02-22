@@ -11,12 +11,12 @@ export default function ShippingReturnsPage() {
     <div className="max-w-3xl mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'Shipping & Returns' }]} />
 
-      <h1 className="text-3xl font-heading font-bold mt-6 mb-8">Shipping & Returns</h1>
+      <h1 className="text-2xl sm:text-3xl font-heading font-bold mt-4 sm:mt-6 mb-6 sm:mb-8">Shipping & Returns</h1>
 
-      <div className="space-y-10">
+      <div className="space-y-8 sm:space-y-10">
         {/* Shipping */}
         <section>
-          <h2 className="text-xl font-heading font-bold mb-4">Shipping Policy</h2>
+          <h2 className="text-lg sm:text-xl font-heading font-bold mb-3 sm:mb-4">Shipping Policy</h2>
           <div className="space-y-4 text-sm text-muted-foreground">
             <div className="p-4 bg-surface rounded-card">
               <h3 className="font-medium text-foreground mb-2">Free Shipping</h3>
@@ -39,7 +39,7 @@ export default function ShippingReturnsPage() {
 
         {/* Returns */}
         <section>
-          <h2 className="text-xl font-heading font-bold mb-4">Return Policy</h2>
+          <h2 className="text-lg sm:text-xl font-heading font-bold mb-3 sm:mb-4">Return Policy</h2>
           <div className="space-y-4 text-sm text-muted-foreground">
             <p>We want you to love every purchase. If you&apos;re not completely satisfied, we offer easy returns within 15 days of delivery.</p>
 
@@ -72,7 +72,7 @@ export default function ShippingReturnsPage() {
 
         {/* Exchange */}
         <section>
-          <h2 className="text-xl font-heading font-bold mb-4">Exchange Policy</h2>
+          <h2 className="text-lg sm:text-xl font-heading font-bold mb-3 sm:mb-4">Exchange Policy</h2>
           <div className="text-sm text-muted-foreground">
             <p>We currently do not offer direct exchanges. Please return the item and place a new order for the desired size/color.</p>
           </div>

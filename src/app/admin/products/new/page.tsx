@@ -195,47 +195,47 @@ export default function NewProductPage() {
           </div>
 
           {variants.map((variant, i) => (
-            <div key={i} className="flex items-end gap-3 p-4 bg-surface rounded-lg">
-              <div className="flex-1">
+            <div key={i} className="flex flex-col sm:flex-row sm:items-end gap-3 p-3 sm:p-4 bg-surface rounded-lg">
+              <div className="flex-1 min-w-0">
                 <label className="block text-xs font-medium mb-1">Size</label>
                 <input
                   value={variant.size}
                   onChange={(e) => updateVariant(i, 'size', e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded text-sm"
+                  className="w-full px-3 py-2 border border-border rounded text-sm min-h-[40px]"
                   placeholder="S, M, L, XL..."
                 />
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <label className="block text-xs font-medium mb-1">Color</label>
                 <input
                   value={variant.color}
                   onChange={(e) => updateVariant(i, 'color', e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded text-sm"
+                  className="w-full px-3 py-2 border border-border rounded text-sm min-h-[40px]"
                   placeholder="Black, White..."
                 />
               </div>
-              <div className="w-20">
+              <div className="w-full sm:w-20">
                 <label className="block text-xs font-medium mb-1">Stock</label>
                 <input
                   type="number"
                   value={variant.stock}
                   onChange={(e) => updateVariant(i, 'stock', parseInt(e.target.value) || 0)}
-                  className="w-full px-3 py-2 border border-border rounded text-sm"
+                  className="w-full px-3 py-2 border border-border rounded text-sm min-h-[40px]"
                 />
               </div>
-              <div className="w-24">
+              <div className="w-full sm:w-24">
                 <label className="block text-xs font-medium mb-1">+Price</label>
                 <input
                   type="number"
                   value={variant.additionalPrice}
                   onChange={(e) => updateVariant(i, 'additionalPrice', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 border border-border rounded text-sm"
+                  className="w-full px-3 py-2 border border-border rounded text-sm min-h-[40px]"
                 />
               </div>
               <button
                 type="button"
                 onClick={() => removeVariant(i)}
-                className="p-2 text-red-600 hover:bg-red-50 rounded"
+                className="p-2 text-red-600 hover:bg-red-50 rounded self-end min-h-[40px] min-w-[40px] flex items-center justify-center"
               >
                 <Trash2 className="w-4 h-4" />
               </button>

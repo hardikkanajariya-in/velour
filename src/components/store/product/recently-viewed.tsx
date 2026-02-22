@@ -32,9 +32,9 @@ export function RecentlyViewed({ title = 'Recently Viewed', excludeId }: Recentl
   if (products.length === 0 && !loading) return null;
 
   return (
-    <section className="py-12">
-      <h2 className="text-2xl font-heading font-bold mb-6">{title}</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+    <section className="py-8 sm:py-12">
+      <h2 className="text-xl sm:text-2xl font-heading font-bold mb-4 sm:mb-6">{title}</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

@@ -88,7 +88,7 @@ export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Summarize your experience"
-          className="w-full px-3 py-2.5 text-sm border rounded-button focus:outline-none focus:ring-2 focus:ring-brand-accent/50"
+          className="w-full px-3 py-2.5 text-sm border border-border rounded-button focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent min-h-[44px]"
           required
         />
       </div>
@@ -103,7 +103,7 @@ export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
           onChange={(e) => setComment(e.target.value)}
           placeholder="Tell us more about your experience"
           rows={4}
-          className="w-full px-3 py-2.5 text-sm border rounded-button focus:outline-none focus:ring-2 focus:ring-brand-accent/50 resize-none"
+          className="w-full px-3 py-2.5 text-sm border border-border rounded-button focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent resize-none"
           required
         />
       </div>

@@ -35,14 +35,14 @@ export function Drawer({ isOpen, onClose, children, title, side = 'right', class
   if (!isOpen) return null;
 
   const sideStyles = {
-    right: 'right-0 top-0 h-full w-full max-w-md animate-[slideInRight_0.3s_ease-out]',
-    left: 'left-0 top-0 h-full w-full max-w-md animate-[slideInLeft_0.3s_ease-out]',
+    right: 'right-0 top-0 h-full w-full max-w-[85vw] sm:max-w-md animate-[slideInRight_0.3s_ease-out]',
+    left: 'left-0 top-0 h-full w-full max-w-[85vw] sm:max-w-md animate-[slideInLeft_0.3s_ease-out]',
     bottom: 'bottom-0 left-0 w-full max-h-[85vh] rounded-t-2xl animate-[fadeUp_0.3s_ease-out]',
   };
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div
         className={cn(
           'fixed bg-white shadow-lg flex flex-col',
@@ -50,16 +50,16 @@ export function Drawer({ isOpen, onClose, children, title, side = 'right', class
           className
         )}
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200 shrink-0">
-          <h2 className="text-lg font-semibold text-brand-primary">{title}</h2>
+        <div className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-4 border-b border-neutral-200 shrink-0">
+          <h2 className="text-base sm:text-lg font-semibold text-brand-primary">{title}</h2>
           <button
             onClick={onClose}
-            className="p-1 rounded-md hover:bg-neutral-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-1.5 rounded-md hover:bg-neutral-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto">{children}</div>
+        <div className="flex-1 overflow-y-auto overscroll-contain">{children}</div>
       </div>
     </div>
   );

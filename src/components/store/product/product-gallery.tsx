@@ -43,16 +43,16 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
   }
 
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-4">
+    <div className="flex flex-col-reverse md:flex-row gap-3 sm:gap-4">
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto md:max-h-[600px] scrollbar-thin">
+        <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto md:max-h-[600px] scrollbar-none pb-1 md:pb-0">
           {images.map((img, i) => (
             <button
               key={img.id}
               onClick={() => setActiveIndex(i)}
               className={cn(
-                'relative h-16 w-16 md:h-20 md:w-20 shrink-0 rounded-card overflow-hidden border-2 transition-colors',
+                'relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 shrink-0 rounded-card overflow-hidden border-2 transition-colors',
                 i === activeIndex ? 'border-brand-accent' : 'border-transparent hover:border-border'
               )}
             >

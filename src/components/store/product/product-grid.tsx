@@ -17,12 +17,12 @@ export function ProductGrid({ products, loading, columns = 4, onQuickView }: Pro
   const gridCols = {
     2: 'grid-cols-2',
     3: 'grid-cols-2 md:grid-cols-3',
-    4: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
+    4: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
   };
 
   if (loading) {
     return (
-      <div className={`grid ${gridCols[columns]} gap-4 md:gap-6`}>
+      <div className={`grid ${gridCols[columns]} gap-3 sm:gap-4 md:gap-6`}>
         {Array.from({ length: columns * 2 }).map((_, i) => (
           <div key={i} className="space-y-3">
             <Skeleton className="aspect-[3/4] rounded-card" />
@@ -48,7 +48,7 @@ export function ProductGrid({ products, loading, columns = 4, onQuickView }: Pro
   }
 
   return (
-    <div className={`grid ${gridCols[columns]} gap-4 md:gap-6`}>
+    <div className={`grid ${gridCols[columns]} gap-3 sm:gap-4 md:gap-6`}>
       {products.map((product) => (
         <ProductCard key={product.id} product={product} onQuickView={onQuickView} />
       ))}

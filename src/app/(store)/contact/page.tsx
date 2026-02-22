@@ -32,14 +32,14 @@ export default function ContactPage() {
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'Contact Us' }]} />
 
-      <div className="text-center max-w-2xl mx-auto py-12">
-        <h1 className="text-3xl md:text-4xl font-heading font-bold mb-4">Get in Touch</h1>
+      <div className="text-center max-w-2xl mx-auto py-8 sm:py-12">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold mb-3 sm:mb-4">Get in Touch</h1>
         <p className="text-muted-foreground">
           Have a question or feedback? We&apos;d love to hear from you.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-10 sm:mb-16">
         {/* Contact Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -70,11 +70,11 @@ export default function ContactPage() {
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               rows={6}
               required
-              className="w-full px-4 py-3 border border-border rounded-lg bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 resize-none"
+              className="w-full px-4 py-3 border border-border rounded-lg bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 resize-none min-h-[120px]"
               placeholder="Tell us how we can help..."
             />
           </div>
-          <Button type="submit" disabled={sending} className="gap-2">
+          <Button type="submit" disabled={sending} className="gap-2 min-h-[44px]">
             <Send className="w-4 h-4" />
             {sending ? 'Sending...' : 'Send Message'}
           </Button>
@@ -101,7 +101,7 @@ export default function ContactPage() {
           ))}
 
           {/* FAQ Link */}
-          <div className="p-6 bg-surface rounded-card mt-8">
+          <div className="p-4 sm:p-6 bg-surface rounded-card mt-6 sm:mt-8">
             <h3 className="font-heading font-bold mb-2">Frequently Asked Questions</h3>
             <p className="text-sm text-muted-foreground mb-3">
               Find answers to common questions about orders, shipping, returns, and more.

@@ -54,10 +54,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: `Search: "${q}"` }]} />
 
-      <h1 className="text-2xl md:text-3xl font-heading font-bold mt-4 mb-2">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-2">
         Search Results for &ldquo;{q}&rdquo;
       </h1>
-      <p className="text-sm text-muted-foreground mb-6">{products.length} results found</p>
+      <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">{products.length} results found</p>
 
       {products.length === 0 ? (
         <EmptyState

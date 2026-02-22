@@ -101,8 +101,8 @@ export function AddressesClient() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-heading font-bold">My Addresses</h2>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+        <h2 className="text-base sm:text-lg font-heading font-bold">My Addresses</h2>
         <Button variant="secondary" onClick={() => setShowForm(!showForm)} className="gap-2">
           <Plus className="w-4 h-4" />
           {showForm ? 'Cancel' : 'Add Address'}
@@ -110,7 +110,7 @@ export function AddressesClient() {
       </div>
 
       {showForm && (
-        <div className="mb-6 p-6 border border-border rounded-card">
+        <div className="mb-4 sm:mb-6 p-4 sm:p-6 border border-border rounded-card">
           <h3 className="text-sm font-medium mb-4">New Address</h3>
           <AddressForm onSubmit={handleSubmit} submitLabel="Save Address" />
         </div>
@@ -121,7 +121,7 @@ export function AddressesClient() {
           No addresses saved yet. Add one above.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {addresses.map((addr) => (
             <div
               key={addr.id}

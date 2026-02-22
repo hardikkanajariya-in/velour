@@ -65,7 +65,7 @@ export default function AdminReviewsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-heading font-bold">Reviews</h1>
+      <h1 className="text-xl sm:text-2xl font-heading font-bold">Reviews</h1>
 
       <DataTable
         columns={[

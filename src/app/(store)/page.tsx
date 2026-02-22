@@ -80,7 +80,7 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-[70vh] md:h-[85vh] overflow-hidden bg-brand-primary">
+      <section className="relative h-[60vh] sm:h-[70vh] md:h-[85vh] overflow-hidden bg-brand-primary">
         {banners[0] ? (
           <>
             <Image
@@ -95,13 +95,13 @@ export default async function HomePage() {
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-[1280px] mx-auto px-4 lg:px-8 w-full">
                 <div className="max-w-xl animate-fadeUp">
-                  <p className="text-brand-accent text-sm font-medium tracking-widest uppercase mb-3">
+                  <p className="text-brand-accent text-xs sm:text-sm font-medium tracking-widest uppercase mb-2 sm:mb-3">
                     {banners[0].subtitle ?? 'New Collection'}
                   </p>
-                  <h1 className="text-4xl md:text-6xl font-heading font-bold text-white leading-tight mb-4">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white leading-tight mb-3 sm:mb-4">
                     {banners[0].title}
                   </h1>
-                  <p className="text-white/80 text-lg mb-6">{banners[0].subtitle}</p>
+                  <p className="text-white/80 text-base sm:text-lg mb-4 sm:mb-6">{banners[0].subtitle}</p>
                   <div className="flex gap-3">
                     <Link href={banners[0].link ?? '/products'}>
                       <Button className="bg-white text-brand-primary hover:bg-white/90" size="lg">
@@ -120,10 +120,10 @@ export default async function HomePage() {
               <p className="text-brand-accent text-sm font-medium tracking-widest uppercase mb-3">
                 {siteConfig.brand.tagline}
               </p>
-              <h1 className="text-5xl md:text-7xl font-heading italic font-bold mb-4">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-heading italic font-bold mb-3 sm:mb-4">
                 {siteConfig.brand.name}
               </h1>
-              <p className="text-white/70 text-lg mb-8 max-w-md mx-auto">
+              <p className="text-white/70 text-base sm:text-lg mb-6 sm:mb-8 max-w-md mx-auto px-4">
                 Premium fashion for the modern Indian wardrobe
               </p>
               <Link href="/products">
@@ -138,16 +138,16 @@ export default async function HomePage() {
       </section>
 
       {/* Trust Bar */}
-      <section className="bg-surface border-y">
-        <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section className="bg-surface border-y border-border">
+        <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-3 sm:py-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[
               { icon: Truck, text: 'Free Shipping Over ₹1,999' },
               { icon: RotateCcw, text: '14-Day Easy Returns' },
               { icon: ShieldCheck, text: 'Secure Payments' },
               { icon: Sparkles, text: '100% Authentic' },
             ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-2 justify-center text-sm text-muted-foreground">
+              <div key={text} className="flex items-center gap-1.5 sm:gap-2 justify-center text-xs sm:text-sm text-muted-foreground">
                 <Icon className="h-4 w-4 text-brand-accent shrink-0" />
                 {text}
               </div>
@@ -158,13 +158,13 @@ export default async function HomePage() {
 
       {/* Categories */}
       {categories.length > 0 && (
-        <section className="py-16">
+        <section className="py-10 sm:py-16">
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-heading font-bold">Shop by Category</h2>
-              <p className="text-muted-foreground mt-2">Explore our curated collections</p>
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="text-2xl sm:text-3xl font-heading font-bold">Shop by Category</h2>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1.5 sm:mt-2">Explore our curated collections</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
               {categories.map((cat) => (
                 <Link
                   key={cat.id}
@@ -193,12 +193,12 @@ export default async function HomePage() {
 
       {/* Featured Products */}
       {featured.length > 0 && (
-        <section className="py-16 bg-surface">
+        <section className="py-10 sm:py-16 bg-surface">
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-5 sm:mb-8">
               <div>
-                <h2 className="text-3xl font-heading font-bold">Featured Products</h2>
-                <p className="text-muted-foreground mt-1">Handpicked styles just for you</p>
+                <h2 className="text-2xl sm:text-3xl font-heading font-bold">Featured Products</h2>
+                <p className="text-sm sm:text-base text-muted-foreground mt-1">Handpicked styles just for you</p>
               </div>
               <Link
                 href="/products?featured=true"
@@ -207,12 +207,12 @@ export default async function HomePage() {
                 View All <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {featured.map((product: ProductListItem) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
-            <div className="text-center mt-8 md:hidden">
+            <div className="text-center mt-6 sm:mt-8 md:hidden">
               <Link href="/products?featured=true">
                 <Button variant="secondary">View All Products</Button>
               </Link>
@@ -222,17 +222,17 @@ export default async function HomePage() {
       )}
 
       {/* Promo Banner */}
-      <section className="py-16">
+      <section className="py-10 sm:py-16">
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
-          <div className="relative rounded-card overflow-hidden bg-brand-primary h-64 md:h-80 flex items-center">
-            <div className="relative z-10 px-8 md:px-12 max-w-lg">
-              <p className="text-brand-accent text-xs font-medium tracking-widest uppercase mb-2">
+          <div className="relative rounded-card overflow-hidden bg-brand-primary h-52 sm:h-64 md:h-80 flex items-center">
+            <div className="relative z-10 px-5 sm:px-8 md:px-12 max-w-lg">
+              <p className="text-brand-accent text-[10px] sm:text-xs font-medium tracking-widest uppercase mb-1.5 sm:mb-2">
                 Limited Time
               </p>
-              <h2 className="text-2xl md:text-4xl font-heading font-bold text-white mb-3">
+              <h2 className="text-xl sm:text-2xl md:text-4xl font-heading font-bold text-white mb-2 sm:mb-3">
                 Season End Sale
               </h2>
-              <p className="text-white/70 mb-5">
+              <p className="text-white/70 text-sm sm:text-base mb-4 sm:mb-5">
                 Up to 50% off on selected styles. Don&apos;t miss out!
               </p>
               <Link href="/products?sort=price-asc">
@@ -250,12 +250,12 @@ export default async function HomePage() {
 
       {/* New Arrivals */}
       {newArrivals.length > 0 && (
-        <section className="py-16 bg-surface">
+        <section className="py-10 sm:py-16 bg-surface">
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-5 sm:mb-8">
               <div>
-                <h2 className="text-3xl font-heading font-bold">New Arrivals</h2>
-                <p className="text-muted-foreground mt-1">Just dropped, just for you</p>
+                <h2 className="text-2xl sm:text-3xl font-heading font-bold">New Arrivals</h2>
+                <p className="text-sm sm:text-base text-muted-foreground mt-1">Just dropped, just for you</p>
               </div>
               <Link
                 href="/products?new=true"
@@ -264,7 +264,7 @@ export default async function HomePage() {
                 View All <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {newArrivals.map((product: ProductListItem) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -275,13 +275,13 @@ export default async function HomePage() {
 
       {/* Best Sellers */}
       {bestSellers.length > 0 && (
-        <section className="py-16">
+        <section className="py-10 sm:py-16">
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-heading font-bold">Best Sellers</h2>
-              <p className="text-muted-foreground mt-2">Our most loved products</p>
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="text-2xl sm:text-3xl font-heading font-bold">Best Sellers</h2>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1.5 sm:mt-2">Our most loved products</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {bestSellers.map((product: ProductListItem) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -291,10 +291,10 @@ export default async function HomePage() {
       )}
 
       {/* Newsletter */}
-      <section className="py-20 bg-brand-primary text-white">
+      <section className="py-12 sm:py-20 bg-brand-primary text-white">
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8 text-center">
-          <h2 className="text-3xl font-heading font-bold mb-3">Join the VELOUR Club</h2>
-          <p className="text-white/60 max-w-md mx-auto mb-8">
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold mb-2 sm:mb-3">Join the VELOUR Club</h2>
+          <p className="text-white/60 text-sm sm:text-base max-w-md mx-auto mb-6 sm:mb-8">
             Get exclusive access to new collections, early sales, and style tips — plus 10% off your first order.
           </p>
           <NewsletterForm />

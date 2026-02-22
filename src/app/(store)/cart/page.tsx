@@ -16,18 +16,18 @@ export default function CartPage() {
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
       <Breadcrumb items={[{ label: 'Cart' }]} />
 
-      <h1 className="text-2xl md:text-3xl font-heading font-bold mt-4 mb-8">Shopping Cart</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-5 sm:mb-8">Shopping Cart</h1>
 
       {items.length === 0 ? (
         <EmptyState
-          icon={<ShoppingBag className="w-12 h-12" />}
+          icon={<ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12" />}
           heading="Your cart is empty"
           description="Looks like you haven't added anything to your cart yet."
           actionLabel="Continue Shopping"
           actionHref="/products"
         />
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           <div className="lg:col-span-2">
             <CartItems />
           </div>

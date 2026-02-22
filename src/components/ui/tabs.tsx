@@ -26,13 +26,13 @@ export function Tabs({ tabs, defaultValue, className, onChange }: TabsProps) {
 
   return (
     <div className={className}>
-      <div className="flex border-b border-neutral-200 overflow-x-auto">
+      <div className="flex border-b border-neutral-200 overflow-x-auto scrollbar-none -mx-4 sm:mx-0 px-4 sm:px-0">
         {tabs.map((tab) => (
           <button
             key={tab.value}
             onClick={() => handleTabChange(tab.value)}
             className={cn(
-              'px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors min-h-[44px]',
+              'px-4 sm:px-5 py-3 text-sm font-medium whitespace-nowrap transition-colors min-h-[48px]',
               'border-b-2 -mb-px',
               activeTab === tab.value
                 ? 'border-brand-accent text-brand-primary'
@@ -43,7 +43,7 @@ export function Tabs({ tabs, defaultValue, className, onChange }: TabsProps) {
           </button>
         ))}
       </div>
-      <div className="pt-4">
+      <div className="pt-5 sm:pt-6">
         {tabs.find((t) => t.value === activeTab)?.content}
       </div>
     </div>

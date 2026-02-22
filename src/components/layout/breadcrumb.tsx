@@ -12,8 +12,8 @@ interface BreadcrumbProps {
 
 export function Breadcrumb({ items }: BreadcrumbProps) {
   return (
-    <nav aria-label="Breadcrumb" className="py-3">
-      <ol className="flex items-center gap-1.5 text-sm text-neutral-500 flex-wrap">
+    <nav aria-label="Breadcrumb" className="py-2 sm:py-3">
+      <ol className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-neutral-500 flex-wrap">
         <li>
           <Link href="/" className="hover:text-brand-primary transition-colors flex items-center gap-1">
             <Home className="h-3.5 w-3.5" />

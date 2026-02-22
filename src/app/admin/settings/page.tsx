@@ -7,12 +7,12 @@ import toast from 'react-hot-toast';
 export default function AdminSettingsPage() {
   return (
     <div className="max-w-2xl space-y-8">
-      <h1 className="text-2xl font-heading font-bold">Settings</h1>
+      <h1 className="text-xl sm:text-2xl font-heading font-bold">Settings</h1>
 
       {/* Store Info */}
       <div className="p-6 bg-background border border-border rounded-card space-y-4">
         <h2 className="text-lg font-heading font-bold">Store Information</h2>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm">
           <div>
             <p className="text-muted-foreground">Store Name</p>
             <p className="font-medium">{siteConfig.brand.name}</p>

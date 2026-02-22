@@ -36,15 +36,15 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   }
 
   return (
-    <div className={cn('overflow-x-auto border border-border rounded-card', className)}>
-      <table className="w-full text-sm">
+    <div className={cn('overflow-x-auto border border-border rounded-card -mx-4 sm:mx-0', className)}>
+      <table className="w-full text-sm min-w-[600px]">
         <thead>
           <tr className="border-b border-border bg-surface">
             {columns.map((col) => (
               <th
                 key={col.key}
                 className={cn(
-                  'text-left px-4 py-3 font-medium text-muted-foreground',
+                  'text-left px-3 sm:px-4 py-2.5 sm:py-3 font-medium text-muted-foreground text-xs sm:text-sm whitespace-nowrap',
                   col.className
                 )}
               >
@@ -64,7 +64,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
               onClick={() => onRowClick?.(item)}
             >
               {columns.map((col) => (
-                <td key={col.key} className={cn('px-4 py-3', col.className)}>
+                <td key={col.key} className={cn('px-3 sm:px-4 py-2.5 sm:py-3', col.className)}>
                   {col.render
                     ? col.render(item)
                     : (item[col.key] as React.ReactNode)}
