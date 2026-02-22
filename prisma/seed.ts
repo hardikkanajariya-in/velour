@@ -290,7 +290,7 @@ async function main() {
       // Men's Shirts
       unsplash("photo-1596755094514-f87e34085b2c"),
       unsplash("photo-1602810318383-e386cc2a3ccf"),
-      unsplash("photo-1598033129183-c4f50c736c10"),
+      unsplash("photo-1503342217505-b0a15ec3261c"),
       unsplash("photo-1589310243389-96a5483213a8"),
       unsplash("photo-1620012253295-c15cc3e65df4"),
       unsplash("photo-1603252109303-2751441dd157"),
@@ -302,7 +302,7 @@ async function main() {
       unsplash("photo-1475178626620-a4d074967452"),
       unsplash("photo-1582552938357-32b906df40cb"),
       unsplash("photo-1604176354204-9268737828e4"),
-      unsplash("photo-1565084888279-aca5eced0256"),
+      unsplash("photo-1556905055-8f358a7a47b2"),
     ],
     [subCats[3].id]: [
       // Men's Jackets
@@ -310,7 +310,7 @@ async function main() {
       unsplash("photo-1591047139829-d91aecb6caea"),
       unsplash("photo-1548883354-94bcfe321cbb"),
       unsplash("photo-1520975954732-35dd22299614"),
-      unsplash("photo-1544923246-77307dd270cb"),
+      unsplash("photo-1516826957135-700dedea698c"),
       unsplash("photo-1559551409-dadc959f76b8"),
     ],
     [subCats[4].id]: [
@@ -328,7 +328,7 @@ async function main() {
       unsplash("photo-1515886657613-9f3515b0c78f"),
       unsplash("photo-1612336307429-8a898d10e223"),
       unsplash("photo-1539008835657-9e8e9680c956"),
-      unsplash("photo-1585487000160-6ebcfceb0d44"),
+      unsplash("photo-1544441893-675973e31985"),
     ],
     [subCats[6].id]: [
       // Women's Tops
@@ -337,7 +337,7 @@ async function main() {
       unsplash("photo-1594938298603-c8148c4dae35"),
       unsplash("photo-1525507119028-ed4c629a60a3"),
       unsplash("photo-1518622358385-8ea7d0794bf6"),
-      unsplash("photo-1434389677669-e08b4cda3a7a"),
+      unsplash("photo-1487412720507-e7ab37603c6f"),
     ],
     [subCats[7].id]: [
       // Women's Skirts
@@ -352,14 +352,14 @@ async function main() {
       unsplash("photo-1582418702059-97ebafb35d09"),
       unsplash("photo-1475178626620-a4d074967452"),
       unsplash("photo-1584370848010-d7fe6bc767ec"),
-      unsplash("photo-1565084888279-aca5eced0256"),
+      unsplash("photo-1594633312681-425c7b97ccd1"),
     ],
     [subCats[9].id]: [
       // Women's Kurtas
       unsplash("photo-1610030469983-98e550d6193c"),
-      unsplash("photo-1583391733956-6c78276477e2"),
-      unsplash("photo-1570382667048-23b581258ab6"),
-      unsplash("photo-1614093302611-8efc4de30f10"),
+      unsplash("photo-1609505848912-b7c3b8b4beda"),
+      unsplash("photo-1490114538077-0a7f8cb49891"),
+      unsplash("photo-1596609548086-85bbf8ddb6b9"),
     ],
     [subCats[10].id]: [
       // Kids Boys
@@ -1351,7 +1351,7 @@ async function main() {
         content:
           "A capsule wardrobe is a collection of essential, timeless clothing that can be mixed and matched to create a variety of outfits. The concept was popularized by Susie Faux in the 1970s and has become a cornerstone of sustainable fashion...",
         coverImage:
-          "https://images.unsplash.com/photo-1558171813-01eda3b889de?w=1200&h=600&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200&h=600&fit=crop&q=80",
         author: "VELOUR Editorial",
         tags: ["fashion", "capsule-wardrobe", "sustainable", "guide"],
         category: "Style Guide",
@@ -1389,7 +1389,7 @@ async function main() {
         content:
           "Quality begins with the raw material. At VELOUR, we partner directly with fabric mills across India, Japan, and Italy to source the finest materials for our collections...",
         coverImage:
-          "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=600&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&h=600&fit=crop&q=80",
         author: "VELOUR Editorial",
         tags: ["behind-the-scenes", "fabric", "quality", "sourcing"],
         category: "Behind the Scenes",

@@ -5,6 +5,11 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
+// NextAuth v5 expects AUTH_SECRET; accept NEXTAUTH_SECRET as a fallback
+if (!process.env.AUTH_SECRET && process.env.NEXTAUTH_SECRET) {
+  process.env.AUTH_SECRET = process.env.NEXTAUTH_SECRET;
+}
+
 // Only include Google provider if credentials are configured
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const providers: any[] = [
