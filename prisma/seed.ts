@@ -14,7 +14,10 @@ const resolver = new dns.Resolver();
 resolver.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
 
 const origLookup = dns.lookup;
-const customLookup: typeof dns.lookup = function (hostname: any, ...args: any[]) {
+const customLookup: typeof dns.lookup = function (
+  hostname: any,
+  ...args: any[]
+) {
   let options: any = {};
   let callback: any;
   if (typeof args[0] === "function") {
@@ -29,7 +32,10 @@ const customLookup: typeof dns.lookup = function (hostname: any, ...args: any[])
         return origLookup(hostname, options, callback);
       }
       if (options.all) {
-        callback(null, addresses.map((a: string) => ({ address: a, family: 4 })));
+        callback(
+          null,
+          addresses.map((a: string) => ({ address: a, family: 4 })),
+        );
       } else {
         callback(null, addresses[0], 4);
       }
@@ -42,6 +48,32 @@ const customLookup: typeof dns.lookup = function (hostname: any, ...args: any[])
 dns.lookup = customLookup;
 
 neonConfig.webSocketConstructor = ws;
+// Use HTTP fetch for pool queries instead of WebSocket
+neonConfig.poolQueryViaFetch = true;
+neonConfig.useSecureWebSocket = true;
+
+// Custom fetch with longer timeout and retry for flaky network
+const originalFetch = globalThis.fetch;
+neonConfig.fetchFunction = async (input: any, init?: any) => {
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000); // 30s timeout
+      const response = await originalFetch(input, {
+        ...init,
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      return response;
+    } catch (err: any) {
+      console.log(`  ⟳ Fetch attempt ${attempt}/${maxRetries} failed: ${err.cause?.code || err.message}`);
+      if (attempt === maxRetries) throw err;
+      await new Promise((r) => setTimeout(r, 2000 * attempt)); // backoff
+    }
+  }
+  throw new Error("unreachable");
+};
 
 const connectionString = process.env.DATABASE_URL!;
 const adapter = new PrismaNeon({ connectionString });
