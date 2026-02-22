@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface UIStore {
   searchQuery: string;
@@ -39,7 +39,17 @@ export const useUIStore = create<UIStore>()(
     }),
     {
       name: 'velour-ui',
+      storage: createJSONStorage(() =>
+        typeof window !== 'undefined'
+          ? localStorage
+          : {
+              getItem: () => null,
+              setItem: () => {},
+              removeItem: () => {},
+            }
+      ),
       partialize: (state) => ({ recentlyViewed: state.recentlyViewed }),
+      skipHydration: true,
     }
   )
 );

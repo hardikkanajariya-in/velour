@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { siteConfig } from '@/lib/site';
 import { formatPrice } from '@/lib/utils';
 import type { ProductListItem } from '@/types/product';
+import { NewsletterForm } from '@/components/store/newsletter-form';
 
 async function getHomeData() {
   const [banners, categories, featured, newArrivals, bestSellers] = await Promise.all([
@@ -282,16 +283,7 @@ export default async function HomePage() {
           <p className="text-white/60 max-w-md mx-auto mb-8">
             Get exclusive access to new collections, early sales, and style tips — plus 10% off your first order.
           </p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e: React.FormEvent) => e.preventDefault()}>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-button text-sm placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-brand-accent/50"
-            />
-            <Button className="bg-brand-accent text-brand-primary hover:bg-brand-accent/90 whitespace-nowrap">
-              Subscribe
-            </Button>
-          </form>
+          <NewsletterForm />
         </div>
       </section>
     </div>

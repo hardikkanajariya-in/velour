@@ -15,7 +15,6 @@ import { useUIStore } from '@/store/ui.store';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
 import { MobileNav } from './mobile-nav';
 import { SearchOverlay } from './search-overlay';
-import { CartDrawer } from '@/components/store/cart/cart-drawer';
 
 export function Header() {
   const { data: session } = useSession();
@@ -217,7 +216,6 @@ export function Header() {
 
       <MobileNav isOpen={mobileNavOpen} onClose={closeMobileNav} />
       <SearchOverlay />
-      <CartDrawer />
     </>
   );
 }

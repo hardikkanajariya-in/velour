@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { CartItemData } from '@/types/cart';
 
 interface CartStore {
@@ -76,7 +76,17 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'velour-cart',
+      storage: createJSONStorage(() =>
+        typeof window !== 'undefined'
+          ? localStorage
+          : {
+              getItem: () => null,
+              setItem: () => {},
+              removeItem: () => {},
+            }
+      ),
       partialize: (state) => ({ items: state.items }),
+      skipHydration: true,
     }
   )
 );

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FooterNewsletterForm } from './footer-newsletter-form';
 import {
   Instagram, Facebook, Youtube, Twitter,
   ShieldCheck, Truck, RotateCcw, Star, Globe,
@@ -153,19 +154,7 @@ export function Footer() {
               <h3 className="text-lg font-semibold mb-1">Get 10% off your first order</h3>
               <p className="text-sm text-white/60">No spam. Unsubscribe anytime.</p>
             </div>
-            <form className="flex gap-2 w-full md:w-auto" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-2.5 bg-white/10 border border-white/20 rounded-button text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-brand-accent/50 w-full md:w-64"
-              />
-              <button
-                type="submit"
-                className="px-6 py-2.5 bg-brand-accent text-brand-primary font-medium rounded-button text-sm hover:bg-brand-accent/90 transition-colors whitespace-nowrap"
-              >
-                Subscribe
-              </button>
-            </form>
+            <FooterNewsletterForm />
           </div>
         </div>
       </div>

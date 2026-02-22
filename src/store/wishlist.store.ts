@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface WishlistStore {
   items: string[];
@@ -45,7 +45,17 @@ export const useWishlistStore = create<WishlistStore>()(
     }),
     {
       name: 'velour-wishlist',
+      storage: createJSONStorage(() =>
+        typeof window !== 'undefined'
+          ? localStorage
+          : {
+              getItem: () => null,
+              setItem: () => {},
+              removeItem: () => {},
+            }
+      ),
       partialize: (state) => ({ items: state.items }),
+      skipHydration: true,
     }
   )
 );

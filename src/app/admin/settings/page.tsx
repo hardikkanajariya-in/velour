@@ -1,6 +1,6 @@
 'use client';
 
-import { siteConfig } from '@/../site.config';
+import { siteConfig } from '@/lib/site';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
 
