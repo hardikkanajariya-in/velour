@@ -1,10 +1,31 @@
 import { PrismaClient } from '@/generated/prisma';
-import { Pool } from '@neondatabase/serverless';
+import { Pool, neonConfig } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
+
+// Enable fetch-based connection cache for better reliability in Node.js / Turbopack
+neonConfig.fetchConnectionCache = true;
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
+
+/**
+ * Convert an opaque ErrorEvent (from WebSocket failures) into a proper Error.
+ */
+function toReadableError(error: unknown): Error {
+  if (error instanceof Error) return error;
+  if (error && typeof error === 'object') {
+    const msg =
+      ('message' in error && error.message) ||
+      ('error' in error && error.error) ||
+      ('reason' in error && error.reason) ||
+      '';
+    return new Error(
+      `[Prisma/Neon] Database connection failed: ${msg || 'WebSocket ErrorEvent'}. Verify DATABASE_URL and network connectivity.`
+    );
+  }
+  return new Error(`[Prisma/Neon] Unknown connection error: ${String(error)}`);
+}
 
 function createPrismaClient() {
   const connectionString = process.env.DATABASE_URL;
@@ -13,11 +34,15 @@ function createPrismaClient() {
   }
 
   const pool = new Pool({ connectionString });
+
+  // Prevent unhandled 'error' events on the pool from crashing the process
+  pool.on('error', (err) => {
+    console.error('[Prisma/Neon] Pool error:', toReadableError(err).message);
+  });
+
   const adapter = new PrismaNeon(pool);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const client = new PrismaClient({ adapter } as any);
-
-  return client;
+  return new PrismaClient({ adapter } as any);
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
