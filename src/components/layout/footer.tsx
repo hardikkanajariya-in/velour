@@ -36,9 +36,9 @@ const companyLinks = [
 ];
 
 const helpLinks = [
-  { label: "FAQ", href: "/contact" },
-  { label: "Shipping", href: "/shipping-policy" },
-  { label: "Returns", href: "/return-policy" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Shipping", href: "/shipping-returns" },
+  { label: "Returns", href: "/shipping-returns" },
   { label: "Size Guide", href: "/size-guide" },
   { label: "Contact Us", href: "/contact" },
   { label: "Track Order", href: "/account/orders" },
@@ -240,7 +240,7 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-4">
               <Link
-                href="/privacy-policy"
+                href="/privacy"
                 className="hover:text-white transition-colors"
               >
                 Privacy Policy
