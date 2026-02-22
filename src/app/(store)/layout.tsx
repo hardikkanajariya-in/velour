@@ -1,0 +1,20 @@
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { CartDrawer } from '@/components/store/cart/cart-drawer';
+import { BackToTop } from '@/components/ui/back-to-top';
+
+export default function StoreLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <Header />
+      <main className="min-h-screen">{children}</main>
+      <Footer />
+      <CartDrawer />
+      <BackToTop />
+    </>
+  );
+}
