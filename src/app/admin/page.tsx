@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { StatCard } from '@/components/admin/stat-card';
-import { DataTable } from '@/components/admin/data-table';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { formatPrice, formatDate } from '@/lib/utils';
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/lib/constants';
-import { DollarSign, ShoppingCart, Users, Package } from 'lucide-react';
-import Link from 'next/link';
+import { useEffect, useState } from "react";
+import { StatCard } from "@/components/admin/stat-card";
+import { DataTable } from "@/components/admin/data-table";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { formatPrice, formatDate } from "@/lib/utils";
+import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from "@/lib/constants";
+import { DollarSign, ShoppingCart, Users, Package } from "lucide-react";
+import Link from "next/link";
 
 interface Analytics {
   totalRevenue: number;
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchAnalytics() {
       try {
-        const res = await fetch('/api/admin/analytics');
+        const res = await fetch("/api/admin/analytics");
         if (res.ok) {
           setData(await res.json());
         }
@@ -64,15 +64,15 @@ export default function AdminDashboard() {
         <StatCard
           title="Total Revenue"
           value={formatPrice(data.totalRevenue)}
-          change={`${data.revenueChange >= 0 ? '+' : ''}${data.revenueChange.toFixed(1)}% from last month`}
-          changeType={data.revenueChange >= 0 ? 'positive' : 'negative'}
+          change={`${data.revenueChange >= 0 ? "+" : ""}${data.revenueChange.toFixed(1)}% from last month`}
+          changeType={data.revenueChange >= 0 ? "positive" : "negative"}
           icon={<DollarSign className="w-5 h-5" />}
         />
         <StatCard
           title="Total Orders"
           value={data.totalOrders}
-          change={`${data.orderChange >= 0 ? '+' : ''}${data.orderChange.toFixed(1)}% from last month`}
-          changeType={data.orderChange >= 0 ? 'positive' : 'negative'}
+          change={`${data.orderChange >= 0 ? "+" : ""}${data.orderChange.toFixed(1)}% from last month`}
+          changeType={data.orderChange >= 0 ? "positive" : "negative"}
           icon={<ShoppingCart className="w-5 h-5" />}
         />
         <StatCard
@@ -90,13 +90,21 @@ export default function AdminDashboard() {
       {/* Monthly Revenue Chart (simple bar representation) */}
       {data.monthlyRevenue.length > 0 && (
         <div className="p-4 sm:p-6 bg-background border border-border rounded-card">
-          <h2 className="text-base sm:text-lg font-heading font-bold mb-3 sm:mb-4">Monthly Revenue</h2>
+          <h2 className="text-base sm:text-lg font-heading font-bold mb-3 sm:mb-4">
+            Monthly Revenue
+          </h2>
           <div className="flex items-end gap-1 sm:gap-2 h-36 sm:h-48 overflow-x-auto scrollbar-none">
             {data.monthlyRevenue.map((item) => {
-              const maxRevenue = Math.max(...data.monthlyRevenue.map((r) => r.revenue));
-              const height = maxRevenue > 0 ? (item.revenue / maxRevenue) * 100 : 0;
+              const maxRevenue = Math.max(
+                ...data.monthlyRevenue.map((r) => r.revenue),
+              );
+              const height =
+                maxRevenue > 0 ? (item.revenue / maxRevenue) * 100 : 0;
               return (
-                <div key={item.month} className="flex-1 flex flex-col items-center gap-1">
+                <div
+                  key={item.month}
+                  className="flex-1 flex flex-col items-center gap-1"
+                >
                   <span className="text-[10px] sm:text-xs text-muted-foreground">
                     {formatPrice(item.revenue)}
                   </span>
@@ -106,10 +114,12 @@ export default function AdminDashboard() {
                   >
                     <div
                       className="w-full bg-accent rounded-t transition-all"
-                      style={{ height: '100%' }}
+                      style={{ height: "100%" }}
                     />
                   </div>
-                  <span className="text-xs text-muted-foreground">{item.month}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {item.month}
+                  </span>
                 </div>
               );
             })}
@@ -120,41 +130,58 @@ export default function AdminDashboard() {
       {/* Recent Orders */}
       <div className="p-4 sm:p-6 bg-background border border-border rounded-card">
         <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <h2 className="text-base sm:text-lg font-heading font-bold">Recent Orders</h2>
-          <Link href="/admin/orders" className="text-sm text-accent hover:underline">
+          <h2 className="text-base sm:text-lg font-heading font-bold">
+            Recent Orders
+          </h2>
+          <Link
+            href="/admin/orders"
+            className="text-sm text-accent hover:underline"
+          >
             View All
           </Link>
         </div>
 
         <DataTable
           columns={[
-            { key: 'orderNumber', label: 'Order #', render: (item) => `#${item.orderNumber}` },
             {
-              key: 'user',
-              label: 'Customer',
+              key: "orderNumber",
+              label: "Order #",
+              render: (item) => `#${item.orderNumber}`,
+            },
+            {
+              key: "user",
+              label: "Customer",
               render: (item) => {
                 const user = item.user as { name?: string } | null;
-                return user?.name ?? (item.guestName as string) ?? 'Guest';
+                return user?.name ?? (item.guestName as string) ?? "Guest";
               },
             },
             {
-              key: 'total',
-              label: 'Total',
+              key: "total",
+              label: "Total",
               render: (item) => formatPrice(item.total as number),
             },
             {
-              key: 'status',
-              label: 'Status',
+              key: "status",
+              label: "Status",
               render: (item) => {
                 const status = item.status as string;
-                const color = ORDER_STATUS_COLORS[status] ?? 'default';
+                const color = ORDER_STATUS_COLORS[status] ?? "default";
                 const label = ORDER_STATUS_LABELS[status] ?? status;
-                return <Badge variant={color as 'default' | 'success' | 'warning' | 'error'}>{label}</Badge>;
+                return (
+                  <Badge
+                    variant={
+                      color as "default" | "success" | "warning" | "error"
+                    }
+                  >
+                    {label}
+                  </Badge>
+                );
               },
             },
             {
-              key: 'createdAt',
-              label: 'Date',
+              key: "createdAt",
+              label: "Date",
               render: (item) => formatDate(item.createdAt as string),
             },
           ]}

@@ -66,64 +66,120 @@
 
 /* Keyframe definitions (keyframes don't participate in cascade layers) */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideOutRight {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes slideInLeft {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideOutLeft {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes scaleBounce {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes confetti-fall {
-  0% { opacity: 1; transform: translateY(-100vh) rotate(0deg); }
-  100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+  0% {
+    opacity: 1;
+    transform: translateY(-100vh) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(720deg);
+  }
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* Scrollbar — kept in @layer base so utilities can still override */
 @layer base {
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--color-neutral-100); }
-  ::-webkit-scrollbar-thumb { background: var(--color-neutral-300); border-radius: 9999px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-400); }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-neutral-100);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-300);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-400);
+  }
 }
 
 /* Custom component/utility classes — in @layer components so Tailwind utilities win */
 @layer components {
   /* Skeleton shimmer */
   .animate-shimmer {
-    background: linear-gradient(90deg, var(--color-neutral-200) 25%, var(--color-neutral-100) 50%, var(--color-neutral-200) 75%);
+    background: linear-gradient(
+      90deg,
+      var(--color-neutral-200) 25%,
+      var(--color-neutral-100) 50%,
+      var(--color-neutral-200) 75%
+    );
     background-size: 200% 100%;
     animation: shimmer 1.5s ease-in-out infinite;
   }
@@ -136,7 +192,9 @@
   .fade-up-target {
     opacity: 0;
     transform: translateY(24px);
-    transition: opacity var(--duration-slow) var(--easing-default), transform var(--duration-slow) var(--easing-default);
+    transition:
+      opacity var(--duration-slow) var(--easing-default),
+      transform var(--duration-slow) var(--easing-default);
   }
 
   .fade-up-target.visible {
@@ -166,7 +224,9 @@
   }
 
   /* Focus ring */
-  .focus-ring { outline: none; }
+  .focus-ring {
+    outline: none;
+  }
   .focus-ring:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
@@ -178,16 +238,32 @@
     grid-template-rows: 0fr;
     transition: grid-template-rows var(--duration-normal) var(--easing-default);
   }
-  .accordion-content.open { grid-template-rows: 1fr; }
-  .accordion-content > div { overflow: hidden; }
+  .accordion-content.open {
+    grid-template-rows: 1fr;
+  }
+  .accordion-content > div {
+    overflow: hidden;
+  }
 
   /* Prose for blog */
-  .prose h1, .prose h2, .prose h3, .prose h4 {
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
     font-family: var(--font-heading), serif;
     font-weight: 700;
     color: var(--color-primary);
   }
-  .prose p { color: var(--color-neutral-600); line-height: 1.8; }
-  .prose a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
-  .prose img { border-radius: var(--radius-lg); }
+  .prose p {
+    color: var(--color-neutral-600);
+    line-height: 1.8;
+  }
+  .prose a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose img {
+    border-radius: var(--radius-lg);
+  }
 }

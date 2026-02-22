@@ -1,23 +1,29 @@
-'use client';
+"use client";
 
-import { Suspense, useState } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/lib/validations/auth';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
-import toast from 'react-hot-toast';
-import type { z } from 'zod';
+import { Suspense, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/lib/validations/auth";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import toast from "react-hot-toast";
+import type { z } from "zod";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center py-20"><Spinner /></div>}>
+    <Suspense
+      fallback={
+        <div className="flex justify-center py-20">
+          <Spinner />
+        </div>
+      }
+    >
       <LoginForm />
     </Suspense>
   );
@@ -26,7 +32,7 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') ?? '/';
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
@@ -38,28 +44,28 @@ function LoginForm() {
   } = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
 
   function fillDemoCredentials(email: string, password: string) {
-    setValue('email', email, { shouldValidate: true });
-    setValue('password', password, { shouldValidate: true });
+    setValue("email", email, { shouldValidate: true });
+    setValue("password", password, { shouldValidate: true });
   }
 
   async function onSubmit(data: LoginFormData) {
     setLoading(true);
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
       });
 
       if (result?.error) {
-        toast.error('Invalid email or password');
+        toast.error("Invalid email or password");
       } else {
-        toast.success('Welcome back!');
+        toast.success("Welcome back!");
         router.push(callbackUrl);
         router.refresh();
       }
     } catch {
-      toast.error('Something went wrong');
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -67,12 +73,14 @@ function LoginForm() {
 
   async function handleGoogleLogin() {
     setGoogleLoading(true);
-    await signIn('google', { callbackUrl });
+    await signIn("google", { callbackUrl });
   }
 
   return (
     <div>
-      <h1 className="text-2xl font-heading font-bold text-center mb-6">Sign In</h1>
+      <h1 className="text-2xl font-heading font-bold text-center mb-6">
+        Sign In
+      </h1>
 
       {/* Google Login */}
       <Button
@@ -111,7 +119,9 @@ function LoginForm() {
           <div className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs">
-          <span className="bg-background px-2 text-muted-foreground">or sign in with email</span>
+          <span className="bg-background px-2 text-muted-foreground">
+            or sign in with email
+          </span>
         </div>
       </div>
 
@@ -119,14 +129,14 @@ function LoginForm() {
         <Input
           label="Email"
           type="email"
-          {...register('email')}
+          {...register("email")}
           error={errors.email?.message}
           placeholder="you@example.com"
         />
         <Input
           label="Password"
           type="password"
-          {...register('password')}
+          {...register("password")}
           error={errors.password?.message}
           placeholder="••••••••"
         />
@@ -136,19 +146,25 @@ function LoginForm() {
             <input type="checkbox" className="rounded border-border" />
             Remember me
           </label>
-          <Link href="/auth/forgot-password" className="text-sm text-accent hover:underline">
+          <Link
+            href="/auth/forgot-password"
+            className="text-sm text-accent hover:underline"
+          >
             Forgot password?
           </Link>
         </div>
 
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? <Spinner size="sm" /> : 'Sign In'}
+          {loading ? <Spinner size="sm" /> : "Sign In"}
         </Button>
       </form>
 
       <p className="text-sm text-center text-muted-foreground mt-6">
-        Don&apos;t have an account?{' '}
-        <Link href="/auth/register" className="text-accent hover:underline font-medium">
+        Don&apos;t have an account?{" "}
+        <Link
+          href="/auth/register"
+          className="text-accent hover:underline font-medium"
+        >
           Create one
         </Link>
       </p>
@@ -161,25 +177,35 @@ function LoginForm() {
         <div className="space-y-2">
           <button
             type="button"
-            onClick={() => fillDemoCredentials('admin@velour.in', 'Admin@123')}
+            onClick={() => fillDemoCredentials("admin@velour.in", "Admin@123")}
             className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2.5 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5 min-h-[44px]"
           >
             <div className="min-w-0">
               <span className="font-medium text-foreground">Admin</span>
-              <span className="ml-1.5 sm:ml-2 text-muted-foreground text-xs sm:text-sm truncate">admin@velour.in</span>
+              <span className="ml-1.5 sm:ml-2 text-muted-foreground text-xs sm:text-sm truncate">
+                admin@velour.in
+              </span>
             </div>
-            <span className="text-[10px] sm:text-xs text-muted-foreground shrink-0 ml-2">Click to fill</span>
+            <span className="text-[10px] sm:text-xs text-muted-foreground shrink-0 ml-2">
+              Click to fill
+            </span>
           </button>
           <button
             type="button"
-            onClick={() => fillDemoCredentials('customer@test.com', 'Customer@123')}
+            onClick={() =>
+              fillDemoCredentials("customer@test.com", "Customer@123")
+            }
             className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2.5 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5 min-h-[44px]"
           >
             <div className="min-w-0">
               <span className="font-medium text-foreground">Customer</span>
-              <span className="ml-1.5 sm:ml-2 text-muted-foreground text-xs sm:text-sm truncate">customer@test.com</span>
+              <span className="ml-1.5 sm:ml-2 text-muted-foreground text-xs sm:text-sm truncate">
+                customer@test.com
+              </span>
             </div>
-            <span className="text-[10px] sm:text-xs text-muted-foreground shrink-0 ml-2">Click to fill</span>
+            <span className="text-[10px] sm:text-xs text-muted-foreground shrink-0 ml-2">
+              Click to fill
+            </span>
           </button>
         </div>
       </div>

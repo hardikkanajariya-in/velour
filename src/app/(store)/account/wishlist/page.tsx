@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useWishlistStore } from '@/store/wishlist.store';
-import { ProductCard } from '@/components/store/product/product-card';
-import { EmptyState } from '@/components/ui/empty-state';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Heart } from 'lucide-react';
-import type { ProductListItem } from '@/types/product';
+import { useEffect, useState } from "react";
+import { useWishlistStore } from "@/store/wishlist.store";
+import { ProductCard } from "@/components/store/product/product-card";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Heart } from "lucide-react";
+import type { ProductListItem } from "@/types/product";
 
 export default function WishlistPage() {
   const { items: wishlistIds } = useWishlistStore();

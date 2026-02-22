@@ -1,7 +1,7 @@
-import { Star, ThumbsUp, User } from 'lucide-react';
-import { cn, formatDate } from '@/lib/utils';
-import { Rating } from '@/components/ui/rating';
-import type { Review } from '@/types/review';
+import { Star, ThumbsUp, User } from "lucide-react";
+import { cn, formatDate } from "@/lib/utils";
+import { Rating } from "@/components/ui/rating";
+import type { Review } from "@/types/review";
 
 interface ReviewListProps {
   reviews: Review[];
@@ -9,13 +9,18 @@ interface ReviewListProps {
   totalReviews?: number;
 }
 
-export function ReviewList({ reviews, averageRating = 0, totalReviews = 0 }: ReviewListProps) {
+export function ReviewList({
+  reviews,
+  averageRating = 0,
+  totalReviews = 0,
+}: ReviewListProps) {
   const distribution = [5, 4, 3, 2, 1].map((star) => ({
     star,
     count: reviews.filter((r) => r.rating === star).length,
-    percentage: totalReviews > 0
-      ? (reviews.filter((r) => r.rating === star).length / totalReviews) * 100
-      : 0,
+    percentage:
+      totalReviews > 0
+        ? (reviews.filter((r) => r.rating === star).length / totalReviews) * 100
+        : 0,
   }));
 
   return (
@@ -23,11 +28,15 @@ export function ReviewList({ reviews, averageRating = 0, totalReviews = 0 }: Rev
       {/* Summary */}
       <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
         <div className="text-center sm:text-left w-full sm:w-auto">
-          <div className="text-3xl sm:text-4xl font-bold">{averageRating.toFixed(1)}</div>
+          <div className="text-3xl sm:text-4xl font-bold">
+            {averageRating.toFixed(1)}
+          </div>
           <div className="mt-1">
             <Rating value={averageRating} />
           </div>
-          <p className="text-sm text-muted-foreground mt-1">{totalReviews} review{totalReviews !== 1 ? 's' : ''}</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            {totalReviews} review{totalReviews !== 1 ? "s" : ""}
+          </p>
         </div>
 
         <div className="flex-1 space-y-1.5 w-full min-w-0">
@@ -41,7 +50,9 @@ export function ReviewList({ reviews, averageRating = 0, totalReviews = 0 }: Rev
                   style={{ width: `${d.percentage}%` }}
                 />
               </div>
-              <span className="text-xs text-muted-foreground w-8">{d.count}</span>
+              <span className="text-xs text-muted-foreground w-8">
+                {d.count}
+              </span>
             </div>
           ))}
         </div>
@@ -57,8 +68,12 @@ export function ReviewList({ reviews, averageRating = 0, totalReviews = 0 }: Rev
                   <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium">{review.user?.name ?? 'Anonymous'}</p>
-                  <p className="text-xs text-muted-foreground">{formatDate(review.createdAt)}</p>
+                  <p className="text-sm font-medium">
+                    {review.user?.name ?? "Anonymous"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatDate(review.createdAt)}
+                  </p>
                 </div>
               </div>
               <Rating value={review.rating} size="sm" />

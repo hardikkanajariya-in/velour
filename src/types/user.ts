@@ -4,7 +4,7 @@ export interface User {
   email: string;
   phone: string | null;
   avatar: string | null;
-  role: 'CUSTOMER' | 'ADMIN';
+  role: "CUSTOMER" | "ADMIN";
   loyaltyPoints: number;
   dateOfBirth: string | null;
   gender: string | null;

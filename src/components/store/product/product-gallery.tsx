@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import type { ProductImage } from '@/types/product';
+import { useState, useCallback } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { ProductImage } from "@/types/product";
 
 interface ProductGalleryProps {
   images: ProductImage[];
@@ -52,8 +52,10 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
               key={img.id}
               onClick={() => setActiveIndex(i)}
               className={cn(
-                'relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 shrink-0 rounded-card overflow-hidden border-2 transition-colors',
-                i === activeIndex ? 'border-brand-accent' : 'border-transparent hover:border-border'
+                "relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 shrink-0 rounded-card overflow-hidden border-2 transition-colors",
+                i === activeIndex
+                  ? "border-brand-accent"
+                  : "border-transparent hover:border-border",
               )}
             >
               <Image
@@ -72,20 +74,20 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
       <div className="flex-1 relative">
         <div
           className={cn(
-            'relative aspect-[3/4] md:aspect-square overflow-hidden rounded-card bg-muted cursor-crosshair',
-            isZoomed && 'cursor-zoom-out'
+            "relative aspect-[3/4] md:aspect-square overflow-hidden rounded-card bg-muted cursor-crosshair",
+            isZoomed && "cursor-zoom-out",
           )}
           onClick={() => setIsZoomed(!isZoomed)}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setIsZoomed(false)}
         >
           <Image
-            src={activeImage?.url ?? '/placeholder-product.png'}
+            src={activeImage?.url ?? "/placeholder-product.png"}
             alt={activeImage?.altText ?? name}
             fill
             className={cn(
-              'object-cover transition-transform duration-300',
-              isZoomed && 'scale-[2.5]'
+              "object-cover transition-transform duration-300",
+              isZoomed && "scale-[2.5]",
             )}
             style={
               isZoomed
@@ -138,8 +140,10 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
                 key={i}
                 onClick={() => setActiveIndex(i)}
                 className={cn(
-                  'h-1.5 rounded-full transition-all',
-                  i === activeIndex ? 'w-6 bg-brand-accent' : 'w-1.5 bg-white/60'
+                  "h-1.5 rounded-full transition-all",
+                  i === activeIndex
+                    ? "w-6 bg-brand-accent"
+                    : "w-1.5 bg-white/60",
                 )}
                 aria-label={`Go to image ${i + 1}`}
               />

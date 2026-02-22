@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { formatPrice, formatDate } from '@/lib/utils';
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/lib/constants';
-import { EmptyState } from '@/components/ui/empty-state';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { ShoppingBag } from 'lucide-react';
-import type { Order } from '@/types/order';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { formatPrice, formatDate } from "@/lib/utils";
+import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from "@/lib/constants";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ShoppingBag } from "lucide-react";
+import type { Order } from "@/types/order";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -17,7 +17,7 @@ export default function OrdersPage() {
   useEffect(() => {
     async function fetchOrders() {
       try {
-        const res = await fetch('/api/orders');
+        const res = await fetch("/api/orders");
         if (res.ok) {
           const data = await res.json();
           setOrders(data.orders ?? []);
@@ -60,7 +60,7 @@ export default function OrdersPage() {
 
       <div className="space-y-4">
         {orders.map((order) => {
-          const statusColor = ORDER_STATUS_COLORS[order.status] ?? 'default';
+          const statusColor = ORDER_STATUS_COLORS[order.status] ?? "default";
           const statusLabel = ORDER_STATUS_LABELS[order.status] ?? order.status;
 
           return (
@@ -72,16 +72,22 @@ export default function OrdersPage() {
               <div className="flex items-center justify-between mb-2 sm:mb-3">
                 <div>
                   <p className="font-medium">Order #{order.orderNumber}</p>
-                  <p className="text-xs text-muted-foreground">{formatDate(order.createdAt)}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatDate(order.createdAt)}
+                  </p>
                 </div>
-                <Badge variant={statusColor as 'default' | 'success' | 'warning' | 'error'}>
+                <Badge
+                  variant={
+                    statusColor as "default" | "success" | "warning" | "error"
+                  }
+                >
                   {statusLabel}
                 </Badge>
               </div>
 
               <div className="flex items-center justify-between text-sm">
                 <p className="text-muted-foreground">
-                  {order.items.length} item{order.items.length !== 1 ? 's' : ''}
+                  {order.items.length} item{order.items.length !== 1 ? "s" : ""}
                 </p>
                 <p className="font-bold">{formatPrice(order.total)}</p>
               </div>

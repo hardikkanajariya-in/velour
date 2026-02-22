@@ -1,1 +1,1 @@
-export { useWishlistStore } from '@/store/wishlist.store';
+export { useWishlistStore } from "@/store/wishlist.store";

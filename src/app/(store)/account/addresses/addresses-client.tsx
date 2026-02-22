@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { AddressForm } from '@/components/store/checkout/address-form';
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
-import { Trash2, Plus, Star } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import { AddressForm } from "@/components/store/checkout/address-form";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { Trash2, Plus, Star } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface Address {
   id: string;
@@ -31,7 +31,7 @@ export function AddressesClient() {
 
   async function fetchAddresses() {
     try {
-      const res = await fetch('/api/user/addresses');
+      const res = await fetch("/api/user/addresses");
       if (res.ok) {
         setAddresses(await res.json());
       }
@@ -45,49 +45,51 @@ export function AddressesClient() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function handleSubmit(data: any) {
     try {
-      const res = await fetch('/api/user/addresses', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/user/addresses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (res.ok) {
-        toast.success('Address saved');
+        toast.success("Address saved");
         setShowForm(false);
         fetchAddresses();
       }
     } catch {
-      toast.error('Failed to save address');
+      toast.error("Failed to save address");
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this address?')) return;
+    if (!confirm("Delete this address?")) return;
     try {
-      const res = await fetch(`/api/user/addresses?id=${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/user/addresses?id=${id}`, {
+        method: "DELETE",
+      });
       if (res.ok) {
         setAddresses((prev) => prev.filter((a) => a.id !== id));
-        toast.success('Address deleted');
+        toast.success("Address deleted");
       }
     } catch {
-      toast.error('Failed to delete');
+      toast.error("Failed to delete");
     }
   }
 
   async function handleSetDefault(id: string) {
     try {
       const res = await fetch(`/api/user/addresses`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, isDefault: true }),
       });
       if (res.ok) {
         setAddresses((prev) =>
-          prev.map((a) => ({ ...a, isDefault: a.id === id }))
+          prev.map((a) => ({ ...a, isDefault: a.id === id })),
         );
-        toast.success('Default address updated');
+        toast.success("Default address updated");
       }
     } catch {
-      toast.error('Failed to update');
+      toast.error("Failed to update");
     }
   }
 
@@ -102,10 +104,16 @@ export function AddressesClient() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
-        <h2 className="text-base sm:text-lg font-heading font-bold">My Addresses</h2>
-        <Button variant="secondary" onClick={() => setShowForm(!showForm)} className="gap-2">
+        <h2 className="text-base sm:text-lg font-heading font-bold">
+          My Addresses
+        </h2>
+        <Button
+          variant="secondary"
+          onClick={() => setShowForm(!showForm)}
+          className="gap-2"
+        >
           <Plus className="w-4 h-4" />
-          {showForm ? 'Cancel' : 'Add Address'}
+          {showForm ? "Cancel" : "Add Address"}
         </Button>
       </div>
 
@@ -126,7 +134,7 @@ export function AddressesClient() {
             <div
               key={addr.id}
               className={`p-4 border rounded-card relative ${
-                addr.isDefault ? 'border-accent bg-accent/5' : 'border-border'
+                addr.isDefault ? "border-accent bg-accent/5" : "border-border"
               }`}
             >
               {addr.isDefault && (
@@ -136,7 +144,8 @@ export function AddressesClient() {
               )}
               <p className="font-medium text-sm">{addr.fullName}</p>
               <p className="text-sm text-muted-foreground mt-1">
-                {addr.line1}{addr.line2 ? `, ${addr.line2}` : ''}
+                {addr.line1}
+                {addr.line2 ? `, ${addr.line2}` : ""}
               </p>
               <p className="text-sm text-muted-foreground">
                 {addr.city}, {addr.state} - {addr.pincode}

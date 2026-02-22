@@ -1,5 +1,5 @@
-import Razorpay from 'razorpay';
-import crypto from 'crypto';
+import Razorpay from "razorpay";
+import crypto from "crypto";
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,
@@ -8,11 +8,11 @@ const razorpay = new Razorpay({
 
 export async function createRazorpayOrder(
   amount: number,
-  receipt: string
+  receipt: string,
 ): Promise<{ id: string; amount: number; currency: string }> {
   const order = await razorpay.orders.create({
     amount: Math.round(amount * 100), // Razorpay expects paise
-    currency: 'INR',
+    currency: "INR",
     receipt,
   });
 
@@ -26,13 +26,13 @@ export async function createRazorpayOrder(
 export function verifyRazorpaySignature(
   orderId: string,
   paymentId: string,
-  signature: string
+  signature: string,
 ): boolean {
   const body = `${orderId}|${paymentId}`;
   const expectedSignature = crypto
-    .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
     .update(body)
-    .digest('hex');
+    .digest("hex");
 
   return expectedSignature === signature;
 }

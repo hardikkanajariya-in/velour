@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { registerSchema } from '@/lib/validations/auth';
-import bcrypt from 'bcryptjs';
-import { sendWelcomeEmail } from '@/lib/resend';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { registerSchema } from "@/lib/validations/auth";
+import bcrypt from "bcryptjs";
+import { sendWelcomeEmail } from "@/lib/resend";
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,8 +11,8 @@ export async function POST(request: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { error: parsed.error.issues[0]?.message ?? 'Invalid input' },
-        { status: 400 }
+        { error: parsed.error.issues[0]?.message ?? "Invalid input" },
+        { status: 400 },
       );
     }
 
@@ -21,8 +21,8 @@ export async function POST(request: NextRequest) {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
       return NextResponse.json(
-        { error: 'An account with this email already exists' },
-        { status: 409 }
+        { error: "An account with this email already exists" },
+        { status: 409 },
       );
     }
 
@@ -36,14 +36,14 @@ export async function POST(request: NextRequest) {
     sendWelcomeEmail(email, name).catch(() => {});
 
     return NextResponse.json(
-      { message: 'Account created', userId: user.id },
-      { status: 201 }
+      { message: "Account created", userId: user.id },
+      { status: 201 },
     );
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error("Registration error:", error);
     return NextResponse.json(
-      { error: 'Failed to create account' },
-      { status: 500 }
+      { error: "Failed to create account" },
+      { status: 500 },
     );
   }
 }

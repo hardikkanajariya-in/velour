@@ -1,17 +1,19 @@
-import { prisma } from '@/lib/prisma';
-import { ProductGrid } from '@/components/store/product/product-grid';
-import { Breadcrumb } from '@/components/layout/breadcrumb';
-import { EmptyState } from '@/components/ui/empty-state';
-import { Search } from 'lucide-react';
-import type { Metadata } from 'next';
+import { prisma } from "@/lib/prisma";
+import { ProductGrid } from "@/components/store/product/product-grid";
+import { Breadcrumb } from "@/components/layout/breadcrumb";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Search } from "lucide-react";
+import type { Metadata } from "next";
 
 interface SearchPageProps {
   searchParams: Promise<Record<string, string | undefined>>;
 }
 
-export async function generateMetadata({ searchParams }: SearchPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams,
+}: SearchPageProps): Promise<Metadata> {
   const { q } = await searchParams;
-  return { title: q ? `Search: ${q}` : 'Search' };
+  return { title: q ? `Search: ${q}` : "Search" };
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
@@ -35,15 +37,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     where: {
       isActive: true,
       OR: [
-        { name: { contains: q, mode: 'insensitive' } },
-        { description: { contains: q, mode: 'insensitive' } },
+        { name: { contains: q, mode: "insensitive" } },
+        { description: { contains: q, mode: "insensitive" } },
         { tags: { has: q.toLowerCase() } },
       ],
     },
     take: 40,
-    orderBy: { totalSold: 'desc' },
+    orderBy: { totalSold: "desc" },
     include: {
-      images: { orderBy: { order: 'asc' } },
+      images: { orderBy: { order: "asc" } },
       variants: true,
       category: { select: { id: true, name: true, slug: true } },
       brand: { select: { id: true, name: true, slug: true } },
@@ -57,7 +59,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-2">
         Search Results for &ldquo;{q}&rdquo;
       </h1>
-      <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">{products.length} results found</p>
+      <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
+        {products.length} results found
+      </p>
 
       {products.length === 0 ? (
         <EmptyState

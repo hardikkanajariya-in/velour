@@ -1,28 +1,31 @@
-'use client';
+"use client";
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { SORT_OPTIONS } from '@/lib/constants';
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { SORT_OPTIONS } from "@/lib/constants";
 
 export function ProductSort() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentSort = searchParams.get('sort') ?? '';
+  const currentSort = searchParams.get("sort") ?? "";
 
   function handleSort(value: string) {
     const params = new URLSearchParams(searchParams.toString());
     if (value) {
-      params.set('sort', value);
+      params.set("sort", value);
     } else {
-      params.delete('sort');
+      params.delete("sort");
     }
-    params.delete('page');
+    params.delete("page");
     router.push(`${pathname}?${params.toString()}`);
   }
 
   return (
     <div className="flex items-center gap-2">
-      <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
+      <label
+        htmlFor="sort"
+        className="text-sm text-muted-foreground whitespace-nowrap"
+      >
         Sort by:
       </label>
       <select

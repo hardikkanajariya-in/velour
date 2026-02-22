@@ -1,7 +1,7 @@
 export interface Coupon {
   id: string;
   code: string;
-  type: 'PERCENTAGE' | 'FIXED';
+  type: "PERCENTAGE" | "FIXED";
   value: number;
   minOrderValue: number | null;
   maxDiscount: number | null;

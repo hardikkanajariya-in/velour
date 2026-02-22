@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/lib/auth';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { productId, rating, title, comment } = await request.json();
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     const hasPurchased = await prisma.orderItem.findFirst({
       where: {
         productId,
-        order: { userId: session.user.id, status: 'DELIVERED' },
+        order: { userId: session.user.id, status: "DELIVERED" },
       },
     });
 
@@ -25,7 +25,10 @@ export async function POST(request: NextRequest) {
     });
 
     if (existingReview) {
-      return NextResponse.json({ error: 'You have already reviewed this product' }, { status: 400 });
+      return NextResponse.json(
+        { error: "You have already reviewed this product" },
+        { status: 400 },
+      );
     }
 
     const review = await prisma.review.create({
@@ -46,7 +49,11 @@ export async function POST(request: NextRequest) {
       select: { rating: true },
     });
 
-    const avgRating = reviews.reduce((sum: number, r: { rating: number }) => sum + r.rating, 0) / reviews.length;
+    const avgRating =
+      reviews.reduce(
+        (sum: number, r: { rating: number }) => sum + r.rating,
+        0,
+      ) / reviews.length;
 
     await prisma.product.update({
       where: { id: productId },
@@ -58,7 +65,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ review }, { status: 201 });
   } catch (error) {
-    console.error('Reviews POST error:', error);
-    return NextResponse.json({ error: 'Failed to submit review' }, { status: 500 });
+    console.error("Reviews POST error:", error);
+    return NextResponse.json(
+      { error: "Failed to submit review" },
+      { status: 500 },
+    );
   }
 }

@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import { Breadcrumb } from '@/components/layout/breadcrumb';
-import { AddressForm } from '@/components/store/checkout/address-form';
-import { CheckoutForm } from '@/components/store/checkout/checkout-form';
-import { OrderSummary } from '@/components/store/checkout/order-summary';
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
-import { useCartStore } from '@/store/cart.store';
-import { formatPrice } from '@/lib/utils';
-import { getShippingCost } from '@/lib/site';
-import { GST_RATE } from '@/lib/constants';
-import toast from 'react-hot-toast';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Breadcrumb } from "@/components/layout/breadcrumb";
+import { AddressForm } from "@/components/store/checkout/address-form";
+import { CheckoutForm } from "@/components/store/checkout/checkout-form";
+import { OrderSummary } from "@/components/store/checkout/order-summary";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { useCartStore } from "@/store/cart.store";
+import { formatPrice } from "@/lib/utils";
+import { getShippingCost } from "@/lib/site";
+import { GST_RATE } from "@/lib/constants";
+import toast from "react-hot-toast";
 
 interface SavedAddress {
   id: string;
@@ -34,27 +34,27 @@ export default function CheckoutPage() {
   const { items, subtotal: getSubtotal } = useCartStore();
   const [step, setStep] = useState(1);
   const [addresses, setAddresses] = useState<SavedAddress[]>([]);
-  const [selectedAddressId, setSelectedAddressId] = useState('');
+  const [selectedAddressId, setSelectedAddressId] = useState("");
   const [showNewAddress, setShowNewAddress] = useState(false);
   const [loadingAddresses, setLoadingAddresses] = useState(false);
-  const [couponCode, setCouponCode] = useState('');
+  const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponLoading, setCouponLoading] = useState(false);
 
   const subtotal = getSubtotal();
-  const shipping = getShippingCost(subtotal, 'standard');
+  const shipping = getShippingCost(subtotal, "standard");
   const tax = Math.round((subtotal - couponDiscount) * GST_RATE);
   const total = subtotal - couponDiscount + shipping + tax;
 
   useEffect(() => {
     if (items.length === 0) {
-      router.replace('/cart');
+      router.replace("/cart");
     }
   }, [items, router]);
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/auth/login?callbackUrl=/checkout');
+    if (status === "unauthenticated") {
+      router.push("/auth/login?callbackUrl=/checkout");
     }
   }, [status, router]);
 
@@ -67,7 +67,7 @@ export default function CheckoutPage() {
   async function fetchAddresses() {
     setLoadingAddresses(true);
     try {
-      const res = await fetch('/api/user/addresses');
+      const res = await fetch("/api/user/addresses");
       if (res.ok) {
         const data = await res.json();
         setAddresses(data);
@@ -84,9 +84,9 @@ export default function CheckoutPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function handleNewAddress(data: any) {
     try {
-      const res = await fetch('/api/user/addresses', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/user/addresses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (res.ok) {
@@ -94,10 +94,10 @@ export default function CheckoutPage() {
         setAddresses((prev) => [...prev, addr]);
         setSelectedAddressId(addr.id);
         setShowNewAddress(false);
-        toast.success('Address saved');
+        toast.success("Address saved");
       }
     } catch {
-      toast.error('Failed to save address');
+      toast.error("Failed to save address");
     }
   }
 
@@ -105,9 +105,9 @@ export default function CheckoutPage() {
     if (!couponCode.trim()) return;
     setCouponLoading(true);
     try {
-      const res = await fetch('/api/coupons/validate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/coupons/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code: couponCode, subtotal }),
       });
       const data = await res.json();
@@ -115,16 +115,16 @@ export default function CheckoutPage() {
         setCouponDiscount(data.discount);
         toast.success(`Coupon applied! You save ${formatPrice(data.discount)}`);
       } else {
-        toast.error(data.message ?? 'Invalid coupon');
+        toast.error(data.message ?? "Invalid coupon");
       }
     } catch {
-      toast.error('Failed to validate coupon');
+      toast.error("Failed to validate coupon");
     } finally {
       setCouponLoading(false);
     }
   }
 
-  if (status === 'loading' || items.length === 0) {
+  if (status === "loading" || items.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Spinner size="lg" />
@@ -134,26 +134,32 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
-      <Breadcrumb items={[{ label: 'Cart', href: '/cart' }, { label: 'Checkout' }]} />
+      <Breadcrumb
+        items={[{ label: "Cart", href: "/cart" }, { label: "Checkout" }]}
+      />
 
-      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-5 sm:mb-8">Checkout</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-5 sm:mb-8">
+        Checkout
+      </h1>
 
       {/* Steps */}
       <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
-        {['Address', 'Payment'].map((label, i) => (
+        {["Address", "Payment"].map((label, i) => (
           <div key={label} className="flex items-center gap-1.5 sm:gap-2">
             <div
               className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold ${
                 step > i + 1
-                  ? 'bg-green-500 text-white'
+                  ? "bg-green-500 text-white"
                   : step === i + 1
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground'
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground"
               }`}
             >
-              {step > i + 1 ? '✓' : i + 1}
+              {step > i + 1 ? "✓" : i + 1}
             </div>
-            <span className={`text-sm font-medium ${step >= i + 1 ? '' : 'text-muted-foreground'}`}>
+            <span
+              className={`text-sm font-medium ${step >= i + 1 ? "" : "text-muted-foreground"}`}
+            >
               {label}
             </span>
             {i < 1 && <div className="w-8 sm:w-12 h-px bg-border" />}
@@ -166,7 +172,9 @@ export default function CheckoutPage() {
           {/* Step 1: Address */}
           {step === 1 && (
             <div className="space-y-6">
-              <h2 className="text-lg font-heading font-bold">Shipping Address</h2>
+              <h2 className="text-lg font-heading font-bold">
+                Shipping Address
+              </h2>
 
               {loadingAddresses ? (
                 <Spinner />
@@ -179,8 +187,8 @@ export default function CheckoutPage() {
                           key={addr.id}
                           className={`block p-4 border rounded-card cursor-pointer transition-colors ${
                             selectedAddressId === addr.id
-                              ? 'border-accent bg-accent/5'
-                              : 'border-border hover:border-accent/50'
+                              ? "border-accent bg-accent/5"
+                              : "border-border hover:border-accent/50"
                           }`}
                         >
                           <input
@@ -193,12 +201,15 @@ export default function CheckoutPage() {
                           />
                           <p className="font-medium">{addr.fullName}</p>
                           <p className="text-sm text-muted-foreground">
-                            {addr.line1}{addr.line2 ? `, ${addr.line2}` : ''}
+                            {addr.line1}
+                            {addr.line2 ? `, ${addr.line2}` : ""}
                           </p>
                           <p className="text-sm text-muted-foreground">
                             {addr.city}, {addr.state} - {addr.pincode}
                           </p>
-                          <p className="text-sm text-muted-foreground">{addr.phone}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {addr.phone}
+                          </p>
                         </label>
                       ))}
 
@@ -247,17 +258,17 @@ export default function CheckoutPage() {
               >
                 ← Change address
               </button>
-              <CheckoutForm
-                addressId={selectedAddressId}
-                total={total}
-              />
+              <CheckoutForm addressId={selectedAddressId} total={total} />
             </div>
           )}
         </div>
 
         {/* Order Summary Sidebar */}
         <div>
-          <OrderSummary couponDiscount={couponDiscount} couponCode={couponCode || undefined} />
+          <OrderSummary
+            couponDiscount={couponDiscount}
+            couponCode={couponCode || undefined}
+          />
 
           {/* Coupon Input */}
           <div className="mt-4 p-3 sm:p-4 bg-surface rounded-card">
@@ -275,7 +286,7 @@ export default function CheckoutPage() {
                 onClick={handleApplyCoupon}
                 disabled={couponLoading}
               >
-                {couponLoading ? <Spinner size="sm" /> : 'Apply'}
+                {couponLoading ? <Spinner size="sm" /> : "Apply"}
               </Button>
             </div>
             {couponDiscount > 0 && (

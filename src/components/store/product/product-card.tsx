@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { Heart, Eye, ShoppingBag, Star } from 'lucide-react';
-import { cn, formatPrice, getDiscountPercentage } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-import { useWishlistStore } from '@/store/wishlist.store';
-import { useUIStore } from '@/store/ui.store';
-import type { ProductListItem } from '@/types/product';
+import Image from "next/image";
+import Link from "next/link";
+import { Heart, Eye, ShoppingBag, Star } from "lucide-react";
+import { cn, formatPrice, getDiscountPercentage } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { useWishlistStore } from "@/store/wishlist.store";
+import { useUIStore } from "@/store/ui.store";
+import type { ProductListItem } from "@/types/product";
 
 interface ProductCardProps {
   product: ProductListItem;
@@ -15,22 +15,29 @@ interface ProductCardProps {
   onQuickView?: (product: ProductListItem) => void;
 }
 
-export function ProductCard({ product, className, onQuickView }: ProductCardProps) {
+export function ProductCard({
+  product,
+  className,
+  onQuickView,
+}: ProductCardProps) {
   const { items: wishlist, toggleItem } = useWishlistStore();
   const { addToRecentlyViewed } = useUIStore();
   const isWishlisted = wishlist.includes(product.id);
 
-  const primaryImage = product.images?.[0]?.url ?? '/placeholder-product.png';
+  const primaryImage = product.images?.[0]?.url ?? "/placeholder-product.png";
   const secondaryImage = product.images?.[1]?.url;
 
   const price = product.basePrice;
-  const hasCompare = product.comparePrice !== null && product.comparePrice > price;
-  const discount = hasCompare ? getDiscountPercentage(product.comparePrice!, price) : 0;
+  const hasCompare =
+    product.comparePrice !== null && product.comparePrice > price;
+  const discount = hasCompare
+    ? getDiscountPercentage(product.comparePrice!, price)
+    : 0;
 
   const isOutOfStock = product.variants?.every((v) => v.stock === 0);
 
   return (
-    <div className={cn('group relative', className)}>
+    <div className={cn("group relative", className)}>
       {/* Image Container */}
       <div className="relative aspect-[3/4] overflow-hidden rounded-card bg-muted">
         <Link
@@ -43,8 +50,8 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
             alt={product.name}
             fill
             className={cn(
-              'object-cover transition-all duration-500',
-              secondaryImage && 'group-hover:opacity-0'
+              "object-cover transition-all duration-500",
+              secondaryImage && "group-hover:opacity-0",
             )}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
@@ -67,7 +74,9 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
             </Badge>
           )}
           {product.isNewArrival && (
-            <Badge variant="new" className="text-[9px] sm:text-[10px]">New</Badge>
+            <Badge variant="new" className="text-[9px] sm:text-[10px]">
+              New
+            </Badge>
           )}
           {isOutOfStock && (
             <Badge variant="default" className="text-[9px] sm:text-[10px]">
@@ -84,12 +93,14 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
               toggleItem(product.id);
             }}
             className={cn(
-              'p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sm hover:bg-white transition-colors',
-              isWishlisted && 'text-red-500'
+              "p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sm hover:bg-white transition-colors",
+              isWishlisted && "text-red-500",
             )}
-            aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+            aria-label={
+              isWishlisted ? "Remove from wishlist" : "Add to wishlist"
+            }
           >
-            <Heart className={cn('h-4 w-4', isWishlisted && 'fill-current')} />
+            <Heart className={cn("h-4 w-4", isWishlisted && "fill-current")} />
           </button>
           {onQuickView && (
             <button
@@ -156,19 +167,44 @@ export function ProductCard({ product, className, onQuickView }: ProductCardProp
         {/* Color Swatches */}
         {product.variants && product.variants.length > 0 && (
           <div className="flex items-center gap-1.5 pt-1">
-            {[...new Set(product.variants.map((v) => v.colorHex ?? v.color).filter(Boolean))]
+            {[
+              ...new Set(
+                product.variants
+                  .map((v) => v.colorHex ?? v.color)
+                  .filter(Boolean),
+              ),
+            ]
               .slice(0, 4)
               .map((color, i) => (
                 <span
                   key={`${color}-${i}`}
                   className="h-3.5 w-3.5 sm:h-3 sm:w-3 rounded-full border border-border"
                   style={{ backgroundColor: color?.toLowerCase() }}
-                  title={product.variants.find(v => (v.colorHex ?? v.color) === color)?.color ?? color ?? ''}
+                  title={
+                    product.variants.find(
+                      (v) => (v.colorHex ?? v.color) === color,
+                    )?.color ??
+                    color ??
+                    ""
+                  }
                 />
               ))}
-            {[...new Set(product.variants.map((v) => v.colorHex ?? v.color).filter(Boolean))].length > 4 && (
+            {[
+              ...new Set(
+                product.variants
+                  .map((v) => v.colorHex ?? v.color)
+                  .filter(Boolean),
+              ),
+            ].length > 4 && (
               <span className="text-[10px] text-muted-foreground">
-                +{[...new Set(product.variants.map((v) => v.colorHex ?? v.color).filter(Boolean))].length - 4}
+                +
+                {[
+                  ...new Set(
+                    product.variants
+                      .map((v) => v.colorHex ?? v.color)
+                      .filter(Boolean),
+                  ),
+                ].length - 4}
               </span>
             )}
           </div>

@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 interface UIStore {
   searchQuery: string;
@@ -19,14 +19,14 @@ interface UIStore {
 export const useUIStore = create<UIStore>()(
   persist(
     (set, get) => ({
-      searchQuery: '',
+      searchQuery: "",
       searchOpen: false,
       recentlyViewed: [],
       mobileNavOpen: false,
 
       setSearchQuery: (query) => set({ searchQuery: query }),
       openSearch: () => set({ searchOpen: true }),
-      closeSearch: () => set({ searchOpen: false, searchQuery: '' }),
+      closeSearch: () => set({ searchOpen: false, searchQuery: "" }),
 
       addToRecentlyViewed: (productId) => {
         const current = get().recentlyViewed.filter((id) => id !== productId);
@@ -38,18 +38,18 @@ export const useUIStore = create<UIStore>()(
       closeMobileNav: () => set({ mobileNavOpen: false }),
     }),
     {
-      name: 'velour-ui',
+      name: "velour-ui",
       storage: createJSONStorage(() =>
-        typeof window !== 'undefined'
+        typeof window !== "undefined"
           ? localStorage
           : {
               getItem: () => null,
               setItem: () => {},
               removeItem: () => {},
-            }
+            },
       ),
       partialize: (state) => ({ recentlyViewed: state.recentlyViewed }),
       skipHydration: true,
-    }
-  )
+    },
+  ),
 );

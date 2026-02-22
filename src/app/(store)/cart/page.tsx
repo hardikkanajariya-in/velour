@@ -1,22 +1,24 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { CartItems } from '@/components/store/cart/cart-items';
-import { OrderSummary } from '@/components/store/checkout/order-summary';
-import { EmptyState } from '@/components/ui/empty-state';
-import { Breadcrumb } from '@/components/layout/breadcrumb';
-import { Button } from '@/components/ui/button';
-import { useCartStore } from '@/store/cart.store';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import Link from "next/link";
+import { CartItems } from "@/components/store/cart/cart-items";
+import { OrderSummary } from "@/components/store/checkout/order-summary";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Breadcrumb } from "@/components/layout/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/cart.store";
+import { ShoppingBag, ArrowRight } from "lucide-react";
 
 export default function CartPage() {
   const { items } = useCartStore();
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
-      <Breadcrumb items={[{ label: 'Cart' }]} />
+      <Breadcrumb items={[{ label: "Cart" }]} />
 
-      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-5 sm:mb-8">Shopping Cart</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mt-4 mb-5 sm:mb-8">
+        Shopping Cart
+      </h1>
 
       {items.length === 0 ? (
         <EmptyState

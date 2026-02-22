@@ -1,4 +1,4 @@
-import { siteConfig } from '../../site.config';
+import { siteConfig } from "../../site.config";
 
 export { siteConfig };
 
@@ -8,14 +8,19 @@ export function getSiteUrl(): string {
 
 export function getPageTitle(title?: string): string {
   if (!title) return `${siteConfig.brand.name} — ${siteConfig.brand.tagline}`;
-  return siteConfig.seo.titleTemplate.replace('%s', title);
+  return siteConfig.seo.titleTemplate.replace("%s", title);
 }
 
-export function getShippingCost(subtotal: number, method: 'standard' | 'express' | 'sameday'): number {
-  if (method === 'standard') {
-    return subtotal >= siteConfig.shipping.freeShippingThreshold ? 0 : siteConfig.shipping.standardRate;
+export function getShippingCost(
+  subtotal: number,
+  method: "standard" | "express" | "sameday",
+): number {
+  if (method === "standard") {
+    return subtotal >= siteConfig.shipping.freeShippingThreshold
+      ? 0
+      : siteConfig.shipping.standardRate;
   }
-  if (method === 'express') return siteConfig.shipping.expressRate;
+  if (method === "express") return siteConfig.shipping.expressRate;
   return siteConfig.shipping.sameDayRate;
 }
 

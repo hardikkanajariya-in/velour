@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/lib/auth';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET() {
   const session = await auth();
@@ -10,7 +10,7 @@ export async function GET() {
 
   const addresses = await prisma.address.findMany({
     where: { userId: session.user.id },
-    orderBy: [{ isDefault: 'desc' }, { createdAt: 'desc' }],
+    orderBy: [{ isDefault: "desc" }, { createdAt: "desc" }],
   });
 
   return NextResponse.json(addresses);
@@ -19,7 +19,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await request.json();
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
   const address = await prisma.address.create({
     data: {
       userId: session.user.id,
-      label: body.label ?? 'Home',
+      label: body.label ?? "Home",
       fullName: body.fullName,
       phone: body.phone,
       line1: body.line1,
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       city: body.city,
       state: body.state,
       pincode: body.pincode,
-      country: body.country ?? 'India',
+      country: body.country ?? "India",
       isDefault: body.isDefault ?? false,
     },
   });
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await request.json();
@@ -78,14 +78,14 @@ export async function PATCH(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
+  const id = searchParams.get("id");
 
   if (!id) {
-    return NextResponse.json({ error: 'Address ID required' }, { status: 400 });
+    return NextResponse.json({ error: "Address ID required" }, { status: 400 });
   }
 
   await prisma.address.delete({

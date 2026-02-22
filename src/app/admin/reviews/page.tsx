@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { DataTable } from '@/components/admin/data-table';
-import { Badge } from '@/components/ui/badge';
-import { Rating } from '@/components/ui/rating';
-import { Spinner } from '@/components/ui/spinner';
-import { formatDate } from '@/lib/utils';
-import toast from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import { DataTable } from "@/components/admin/data-table";
+import { Badge } from "@/components/ui/badge";
+import { Rating } from "@/components/ui/rating";
+import { Spinner } from "@/components/ui/spinner";
+import { formatDate } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 interface ReviewItem {
   id: string;
@@ -29,7 +29,7 @@ export default function AdminReviewsPage() {
 
   async function fetchReviews() {
     try {
-      const res = await fetch('/api/admin/reviews');
+      const res = await fetch("/api/admin/reviews");
       if (res.ok) {
         const data = await res.json();
         setReviews(data.reviews ?? []);
@@ -43,15 +43,17 @@ export default function AdminReviewsPage() {
 
   async function toggleApproval(id: string, approved: boolean) {
     try {
-      await fetch('/api/admin/reviews', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+      await fetch("/api/admin/reviews", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, isApproved: !approved }),
       });
-      setReviews((prev) => prev.map((r) => (r.id === id ? { ...r, isApproved: !approved } : r)));
-      toast.success('Updated');
+      setReviews((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, isApproved: !approved } : r)),
+      );
+      toast.success("Updated");
     } catch {
-      toast.error('Failed');
+      toast.error("Failed");
     }
   }
 
@@ -70,41 +72,50 @@ export default function AdminReviewsPage() {
       <DataTable
         columns={[
           {
-            key: 'product',
-            label: 'Product',
-            render: (item) => (item.product as { name: string } | null)?.name ?? 'N/A',
+            key: "product",
+            label: "Product",
+            render: (item) =>
+              (item.product as { name: string } | null)?.name ?? "N/A",
           },
           {
-            key: 'user',
-            label: 'Customer',
-            render: (item) => (item.user as { name: string | null } | null)?.name ?? 'Anonymous',
+            key: "user",
+            label: "Customer",
+            render: (item) =>
+              (item.user as { name: string | null } | null)?.name ??
+              "Anonymous",
           },
           {
-            key: 'rating',
-            label: 'Rating',
-            render: (item) => <Rating value={item.rating as number} size="sm" />,
+            key: "rating",
+            label: "Rating",
+            render: (item) => (
+              <Rating value={item.rating as number} size="sm" />
+            ),
           },
           {
-            key: 'body',
-            label: 'Review',
+            key: "body",
+            label: "Review",
             render: (item) => (
               <p className="text-sm max-w-xs truncate">{item.body as string}</p>
             ),
           },
           {
-            key: 'isApproved',
-            label: 'Status',
+            key: "isApproved",
+            label: "Status",
             render: (item) => (
-              <button onClick={() => toggleApproval(item.id as string, item.isApproved as boolean)}>
-                <Badge variant={item.isApproved ? 'success' : 'warning'}>
-                  {item.isApproved ? 'Approved' : 'Pending'}
+              <button
+                onClick={() =>
+                  toggleApproval(item.id as string, item.isApproved as boolean)
+                }
+              >
+                <Badge variant={item.isApproved ? "success" : "warning"}>
+                  {item.isApproved ? "Approved" : "Pending"}
                 </Badge>
               </button>
             ),
           },
           {
-            key: 'createdAt',
-            label: 'Date',
+            key: "createdAt",
+            label: "Date",
             render: (item) => formatDate(item.createdAt as string),
           },
         ]}

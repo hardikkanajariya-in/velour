@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -11,14 +11,14 @@ interface EmailOptions {
 export async function sendEmail({ to, subject, html }: EmailOptions) {
   try {
     const data = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'VELOUR <orders@velour.in>',
+      from: process.env.RESEND_FROM_EMAIL || "VELOUR <orders@velour.in>",
       to,
       subject,
       html,
     });
     return { success: true, data };
   } catch (error) {
-    console.error('Email send failed:', error);
+    console.error("Email send failed:", error);
     return { success: false, error };
   }
 }
@@ -27,7 +27,14 @@ export async function sendOrderConfirmation(
   to: string,
   orderNumber: string,
   orderDetails: {
-    items: Array<{ name: string; size: string; color: string; qty: number; price: number; image: string }>;
+    items: Array<{
+      name: string;
+      size: string;
+      color: string;
+      qty: number;
+      price: number;
+      image: string;
+    }>;
     subtotal: number;
     discount: number;
     shipping: number;
@@ -35,7 +42,7 @@ export async function sendOrderConfirmation(
     total: number;
     address: string;
     estimatedDelivery: string;
-  }
+  },
 ) {
   const itemsHtml = orderDetails.items
     .map(
@@ -48,10 +55,10 @@ export async function sendOrderConfirmation(
           <strong>${item.name}</strong><br/>
           <span style="color:#6B6B6B;">${item.size} / ${item.color} × ${item.qty}</span>
         </td>
-        <td style="padding:12px;border-bottom:1px solid #eee;text-align:right;">₹${item.price.toLocaleString('en-IN')}</td>
-      </tr>`
+        <td style="padding:12px;border-bottom:1px solid #eee;text-align:right;">₹${item.price.toLocaleString("en-IN")}</td>
+      </tr>`,
     )
-    .join('');
+    .join("");
 
   const html = `
     <div style="max-width:600px;margin:0 auto;font-family:'DM Sans',Arial,sans-serif;color:#1A1A1A;">
@@ -68,11 +75,11 @@ export async function sendOrderConfirmation(
           ${itemsHtml}
         </table>
         <table style="width:100%;margin:16px 0;">
-          <tr><td style="padding:4px 0;color:#6B6B6B;">Subtotal</td><td style="text-align:right;">₹${orderDetails.subtotal.toLocaleString('en-IN')}</td></tr>
-          ${orderDetails.discount > 0 ? `<tr><td style="padding:4px 0;color:#16A34A;">Discount</td><td style="text-align:right;color:#16A34A;">-₹${orderDetails.discount.toLocaleString('en-IN')}</td></tr>` : ''}
-          <tr><td style="padding:4px 0;color:#6B6B6B;">Shipping</td><td style="text-align:right;">${orderDetails.shipping === 0 ? 'FREE' : '₹' + orderDetails.shipping.toLocaleString('en-IN')}</td></tr>
-          <tr><td style="padding:4px 0;color:#6B6B6B;">Tax (GST)</td><td style="text-align:right;">₹${orderDetails.tax.toLocaleString('en-IN')}</td></tr>
-          <tr><td style="padding:12px 0 4px;font-weight:700;font-size:18px;border-top:2px solid #1A1A1A;">Total</td><td style="text-align:right;font-weight:700;font-size:18px;border-top:2px solid #1A1A1A;">₹${orderDetails.total.toLocaleString('en-IN')}</td></tr>
+          <tr><td style="padding:4px 0;color:#6B6B6B;">Subtotal</td><td style="text-align:right;">₹${orderDetails.subtotal.toLocaleString("en-IN")}</td></tr>
+          ${orderDetails.discount > 0 ? `<tr><td style="padding:4px 0;color:#16A34A;">Discount</td><td style="text-align:right;color:#16A34A;">-₹${orderDetails.discount.toLocaleString("en-IN")}</td></tr>` : ""}
+          <tr><td style="padding:4px 0;color:#6B6B6B;">Shipping</td><td style="text-align:right;">${orderDetails.shipping === 0 ? "FREE" : "₹" + orderDetails.shipping.toLocaleString("en-IN")}</td></tr>
+          <tr><td style="padding:4px 0;color:#6B6B6B;">Tax (GST)</td><td style="text-align:right;">₹${orderDetails.tax.toLocaleString("en-IN")}</td></tr>
+          <tr><td style="padding:12px 0 4px;font-weight:700;font-size:18px;border-top:2px solid #1A1A1A;">Total</td><td style="text-align:right;font-weight:700;font-size:18px;border-top:2px solid #1A1A1A;">₹${orderDetails.total.toLocaleString("en-IN")}</td></tr>
         </table>
         <p style="color:#6B6B6B;margin:24px 0 8px;">Estimated Delivery: <strong>${orderDetails.estimatedDelivery}</strong></p>
         <p style="color:#6B6B6B;margin:0 0 24px;">Shipping to: ${orderDetails.address}</p>
@@ -97,7 +104,7 @@ export async function sendOrderShipped(
   orderNumber: string,
   trackingNumber: string,
   trackingUrl: string,
-  estimatedDelivery: string
+  estimatedDelivery: string,
 ) {
   const html = `
     <div style="max-width:600px;margin:0 auto;font-family:'DM Sans',Arial,sans-serif;color:#1A1A1A;">
@@ -137,5 +144,5 @@ export async function sendWelcomeEmail(to: string, name: string) {
     </div>
   `;
 
-  return sendEmail({ to, subject: 'Welcome to VELOUR — Wear the Story', html });
+  return sendEmail({ to, subject: "Welcome to VELOUR — Wear the Story", html });
 }

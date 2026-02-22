@@ -5,7 +5,7 @@ export interface Banner {
   image: string;
   mobileImage: string | null;
   link: string | null;
-  position: 'HERO' | 'PROMO' | 'STRIP' | 'SIDEBAR';
+  position: "HERO" | "PROMO" | "STRIP" | "SIDEBAR";
   order: number;
   isActive: boolean;
   startDate: string | null;

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,25 +15,31 @@ export async function POST(request: NextRequest) {
     });
 
     if (!coupon) {
-      return NextResponse.json({ error: 'Invalid or expired coupon' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid or expired coupon" },
+        { status: 400 },
+      );
     }
 
     if (coupon.minOrderValue && subtotal < coupon.minOrderValue) {
       return NextResponse.json(
         { error: `Minimum order of ₹${coupon.minOrderValue} required` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (coupon.usageLimit && coupon.usedCount >= coupon.usageLimit) {
-      return NextResponse.json({ error: 'Coupon usage limit reached' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Coupon usage limit reached" },
+        { status: 400 },
+      );
     }
 
     let discount: number;
-    if (coupon.type === 'PERCENTAGE') {
+    if (coupon.type === "PERCENTAGE") {
       discount = Math.min(
         (subtotal * coupon.value) / 100,
-        coupon.maxDiscount ?? Infinity
+        coupon.maxDiscount ?? Infinity,
       );
     } else {
       discount = coupon.value;
@@ -49,7 +55,10 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Coupon validate error:', error);
-    return NextResponse.json({ error: 'Failed to validate coupon' }, { status: 500 });
+    console.error("Coupon validate error:", error);
+    return NextResponse.json(
+      { error: "Failed to validate coupon" },
+      { status: 500 },
+    );
   }
 }

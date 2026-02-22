@@ -1,25 +1,25 @@
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface SkeletonProps {
   className?: string;
-  variant?: 'text' | 'card' | 'image' | 'avatar' | 'button';
+  variant?: "text" | "card" | "image" | "avatar" | "button";
 }
 
 const variantStyles = {
-  text: 'h-4 w-full rounded',
-  card: 'h-64 w-full rounded-card',
-  image: 'aspect-[3/4] w-full rounded-lg',
-  avatar: 'h-10 w-10 rounded-full',
-  button: 'h-10 w-24 rounded-button',
+  text: "h-4 w-full rounded",
+  card: "h-64 w-full rounded-card",
+  image: "aspect-[3/4] w-full rounded-lg",
+  avatar: "h-10 w-10 rounded-full",
+  button: "h-10 w-24 rounded-button",
 };
 
-export function Skeleton({ className, variant = 'text' }: SkeletonProps) {
+export function Skeleton({ className, variant = "text" }: SkeletonProps) {
   return (
     <div
       className={cn(
-        'animate-shimmer bg-neutral-200',
+        "animate-shimmer bg-neutral-200",
         variantStyles[variant],
-        className
+        className,
       )}
     />
   );

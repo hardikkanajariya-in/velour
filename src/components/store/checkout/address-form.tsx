@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Select } from '@/components/ui/select';
-import { INDIAN_STATES } from '@/lib/constants';
+import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select } from "@/components/ui/select";
+import { INDIAN_STATES } from "@/lib/constants";
 
 interface AddressFormData {
   fullName: string;
@@ -28,7 +28,7 @@ export function AddressForm({
   defaultValues,
   onSubmit,
   isLoading,
-  submitLabel = 'Save Address',
+  submitLabel = "Save Address",
 }: AddressFormProps) {
   const {
     register,
@@ -36,13 +36,13 @@ export function AddressForm({
     formState: { errors },
   } = useForm<AddressFormData>({
     defaultValues: {
-      fullName: '',
-      phone: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      pincode: '',
+      fullName: "",
+      phone: "",
+      addressLine1: "",
+      addressLine2: "",
+      city: "",
+      state: "",
+      pincode: "",
       isDefault: false,
       ...defaultValues,
     },
@@ -53,15 +53,15 @@ export function AddressForm({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           label="Full Name"
-          {...register('fullName', { required: 'Full name is required' })}
+          {...register("fullName", { required: "Full name is required" })}
           error={errors.fullName?.message}
         />
         <Input
           label="Phone Number"
           type="tel"
-          {...register('phone', {
-            required: 'Phone number is required',
-            pattern: { value: /^[6-9]\d{9}$/, message: 'Invalid phone number' },
+          {...register("phone", {
+            required: "Phone number is required",
+            pattern: { value: /^[6-9]\d{9}$/, message: "Invalid phone number" },
           })}
           error={errors.phone?.message}
         />
@@ -69,25 +69,25 @@ export function AddressForm({
 
       <Input
         label="Address Line 1"
-        {...register('addressLine1', { required: 'Address is required' })}
+        {...register("addressLine1", { required: "Address is required" })}
         error={errors.addressLine1?.message}
       />
       <Input
         label="Address Line 2 (Optional)"
-        {...register('addressLine2')}
+        {...register("addressLine2")}
         error={errors.addressLine2?.message}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Input
           label="City"
-          {...register('city', { required: 'City is required' })}
+          {...register("city", { required: "City is required" })}
           error={errors.city?.message}
         />
         <div>
           <label className="block text-sm font-medium mb-1.5">State</label>
           <select
-            {...register('state', { required: 'State is required' })}
+            {...register("state", { required: "State is required" })}
             className="w-full px-3 py-2.5 text-sm border border-border rounded-button focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent min-h-[44px]"
           >
             <option value="">Select State</option>
@@ -103,9 +103,9 @@ export function AddressForm({
         </div>
         <Input
           label="Pincode"
-          {...register('pincode', {
-            required: 'Pincode is required',
-            pattern: { value: /^\d{6}$/, message: 'Invalid pincode' },
+          {...register("pincode", {
+            required: "Pincode is required",
+            pattern: { value: /^\d{6}$/, message: "Invalid pincode" },
           })}
           error={errors.pincode?.message}
         />
@@ -114,7 +114,7 @@ export function AddressForm({
       <label className="flex items-center gap-2 cursor-pointer">
         <input
           type="checkbox"
-          {...register('isDefault')}
+          {...register("isDefault")}
           className="rounded border-border"
         />
         <span className="text-sm">Set as default address</span>

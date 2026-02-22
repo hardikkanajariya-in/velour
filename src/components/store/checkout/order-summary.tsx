@@ -1,20 +1,23 @@
-'use client';
+"use client";
 
-import { useCartStore } from '@/store/cart.store';
-import { formatPrice } from '@/lib/utils';
-import { getShippingCost, getRemainingForFreeShipping } from '@/lib/site';
-import { GST_RATE } from '@/lib/constants';
-import { Truck, ShieldCheck, Tag } from 'lucide-react';
+import { useCartStore } from "@/store/cart.store";
+import { formatPrice } from "@/lib/utils";
+import { getShippingCost, getRemainingForFreeShipping } from "@/lib/site";
+import { GST_RATE } from "@/lib/constants";
+import { Truck, ShieldCheck, Tag } from "lucide-react";
 
 interface OrderSummaryProps {
   couponDiscount?: number;
   couponCode?: string;
 }
 
-export function OrderSummary({ couponDiscount = 0, couponCode }: OrderSummaryProps) {
+export function OrderSummary({
+  couponDiscount = 0,
+  couponCode,
+}: OrderSummaryProps) {
   const { items, subtotal: getSubtotal, totalItems } = useCartStore();
   const subtotal = getSubtotal();
-  const shipping = getShippingCost(subtotal, 'standard');
+  const shipping = getShippingCost(subtotal, "standard");
   const tax = Math.round((subtotal - couponDiscount) * GST_RATE);
   const total = subtotal - couponDiscount + shipping + tax;
   const remaining = getRemainingForFreeShipping(subtotal);
@@ -26,12 +29,18 @@ export function OrderSummary({ couponDiscount = 0, couponCode }: OrderSummaryPro
       {/* Items List (compact) */}
       <div className="space-y-2 max-h-48 overflow-y-auto">
         {items.map((item) => (
-          <div key={item.variantId} className="flex items-center justify-between text-sm">
+          <div
+            key={item.variantId}
+            className="flex items-center justify-between text-sm"
+          >
             <span className="text-muted-foreground truncate mr-2">
               {item.product.name} × {item.quantity}
             </span>
             <span className="font-medium whitespace-nowrap">
-              {formatPrice((item.product.basePrice + item.variant.additionalPrice) * item.quantity)}
+              {formatPrice(
+                (item.product.basePrice + item.variant.additionalPrice) *
+                  item.quantity,
+              )}
             </span>
           </div>
         ))}
@@ -39,7 +48,9 @@ export function OrderSummary({ couponDiscount = 0, couponCode }: OrderSummaryPro
 
       <div className="border-t pt-4 space-y-2.5">
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Subtotal ({totalItems()} items)</span>
+          <span className="text-muted-foreground">
+            Subtotal ({totalItems()} items)
+          </span>
           <span>{formatPrice(subtotal)}</span>
         </div>
 
@@ -55,8 +66,8 @@ export function OrderSummary({ couponDiscount = 0, couponCode }: OrderSummaryPro
 
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Shipping</span>
-          <span className={shipping === 0 ? 'text-green-600 font-medium' : ''}>
-            {shipping === 0 ? 'Free' : formatPrice(shipping)}
+          <span className={shipping === 0 ? "text-green-600 font-medium" : ""}>
+            {shipping === 0 ? "Free" : formatPrice(shipping)}
           </span>
         </div>
 

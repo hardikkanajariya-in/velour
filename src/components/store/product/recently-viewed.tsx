@@ -1,16 +1,19 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useUIStore } from '@/store/ui.store';
-import { ProductCard } from './product-card';
-import type { ProductListItem } from '@/types/product';
+import { useEffect, useState } from "react";
+import { useUIStore } from "@/store/ui.store";
+import { ProductCard } from "./product-card";
+import type { ProductListItem } from "@/types/product";
 
 interface RecentlyViewedProps {
   title?: string;
   excludeId?: string;
 }
 
-export function RecentlyViewed({ title = 'Recently Viewed', excludeId }: RecentlyViewedProps) {
+export function RecentlyViewed({
+  title = "Recently Viewed",
+  excludeId,
+}: RecentlyViewedProps) {
   const { recentlyViewed } = useUIStore();
   const [products, setProducts] = useState<ProductListItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +23,7 @@ export function RecentlyViewed({ title = 'Recently Viewed', excludeId }: Recentl
     if (ids.length === 0) return;
 
     setLoading(true);
-    fetch(`/api/products?ids=${ids.join(',')}`)
+    fetch(`/api/products?ids=${ids.join(",")}`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.products ?? []);
@@ -33,7 +36,9 @@ export function RecentlyViewed({ title = 'Recently Viewed', excludeId }: Recentl
 
   return (
     <section className="py-8 sm:py-12">
-      <h2 className="text-xl sm:text-2xl font-heading font-bold mb-4 sm:mb-6">{title}</h2>
+      <h2 className="text-xl sm:text-2xl font-heading font-bold mb-4 sm:mb-6">
+        {title}
+      </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />

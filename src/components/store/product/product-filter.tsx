@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useState, useCallback } from 'react';
-import { ChevronDown, X, SlidersHorizontal } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import { SORT_OPTIONS, PRODUCT_SIZES } from '@/lib/constants';
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState, useCallback } from "react";
+import { ChevronDown, X, SlidersHorizontal } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { SORT_OPTIONS, PRODUCT_SIZES } from "@/lib/constants";
 
 interface FilterOption {
   label: string;
@@ -34,25 +34,29 @@ export function ProductFilter({
   const searchParams = useSearchParams();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const selectedCategories = searchParams.get('category')?.split(',').filter(Boolean) ?? [];
-  const selectedBrands = searchParams.get('brand')?.split(',').filter(Boolean) ?? [];
-  const selectedSizes = searchParams.get('size')?.split(',').filter(Boolean) ?? [];
-  const selectedColors = searchParams.get('color')?.split(',').filter(Boolean) ?? [];
-  const selectedPrice = searchParams.get('price') ?? '';
-  const selectedSort = searchParams.get('sort') ?? '';
+  const selectedCategories =
+    searchParams.get("category")?.split(",").filter(Boolean) ?? [];
+  const selectedBrands =
+    searchParams.get("brand")?.split(",").filter(Boolean) ?? [];
+  const selectedSizes =
+    searchParams.get("size")?.split(",").filter(Boolean) ?? [];
+  const selectedColors =
+    searchParams.get("color")?.split(",").filter(Boolean) ?? [];
+  const selectedPrice = searchParams.get("price") ?? "";
+  const selectedSort = searchParams.get("sort") ?? "";
 
   const updateFilter = useCallback(
     (key: string, value: string, isMulti = true) => {
       const params = new URLSearchParams(searchParams.toString());
 
       if (isMulti) {
-        const current = params.get(key)?.split(',').filter(Boolean) ?? [];
+        const current = params.get(key)?.split(",").filter(Boolean) ?? [];
         const updated = current.includes(value)
           ? current.filter((v) => v !== value)
           : [...current, value];
 
         if (updated.length > 0) {
-          params.set(key, updated.join(','));
+          params.set(key, updated.join(","));
         } else {
           params.delete(key);
         }
@@ -64,10 +68,10 @@ export function ProductFilter({
         }
       }
 
-      params.delete('page');
+      params.delete("page");
       router.push(`${pathname}?${params.toString()}`);
     },
-    [router, pathname, searchParams]
+    [router, pathname, searchParams],
   );
 
   function clearAll() {
@@ -79,7 +83,7 @@ export function ProductFilter({
     selectedBrands.length > 0 ||
     selectedSizes.length > 0 ||
     selectedColors.length > 0 ||
-    selectedPrice !== '';
+    selectedPrice !== "";
 
   const filterContent = (
     <div className="space-y-4">
@@ -98,7 +102,13 @@ export function ProductFilter({
             </button>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {[...selectedCategories, ...selectedBrands, ...selectedSizes, ...selectedColors, selectedPrice]
+            {[
+              ...selectedCategories,
+              ...selectedBrands,
+              ...selectedSizes,
+              ...selectedColors,
+              selectedPrice,
+            ]
               .filter(Boolean)
               .map((filter) => (
                 <span
@@ -121,16 +131,21 @@ export function ProductFilter({
           <h3 className="text-sm font-semibold mb-3">Category</h3>
           <div className="space-y-2">
             {categories.map((cat) => (
-              <label key={cat.value} className="flex items-center gap-2 cursor-pointer group">
+              <label
+                key={cat.value}
+                className="flex items-center gap-2 cursor-pointer group"
+              >
                 <Checkbox
                   checked={selectedCategories.includes(cat.value)}
-                  onChange={() => updateFilter('category', cat.value)}
+                  onChange={() => updateFilter("category", cat.value)}
                 />
                 <span className="text-sm group-hover:text-brand-accent transition-colors">
                   {cat.label}
                 </span>
                 {cat.count !== undefined && (
-                  <span className="text-xs text-muted-foreground ml-auto">({cat.count})</span>
+                  <span className="text-xs text-muted-foreground ml-auto">
+                    ({cat.count})
+                  </span>
                 )}
               </label>
             ))}
@@ -145,12 +160,12 @@ export function ProductFilter({
           {PRODUCT_SIZES.map((size) => (
             <button
               key={size}
-              onClick={() => updateFilter('size', size)}
+              onClick={() => updateFilter("size", size)}
               className={cn(
-                'min-w-[2.5rem] px-2.5 py-1.5 text-xs font-medium border rounded-button transition-all',
+                "min-w-[2.5rem] px-2.5 py-1.5 text-xs font-medium border rounded-button transition-all",
                 selectedSizes.includes(size)
-                  ? 'border-brand-primary bg-brand-primary text-white'
-                  : 'border-border hover:border-brand-primary'
+                  ? "border-brand-primary bg-brand-primary text-white"
+                  : "border-border hover:border-brand-primary",
               )}
             >
               {size}
@@ -165,16 +180,21 @@ export function ProductFilter({
           <h3 className="text-sm font-semibold mb-3">Brand</h3>
           <div className="space-y-2">
             {brands.map((brand) => (
-              <label key={brand.value} className="flex items-center gap-2 cursor-pointer group">
+              <label
+                key={brand.value}
+                className="flex items-center gap-2 cursor-pointer group"
+              >
                 <Checkbox
                   checked={selectedBrands.includes(brand.value)}
-                  onChange={() => updateFilter('brand', brand.value)}
+                  onChange={() => updateFilter("brand", brand.value)}
                 />
                 <span className="text-sm group-hover:text-brand-accent transition-colors">
                   {brand.label}
                 </span>
                 {brand.count !== undefined && (
-                  <span className="text-xs text-muted-foreground ml-auto">({brand.count})</span>
+                  <span className="text-xs text-muted-foreground ml-auto">
+                    ({brand.count})
+                  </span>
                 )}
               </label>
             ))}
@@ -190,12 +210,12 @@ export function ProductFilter({
             {colors.map((color) => (
               <button
                 key={color.value}
-                onClick={() => updateFilter('color', color.value)}
+                onClick={() => updateFilter("color", color.value)}
                 className={cn(
-                  'h-7 w-7 rounded-full border-2 transition-all',
+                  "h-7 w-7 rounded-full border-2 transition-all",
                   selectedColors.includes(color.value)
-                    ? 'border-brand-accent ring-2 ring-brand-accent/30'
-                    : 'border-border hover:border-brand-accent/50'
+                    ? "border-brand-accent ring-2 ring-brand-accent/30"
+                    : "border-border hover:border-brand-accent/50",
                 )}
                 style={{ backgroundColor: color.value.toLowerCase() }}
                 title={color.label}
@@ -212,10 +232,13 @@ export function ProductFilter({
           <h3 className="text-sm font-semibold mb-3">Price</h3>
           <div className="space-y-2">
             {priceRanges.map((range) => (
-              <label key={range.value} className="flex items-center gap-2 cursor-pointer group">
+              <label
+                key={range.value}
+                className="flex items-center gap-2 cursor-pointer group"
+              >
                 <Checkbox
                   checked={selectedPrice === range.value}
-                  onChange={() => updateFilter('price', range.value, false)}
+                  onChange={() => updateFilter("price", range.value, false)}
                 />
                 <span className="text-sm group-hover:text-brand-accent transition-colors">
                   {range.label}
@@ -238,13 +261,18 @@ export function ProductFilter({
           onClick={() => setMobileOpen(!mobileOpen)}
           leftIcon={<SlidersHorizontal className="h-4 w-4" />}
         >
-          Filters {hasFilters && `(${[...selectedCategories, ...selectedBrands, ...selectedSizes, ...selectedColors].length})`}
+          Filters{" "}
+          {hasFilters &&
+            `(${[...selectedCategories, ...selectedBrands, ...selectedSizes, ...selectedColors].length})`}
         </Button>
       </div>
 
       {/* Mobile Overlay */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={() => setMobileOpen(false)}>
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
+        >
           <div
             className="absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-white overflow-y-auto overscroll-contain flex flex-col"
             onClick={(e) => e.stopPropagation()}
@@ -258,9 +286,7 @@ export function ProductFilter({
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-4">
-              {filterContent}
-            </div>
+            <div className="flex-1 overflow-y-auto p-4">{filterContent}</div>
           </div>
         </div>
       )}

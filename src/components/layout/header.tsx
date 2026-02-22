@@ -1,20 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useState } from "react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 import {
-  Search, Heart, ShoppingBag, User, Menu,
-  ChevronDown, ExternalLink,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { siteConfig } from '@/lib/site';
-import { useCartStore } from '@/store/cart.store';
-import { useWishlistStore } from '@/store/wishlist.store';
-import { useUIStore } from '@/store/ui.store';
-import { useScrollPosition } from '@/hooks/use-scroll-position';
-import { MobileNav } from './mobile-nav';
-import { SearchOverlay } from './search-overlay';
+  Search,
+  Heart,
+  ShoppingBag,
+  User,
+  Menu,
+  ChevronDown,
+  ExternalLink,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { siteConfig } from "@/lib/site";
+import { useCartStore } from "@/store/cart.store";
+import { useWishlistStore } from "@/store/wishlist.store";
+import { useUIStore } from "@/store/ui.store";
+import { useScrollPosition } from "@/hooks/use-scroll-position";
+import { MobileNav } from "./mobile-nav";
+import { SearchOverlay } from "./search-overlay";
 
 export function Header() {
   const { data: session } = useSession();
@@ -22,7 +27,13 @@ export function Header() {
   const cartItems = useCartStore((s) => s.totalItems());
   const openCart = useCartStore((s) => s.openDrawer);
   const wishlistCount = useWishlistStore((s) => s.count());
-  const { openSearch, searchOpen, mobileNavOpen, toggleMobileNav, closeMobileNav } = useUIStore();
+  const {
+    openSearch,
+    searchOpen,
+    mobileNavOpen,
+    toggleMobileNav,
+    closeMobileNav,
+  } = useUIStore();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [userDropdown, setUserDropdown] = useState(false);
 
@@ -48,10 +59,8 @@ export function Header() {
       {/* Main Header */}
       <header
         className={cn(
-          'sticky top-0 z-50 transition-all duration-300',
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-sm shadow-sm'
-            : 'bg-white'
+          "sticky top-0 z-50 transition-all duration-300",
+          isScrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-white",
         )}
       >
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
@@ -65,7 +74,10 @@ export function Header() {
               >
                 <Menu className="h-5 w-5" />
               </button>
-              <Link href="/" className="font-heading italic text-xl sm:text-2xl font-bold text-brand-primary tracking-wide">
+              <Link
+                href="/"
+                className="font-heading italic text-xl sm:text-2xl font-bold text-brand-primary tracking-wide"
+              >
                 {siteConfig.brand.name}
               </Link>
             </div>
@@ -73,22 +85,25 @@ export function Header() {
             {/* Center: Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-8">
               {siteConfig.navigation.header.map((item) => {
-                const hasChildren = 'children' in item && item.children;
-                const isSale = 'isSale' in item && (item as Record<string, unknown>).isSale;
+                const hasChildren = "children" in item && item.children;
+                const isSale =
+                  "isSale" in item && (item as Record<string, unknown>).isSale;
                 return (
                   <div
                     key={item.labelKey}
                     className="relative"
-                    onMouseEnter={() => hasChildren ? setActiveDropdown(item.labelKey) : undefined}
+                    onMouseEnter={() =>
+                      hasChildren ? setActiveDropdown(item.labelKey) : undefined
+                    }
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
                     <Link
                       href={item.href}
                       className={cn(
-                        'text-sm font-medium transition-colors py-6 flex items-center gap-1',
+                        "text-sm font-medium transition-colors py-6 flex items-center gap-1",
                         isSale
-                          ? 'text-brand-crimson font-semibold'
-                          : 'text-neutral-600 hover:text-brand-primary'
+                          ? "text-brand-crimson font-semibold"
+                          : "text-neutral-600 hover:text-brand-primary",
                       )}
                     >
                       {item.labelKey}
@@ -98,30 +113,55 @@ export function Header() {
                     {/* Mega Dropdown */}
                     {hasChildren && activeDropdown === item.labelKey && (
                       <div className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] bg-white rounded-lg shadow-dropdown border border-neutral-100 p-6 grid grid-cols-3 gap-6">
-                        {(item as unknown as { children: Array<{ labelKey: string; href: string; children?: Array<{ labelKey: string; href: string }> }> }).children.map((group: { labelKey: string; href: string; children?: Array<{ labelKey: string; href: string }> }) => (
-                          <div key={group.labelKey}>
-                            <Link
-                              href={group.href}
-                              className="text-sm font-semibold text-brand-primary mb-3 block hover:text-brand-accent"
-                            >
-                              {group.labelKey}
-                            </Link>
-                            {group.children && (
-                              <ul className="space-y-2">
-                                {group.children.map((sub: { labelKey: string; href: string }) => (
-                                  <li key={sub.labelKey}>
-                                    <Link
-                                      href={sub.href}
-                                      className="text-sm text-neutral-500 hover:text-brand-primary transition-colors"
-                                    >
-                                      {sub.labelKey}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </div>
-                        ))}
+                        {(
+                          item as unknown as {
+                            children: Array<{
+                              labelKey: string;
+                              href: string;
+                              children?: Array<{
+                                labelKey: string;
+                                href: string;
+                              }>;
+                            }>;
+                          }
+                        ).children.map(
+                          (group: {
+                            labelKey: string;
+                            href: string;
+                            children?: Array<{
+                              labelKey: string;
+                              href: string;
+                            }>;
+                          }) => (
+                            <div key={group.labelKey}>
+                              <Link
+                                href={group.href}
+                                className="text-sm font-semibold text-brand-primary mb-3 block hover:text-brand-accent"
+                              >
+                                {group.labelKey}
+                              </Link>
+                              {group.children && (
+                                <ul className="space-y-2">
+                                  {group.children.map(
+                                    (sub: {
+                                      labelKey: string;
+                                      href: string;
+                                    }) => (
+                                      <li key={sub.labelKey}>
+                                        <Link
+                                          href={sub.href}
+                                          className="text-sm text-neutral-500 hover:text-brand-primary transition-colors"
+                                        >
+                                          {sub.labelKey}
+                                        </Link>
+                                      </li>
+                                    ),
+                                  )}
+                                </ul>
+                              )}
+                            </div>
+                          ),
+                        )}
                       </div>
                     )}
                   </div>
@@ -177,31 +217,52 @@ export function Header() {
                   <div className="absolute right-0 top-full w-48 bg-white rounded-lg shadow-dropdown border border-neutral-100 py-2">
                     {session ? (
                       <>
-                        <Link href="/account" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link
+                          href="/account"
+                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                        >
                           My Account
                         </Link>
-                        <Link href="/account/orders" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link
+                          href="/account/orders"
+                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                        >
                           Orders
                         </Link>
-                        <Link href="/wishlist" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link
+                          href="/wishlist"
+                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                        >
                           Wishlist
                         </Link>
-                        {session.user?.role === 'ADMIN' && (
-                          <Link href="/admin" className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
+                        {session.user?.role === "ADMIN" && (
+                          <Link
+                            href="/admin"
+                            className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                          >
                             Admin Panel <ExternalLink className="h-3 w-3" />
                           </Link>
                         )}
                         <hr className="my-1 border-neutral-100" />
-                        <Link href="/api/auth/signout" className="block px-4 py-2.5 text-sm text-error hover:bg-neutral-50">
+                        <Link
+                          href="/api/auth/signout"
+                          className="block px-4 py-2.5 text-sm text-error hover:bg-neutral-50"
+                        >
                           Logout
                         </Link>
                       </>
                     ) : (
                       <>
-                        <Link href="/auth/login" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link
+                          href="/auth/login"
+                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                        >
                           Login
                         </Link>
-                        <Link href="/auth/register" className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">
+                        <Link
+                          href="/auth/register"
+                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                        >
                           Create Account
                         </Link>
                       </>

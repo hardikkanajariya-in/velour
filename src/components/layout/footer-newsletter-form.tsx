@@ -1,8 +1,11 @@
-'use client';
+"use client";
 
 export function FooterNewsletterForm() {
   return (
-    <form className="flex gap-2 w-full md:w-auto" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="flex gap-2 w-full md:w-auto"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <input
         type="email"
         placeholder="Enter your email"

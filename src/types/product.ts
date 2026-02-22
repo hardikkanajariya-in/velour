@@ -29,7 +29,7 @@ export interface Product {
   costPrice: number | null;
   sku: string;
   tags: string[];
-  gender: 'MEN' | 'WOMEN' | 'KIDS' | 'UNISEX';
+  gender: "MEN" | "WOMEN" | "KIDS" | "UNISEX";
   isFeatured: boolean;
   isNewArrival: boolean;
   isBestSeller: boolean;
@@ -54,7 +54,7 @@ export interface ProductListItem {
   slug: string;
   basePrice: number;
   comparePrice: number | null;
-  gender: 'MEN' | 'WOMEN' | 'KIDS' | 'UNISEX';
+  gender: "MEN" | "WOMEN" | "KIDS" | "UNISEX";
   isFeatured: boolean;
   isNewArrival: boolean;
   isBestSeller: boolean;

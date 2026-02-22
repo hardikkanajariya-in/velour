@@ -9,9 +9,19 @@ export const metadata: Metadata = {
     default: "VELOUR – Wear the Story",
     template: "%s | VELOUR",
   },
-  description: "Premium fashion for the modern Indian wardrobe. Discover curated clothing, accessories and more at VELOUR.",
-  keywords: ["fashion", "clothing", "online shopping", "India", "premium fashion", "VELOUR"],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  description:
+    "Premium fashion for the modern Indian wardrobe. Discover curated clothing, accessories and more at VELOUR.",
+  keywords: [
+    "fashion",
+    "clothing",
+    "online shopping",
+    "India",
+    "premium fashion",
+    "VELOUR",
+  ],
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
   openGraph: {
     type: "website",
     locale: "en_IN",

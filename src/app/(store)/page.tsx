@@ -1,14 +1,20 @@
-import { Suspense } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, Truck, RotateCcw, ShieldCheck, Sparkles } from 'lucide-react';
-import { prisma } from '@/lib/prisma';
-import { Button } from '@/components/ui/button';
-import { ProductCard } from '@/components/store/product/product-card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { siteConfig } from '@/lib/site';
-import type { ProductListItem } from '@/types/product';
-import { NewsletterForm } from '@/components/store/newsletter-form';
+import { Suspense } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  ArrowRight,
+  Truck,
+  RotateCcw,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import { prisma } from "@/lib/prisma";
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/store/product/product-card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { siteConfig } from "@/lib/site";
+import type { ProductListItem } from "@/types/product";
+import { NewsletterForm } from "@/components/store/newsletter-form";
 
 const productSelect = {
   id: true,
@@ -23,11 +29,25 @@ const productSelect = {
   averageRating: true,
   reviewCount: true,
   images: {
-    select: { id: true, url: true, altText: true, isPrimary: true, order: true },
-    orderBy: { order: 'asc' as const },
+    select: {
+      id: true,
+      url: true,
+      altText: true,
+      isPrimary: true,
+      order: true,
+    },
+    orderBy: { order: "asc" as const },
   },
   variants: {
-    select: { id: true, size: true, color: true, colorHex: true, stock: true, additionalPrice: true, sku: true },
+    select: {
+      id: true,
+      size: true,
+      color: true,
+      colorHex: true,
+      stock: true,
+      additionalPrice: true,
+      sku: true,
+    },
   },
   category: { select: { id: true, name: true, slug: true } },
   brand: { select: { id: true, name: true, slug: true } },
@@ -35,47 +55,64 @@ const productSelect = {
 
 async function getHomeData() {
   try {
-    const [banners, categories, featured, newArrivals, bestSellers] = await Promise.all([
-      prisma.banner.findMany({
-        where: { isActive: true },
-        select: { id: true, title: true, subtitle: true, image: true, mobileImage: true, link: true, position: true, order: true },
-        orderBy: { order: 'asc' },
-        take: 5,
-      }),
-      prisma.category.findMany({
-        where: { isActive: true, parentId: null },
-        select: { id: true, slug: true, name: true, image: true },
-        orderBy: { displayOrder: 'asc' },
-        take: 6,
-      }),
-      prisma.product.findMany({
-        where: { isActive: true, isFeatured: true },
-        select: productSelect,
-        take: 8,
-      }),
-      prisma.product.findMany({
-        where: { isActive: true, isNewArrival: true },
-        select: productSelect,
-        orderBy: { createdAt: 'desc' },
-        take: 8,
-      }),
-      prisma.product.findMany({
-        where: { isActive: true, isBestSeller: true },
-        select: productSelect,
-        orderBy: { totalSold: 'desc' },
-        take: 4,
-      }),
-    ]);
+    const [banners, categories, featured, newArrivals, bestSellers] =
+      await Promise.all([
+        prisma.banner.findMany({
+          where: { isActive: true },
+          select: {
+            id: true,
+            title: true,
+            subtitle: true,
+            image: true,
+            mobileImage: true,
+            link: true,
+            position: true,
+            order: true,
+          },
+          orderBy: { order: "asc" },
+          take: 5,
+        }),
+        prisma.category.findMany({
+          where: { isActive: true, parentId: null },
+          select: { id: true, slug: true, name: true, image: true },
+          orderBy: { displayOrder: "asc" },
+          take: 6,
+        }),
+        prisma.product.findMany({
+          where: { isActive: true, isFeatured: true },
+          select: productSelect,
+          take: 8,
+        }),
+        prisma.product.findMany({
+          where: { isActive: true, isNewArrival: true },
+          select: productSelect,
+          orderBy: { createdAt: "desc" },
+          take: 8,
+        }),
+        prisma.product.findMany({
+          where: { isActive: true, isBestSeller: true },
+          select: productSelect,
+          orderBy: { totalSold: "desc" },
+          take: 4,
+        }),
+      ]);
 
     return { banners, categories, featured, newArrivals, bestSellers };
   } catch (error) {
-    console.error('[getHomeData] Database query failed:', error);
-    return { banners: [], categories: [], featured: [], newArrivals: [], bestSellers: [] };
+    console.error("[getHomeData] Database query failed:", error);
+    return {
+      banners: [],
+      categories: [],
+      featured: [],
+      newArrivals: [],
+      bestSellers: [],
+    };
   }
 }
 
 export default async function HomePage() {
-  const { banners, categories, featured, newArrivals, bestSellers } = await getHomeData();
+  const { banners, categories, featured, newArrivals, bestSellers } =
+    await getHomeData();
 
   return (
     <div>
@@ -96,15 +133,20 @@ export default async function HomePage() {
               <div className="max-w-[1280px] mx-auto px-4 lg:px-8 w-full">
                 <div className="max-w-xl animate-fadeUp">
                   <p className="text-brand-accent text-xs sm:text-sm font-medium tracking-widest uppercase mb-2 sm:mb-3">
-                    {banners[0].subtitle ?? 'New Collection'}
+                    {banners[0].subtitle ?? "New Collection"}
                   </p>
                   <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white leading-tight mb-3 sm:mb-4">
                     {banners[0].title}
                   </h1>
-                  <p className="text-white/80 text-base sm:text-lg mb-4 sm:mb-6">{banners[0].subtitle}</p>
+                  <p className="text-white/80 text-base sm:text-lg mb-4 sm:mb-6">
+                    {banners[0].subtitle}
+                  </p>
                   <div className="flex gap-3">
-                    <Link href={banners[0].link ?? '/products'}>
-                      <Button className="bg-white text-brand-primary hover:bg-white/90" size="lg">
+                    <Link href={banners[0].link ?? "/products"}>
+                      <Button
+                        className="bg-white text-brand-primary hover:bg-white/90"
+                        size="lg"
+                      >
                         Shop Now
                         <ArrowRight className="h-4 w-4 ml-2" />
                       </Button>
@@ -127,7 +169,10 @@ export default async function HomePage() {
                 Premium fashion for the modern Indian wardrobe
               </p>
               <Link href="/products">
-                <Button className="bg-brand-accent text-brand-primary hover:bg-brand-accent/90" size="lg">
+                <Button
+                  className="bg-brand-accent text-brand-primary hover:bg-brand-accent/90"
+                  size="lg"
+                >
                   Explore Collection
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -142,12 +187,15 @@ export default async function HomePage() {
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-3 sm:py-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[
-              { icon: Truck, text: 'Free Shipping Over ₹1,999' },
-              { icon: RotateCcw, text: '14-Day Easy Returns' },
-              { icon: ShieldCheck, text: 'Secure Payments' },
-              { icon: Sparkles, text: '100% Authentic' },
+              { icon: Truck, text: "Free Shipping Over ₹1,999" },
+              { icon: RotateCcw, text: "14-Day Easy Returns" },
+              { icon: ShieldCheck, text: "Secure Payments" },
+              { icon: Sparkles, text: "100% Authentic" },
             ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-1.5 sm:gap-2 justify-center text-xs sm:text-sm text-muted-foreground">
+              <div
+                key={text}
+                className="flex items-center gap-1.5 sm:gap-2 justify-center text-xs sm:text-sm text-muted-foreground"
+              >
                 <Icon className="h-4 w-4 text-brand-accent shrink-0" />
                 {text}
               </div>
@@ -161,8 +209,12 @@ export default async function HomePage() {
         <section className="py-10 sm:py-16">
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
             <div className="text-center mb-6 sm:mb-10">
-              <h2 className="text-2xl sm:text-3xl font-heading font-bold">Shop by Category</h2>
-              <p className="text-sm sm:text-base text-muted-foreground mt-1.5 sm:mt-2">Explore our curated collections</p>
+              <h2 className="text-2xl sm:text-3xl font-heading font-bold">
+                Shop by Category
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1.5 sm:mt-2">
+                Explore our curated collections
+              </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
               {categories.map((cat) => (
@@ -197,8 +249,12 @@ export default async function HomePage() {
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
             <div className="flex items-center justify-between mb-5 sm:mb-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-heading font-bold">Featured Products</h2>
-                <p className="text-sm sm:text-base text-muted-foreground mt-1">Handpicked styles just for you</p>
+                <h2 className="text-2xl sm:text-3xl font-heading font-bold">
+                  Featured Products
+                </h2>
+                <p className="text-sm sm:text-base text-muted-foreground mt-1">
+                  Handpicked styles just for you
+                </p>
               </div>
               <Link
                 href="/products?featured=true"
@@ -254,8 +310,12 @@ export default async function HomePage() {
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
             <div className="flex items-center justify-between mb-5 sm:mb-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-heading font-bold">New Arrivals</h2>
-                <p className="text-sm sm:text-base text-muted-foreground mt-1">Just dropped, just for you</p>
+                <h2 className="text-2xl sm:text-3xl font-heading font-bold">
+                  New Arrivals
+                </h2>
+                <p className="text-sm sm:text-base text-muted-foreground mt-1">
+                  Just dropped, just for you
+                </p>
               </div>
               <Link
                 href="/products?new=true"
@@ -278,8 +338,12 @@ export default async function HomePage() {
         <section className="py-10 sm:py-16">
           <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
             <div className="text-center mb-6 sm:mb-10">
-              <h2 className="text-2xl sm:text-3xl font-heading font-bold">Best Sellers</h2>
-              <p className="text-sm sm:text-base text-muted-foreground mt-1.5 sm:mt-2">Our most loved products</p>
+              <h2 className="text-2xl sm:text-3xl font-heading font-bold">
+                Best Sellers
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1.5 sm:mt-2">
+                Our most loved products
+              </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {bestSellers.map((product: ProductListItem) => (
@@ -293,9 +357,12 @@ export default async function HomePage() {
       {/* Newsletter */}
       <section className="py-12 sm:py-20 bg-brand-primary text-white">
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-heading font-bold mb-2 sm:mb-3">Join the VELOUR Club</h2>
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold mb-2 sm:mb-3">
+            Join the VELOUR Club
+          </h2>
           <p className="text-white/60 text-sm sm:text-base max-w-md mx-auto mb-6 sm:mb-8">
-            Get exclusive access to new collections, early sales, and style tips — plus 10% off your first order.
+            Get exclusive access to new collections, early sales, and style tips
+            — plus 10% off your first order.
           </p>
           <NewsletterForm />
         </div>

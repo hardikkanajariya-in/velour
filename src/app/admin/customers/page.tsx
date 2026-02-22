@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { DataTable } from '@/components/admin/data-table';
-import { Spinner } from '@/components/ui/spinner';
-import { Badge } from '@/components/ui/badge';
-import { formatDate } from '@/lib/utils';
+import { useEffect, useState } from "react";
+import { DataTable } from "@/components/admin/data-table";
+import { Spinner } from "@/components/ui/spinner";
+import { Badge } from "@/components/ui/badge";
+import { formatDate } from "@/lib/utils";
 
 export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<Record<string, unknown>[]>([]);
@@ -13,7 +13,7 @@ export default function AdminCustomersPage() {
   useEffect(() => {
     async function fetchCustomers() {
       try {
-        const res = await fetch('/api/admin/customers');
+        const res = await fetch("/api/admin/customers");
         if (res.ok) {
           const data = await res.json();
           setCustomers(data.customers ?? []);
@@ -41,28 +41,32 @@ export default function AdminCustomersPage() {
 
       <DataTable
         columns={[
-          { key: 'name', label: 'Name', render: (item) => (item.name as string) ?? 'N/A' },
-          { key: 'email', label: 'Email' },
           {
-            key: 'role',
-            label: 'Role',
+            key: "name",
+            label: "Name",
+            render: (item) => (item.name as string) ?? "N/A",
+          },
+          { key: "email", label: "Email" },
+          {
+            key: "role",
+            label: "Role",
             render: (item) => (
-              <Badge variant={item.role === 'ADMIN' ? 'warning' : 'default'}>
+              <Badge variant={item.role === "ADMIN" ? "warning" : "default"}>
                 {item.role as string}
               </Badge>
             ),
           },
           {
-            key: '_count',
-            label: 'Orders',
+            key: "_count",
+            label: "Orders",
             render: (item) => {
               const count = item._count as { orders: number } | undefined;
               return count?.orders ?? 0;
             },
           },
           {
-            key: 'createdAt',
-            label: 'Joined',
+            key: "createdAt",
+            label: "Joined",
             render: (item) => formatDate(item.createdAt as string),
           },
         ]}

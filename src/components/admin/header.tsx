@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useSession, signOut } from 'next-auth/react';
-import { Bell, LogOut } from 'lucide-react';
-import { getInitials } from '@/lib/utils';
+import { useSession, signOut } from "next-auth/react";
+import { Bell, LogOut } from "lucide-react";
+import { getInitials } from "@/lib/utils";
 
 export function AdminHeader() {
   const { data: session } = useSession();
@@ -17,7 +17,9 @@ export function AdminHeader() {
         >
           <span className="sr-only">Menu</span>
         </button>
-        <h2 className="text-xs sm:text-sm font-medium text-muted-foreground">Admin Panel</h2>
+        <h2 className="text-xs sm:text-sm font-medium text-muted-foreground">
+          Admin Panel
+        </h2>
       </div>
 
       <div className="flex items-center gap-2 sm:gap-4">
@@ -28,14 +30,16 @@ export function AdminHeader() {
 
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">
-            {getInitials(user?.name ?? 'A')}
+            {getInitials(user?.name ?? "A")}
           </div>
           <div className="hidden sm:block">
-            <p className="text-sm font-medium leading-none">{user?.name ?? 'Admin'}</p>
+            <p className="text-sm font-medium leading-none">
+              {user?.name ?? "Admin"}
+            </p>
             <p className="text-xs text-muted-foreground">{user?.email}</p>
           </div>
           <button
-            onClick={() => signOut({ callbackUrl: '/' })}
+            onClick={() => signOut({ callbackUrl: "/" })}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
             title="Sign out"
           >

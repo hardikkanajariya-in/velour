@@ -1,30 +1,43 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { Breadcrumb } from '@/components/layout/breadcrumb';
-import { ProductGallery } from '@/components/store/product/product-gallery';
-import { VariantSelector } from '@/components/store/product/variant-selector';
-import { SizeGuideModal } from '@/components/store/product/size-guide-modal';
-import { ReviewList } from '@/components/store/review/review-list';
-import { ReviewForm } from '@/components/store/review/review-form';
-import { RelatedProducts } from '@/components/store/product/related-products';
-import { RecentlyViewed } from '@/components/store/product/recently-viewed';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Rating } from '@/components/ui/rating';
-import { Tabs } from '@/components/ui/tabs';
-import { useCartStore } from '@/store/cart.store';
-import { useWishlistStore } from '@/store/wishlist.store';
-import { useUIStore } from '@/store/ui.store';
-import { formatPrice, getDiscountPercentage, getEstimatedDelivery, cn } from '@/lib/utils';
-import { siteConfig } from '@/lib/site';
-import type { Product, ProductVariant, ProductListItem } from '@/types/product';
-import type { Review } from '@/types/review';
+import { useState, useCallback } from "react";
+import { Breadcrumb } from "@/components/layout/breadcrumb";
+import { ProductGallery } from "@/components/store/product/product-gallery";
+import { VariantSelector } from "@/components/store/product/variant-selector";
+import { SizeGuideModal } from "@/components/store/product/size-guide-modal";
+import { ReviewList } from "@/components/store/review/review-list";
+import { ReviewForm } from "@/components/store/review/review-form";
+import { RelatedProducts } from "@/components/store/product/related-products";
+import { RecentlyViewed } from "@/components/store/product/recently-viewed";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Rating } from "@/components/ui/rating";
+import { Tabs } from "@/components/ui/tabs";
+import { useCartStore } from "@/store/cart.store";
+import { useWishlistStore } from "@/store/wishlist.store";
+import { useUIStore } from "@/store/ui.store";
 import {
-  Heart, ShoppingBag, Truck, RotateCcw, Shield, Share2, Minus, Plus, Ruler,
-} from 'lucide-react';
-import toast from 'react-hot-toast';
-import { useEffect } from 'react';
+  formatPrice,
+  getDiscountPercentage,
+  getEstimatedDelivery,
+  cn,
+} from "@/lib/utils";
+import { siteConfig } from "@/lib/site";
+import type { Product, ProductVariant, ProductListItem } from "@/types/product";
+import type { Review } from "@/types/review";
+import {
+  Heart,
+  ShoppingBag,
+  Truck,
+  RotateCcw,
+  Shield,
+  Share2,
+  Minus,
+  Plus,
+  Ruler,
+} from "lucide-react";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -32,20 +45,27 @@ interface ProductDetailClientProps {
   relatedProducts: ProductListItem[];
 }
 
-export function ProductDetailClient({ product, reviews: initialReviews, relatedProducts }: ProductDetailClientProps) {
+export function ProductDetailClient({
+  product,
+  reviews: initialReviews,
+  relatedProducts,
+}: ProductDetailClientProps) {
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(() => {
-    if (product.variants?.length > 0) {
-      const inStock = product.variants.find((v) => v.stock > 0);
-      return inStock ?? product.variants[0];
-    }
-    return null;
-  });
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
+    () => {
+      if (product.variants?.length > 0) {
+        const inStock = product.variants.find((v) => v.stock > 0);
+        return inStock ?? product.variants[0];
+      }
+      return null;
+    },
+  );
   const [quantity, setQuantity] = useState(1);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   const { addItem, openDrawer } = useCartStore();
-  const { items: wishlistItems, toggleItem: toggleWishlist } = useWishlistStore();
+  const { items: wishlistItems, toggleItem: toggleWishlist } =
+    useWishlistStore();
   const { addToRecentlyViewed } = useUIStore();
 
   useEffect(() => {
@@ -55,10 +75,13 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
   const price = selectedVariant
     ? product.basePrice + selectedVariant.additionalPrice
     : product.basePrice;
-  const discount = product.comparePrice ? getDiscountPercentage(product.comparePrice, price) : 0;
+  const discount = product.comparePrice
+    ? getDiscountPercentage(product.comparePrice, price)
+    : 0;
   const isWishlisted = wishlistItems.includes(product.id);
   const inStock = selectedVariant ? selectedVariant.stock > 0 : false;
-  const remaining = siteConfig.shipping.freeShippingThreshold - price * quantity;
+  const remaining =
+    siteConfig.shipping.freeShippingThreshold - price * quantity;
 
   const handleRefreshReviews = useCallback(async () => {
     try {
@@ -74,11 +97,11 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
 
   function handleAddToCart() {
     if (!selectedVariant) {
-      toast.error('Please select a size');
+      toast.error("Please select a size");
       return;
     }
     if (!inStock) {
-      toast.error('This variant is out of stock');
+      toast.error("This variant is out of stock");
       return;
     }
     addItem({
@@ -96,15 +119,15 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
       variant: selectedVariant,
     });
     openDrawer();
-    toast.success('Added to cart');
+    toast.success("Added to cart");
   }
 
   async function handleShare() {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      toast.success('Link copied!');
+      toast.success("Link copied!");
     } catch {
-      toast.error('Failed to copy link');
+      toast.error("Failed to copy link");
     }
   }
 
@@ -112,9 +135,14 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-4 sm:py-6">
       <Breadcrumb
         items={[
-          { label: 'Products', href: '/products' },
+          { label: "Products", href: "/products" },
           ...(product.category
-            ? [{ label: product.category.name, href: `/category/${product.category.slug}` }]
+            ? [
+                {
+                  label: product.category.name,
+                  href: `/category/${product.category.slug}`,
+                },
+              ]
             : []),
           { label: product.name },
         ]}
@@ -138,17 +166,22 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
             </p>
           )}
 
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mb-2">{product.name}</h1>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mb-2">
+            {product.name}
+          </h1>
 
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
             <Rating value={product.averageRating} />
             <span className="text-sm text-muted-foreground">
-              ({product.reviewCount} review{product.reviewCount !== 1 ? 's' : ''})
+              ({product.reviewCount} review
+              {product.reviewCount !== 1 ? "s" : ""})
             </span>
           </div>
 
           <div className="flex items-baseline gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <span className="text-xl sm:text-2xl font-bold">{formatPrice(price)}</span>
+            <span className="text-xl sm:text-2xl font-bold">
+              {formatPrice(price)}
+            </span>
             {product.comparePrice && product.comparePrice > price && (
               <span className="text-base sm:text-lg text-muted-foreground line-through">
                 {formatPrice(product.comparePrice)}
@@ -157,7 +190,9 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
           </div>
 
           {product.shortDescription && (
-            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">{product.shortDescription}</p>
+            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
+              {product.shortDescription}
+            </p>
           )}
 
           {/* Variant Selector */}
@@ -189,7 +224,9 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
               >
                 <Minus className="w-4 h-4" />
               </button>
-              <span className="w-10 sm:w-12 text-center text-sm font-medium">{quantity}</span>
+              <span className="w-10 sm:w-12 text-center text-sm font-medium">
+                {quantity}
+              </span>
               <button
                 onClick={() => setQuantity(Math.min(10, quantity + 1))}
                 className="p-2.5 hover:bg-muted transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -201,29 +238,44 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
 
           {/* Stock Status */}
           {selectedVariant && (
-            <p className={cn('text-sm mb-4', inStock ? 'text-green-600' : 'text-red-600')}>
+            <p
+              className={cn(
+                "text-sm mb-4",
+                inStock ? "text-green-600" : "text-red-600",
+              )}
+            >
               {inStock
                 ? selectedVariant.stock <= 5
                   ? `Only ${selectedVariant.stock} left in stock!`
-                  : 'In Stock'
-                : 'Out of Stock'}
+                  : "In Stock"
+                : "Out of Stock"}
             </p>
           )}
 
           {/* Actions */}
           <div className="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Button onClick={handleAddToCart} disabled={!inStock} className="flex-1 gap-2">
+            <Button
+              onClick={handleAddToCart}
+              disabled={!inStock}
+              className="flex-1 gap-2"
+            >
               <ShoppingBag className="w-4 h-4" />
-              {inStock ? 'Add to Cart' : 'Out of Stock'}
+              {inStock ? "Add to Cart" : "Out of Stock"}
             </Button>
             <Button
-              variant={isWishlisted ? 'accent' : 'secondary'}
+              variant={isWishlisted ? "accent" : "secondary"}
               onClick={() => toggleWishlist(product.id)}
               className="px-3 sm:px-4"
             >
-              <Heart className={cn('w-5 h-5', isWishlisted && 'fill-current')} />
+              <Heart
+                className={cn("w-5 h-5", isWishlisted && "fill-current")}
+              />
             </Button>
-            <Button variant="secondary" onClick={handleShare} className="px-3 sm:px-4 hidden sm:flex">
+            <Button
+              variant="secondary"
+              onClick={handleShare}
+              className="px-3 sm:px-4 hidden sm:flex"
+            >
               <Share2 className="w-5 h-5" />
             </Button>
           </div>
@@ -231,7 +283,8 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
           {/* Free Shipping Info */}
           {remaining > 0 ? (
             <p className="text-sm text-muted-foreground mb-6">
-              Add {formatPrice(remaining)} more for <strong>free shipping</strong>
+              Add {formatPrice(remaining)} more for{" "}
+              <strong>free shipping</strong>
             </p>
           ) : (
             <p className="text-sm text-green-600 font-medium mb-6">
@@ -243,18 +296,33 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
           <div className="grid grid-cols-3 gap-3 sm:gap-4 border-t border-border pt-4 sm:pt-6">
             <div className="flex flex-col items-center text-center gap-1">
               <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
-              <span className="text-[10px] sm:text-xs font-medium">Free Shipping</span>
-              <span className="text-[10px] sm:text-xs text-muted-foreground">{getEstimatedDelivery(5).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
+              <span className="text-[10px] sm:text-xs font-medium">
+                Free Shipping
+              </span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">
+                {getEstimatedDelivery(5).toLocaleDateString("en-IN", {
+                  day: "numeric",
+                  month: "short",
+                })}
+              </span>
             </div>
             <div className="flex flex-col items-center text-center gap-1">
               <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
-              <span className="text-[10px] sm:text-xs font-medium">Easy Returns</span>
-              <span className="text-[10px] sm:text-xs text-muted-foreground">15-day policy</span>
+              <span className="text-[10px] sm:text-xs font-medium">
+                Easy Returns
+              </span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">
+                15-day policy
+              </span>
             </div>
             <div className="flex flex-col items-center text-center gap-1">
               <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
-              <span className="text-[10px] sm:text-xs font-medium">Secure Payment</span>
-              <span className="text-[10px] sm:text-xs text-muted-foreground">100% protected</span>
+              <span className="text-[10px] sm:text-xs font-medium">
+                Secure Payment
+              </span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">
+                100% protected
+              </span>
             </div>
           </div>
         </div>
@@ -265,17 +333,19 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
         <Tabs
           tabs={[
             {
-              label: 'Description',
-              value: 'description',
+              label: "Description",
+              value: "description",
               content: (
                 <div className="prose max-w-none py-6">
-                  <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: product.description }}
+                  />
                 </div>
               ),
             },
             {
               label: `Reviews (${product.reviewCount})`,
-              value: 'reviews',
+              value: "reviews",
               content: (
                 <div className="py-6 space-y-8">
                   <ReviewList
@@ -284,25 +354,47 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
                     totalReviews={product.reviewCount}
                   />
                   <div className="border-t border-border pt-8">
-                    <h3 className="text-lg font-heading font-bold mb-4">Write a Review</h3>
-                    <ReviewForm productId={product.id} onSuccess={handleRefreshReviews} />
+                    <h3 className="text-lg font-heading font-bold mb-4">
+                      Write a Review
+                    </h3>
+                    <ReviewForm
+                      productId={product.id}
+                      onSuccess={handleRefreshReviews}
+                    />
                   </div>
                 </div>
               ),
             },
             {
-              label: 'Shipping & Returns',
-              value: 'shipping',
+              label: "Shipping & Returns",
+              value: "shipping",
               content: (
                 <div className="py-6 space-y-4 text-sm text-muted-foreground">
                   <div>
-                    <h4 className="font-medium text-foreground mb-1">Shipping</h4>
-                    <p>Free shipping on orders above {formatPrice(siteConfig.shipping.freeShippingThreshold)}.</p>
-                    <p>Standard delivery: {getEstimatedDelivery(5).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                    <h4 className="font-medium text-foreground mb-1">
+                      Shipping
+                    </h4>
+                    <p>
+                      Free shipping on orders above{" "}
+                      {formatPrice(siteConfig.shipping.freeShippingThreshold)}.
+                    </p>
+                    <p>
+                      Standard delivery:{" "}
+                      {getEstimatedDelivery(5).toLocaleDateString("en-IN", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-foreground mb-1">Returns</h4>
-                    <p>Easy 15-day returns. Items must be unworn with original tags attached.</p>
+                    <h4 className="font-medium text-foreground mb-1">
+                      Returns
+                    </h4>
+                    <p>
+                      Easy 15-day returns. Items must be unworn with original
+                      tags attached.
+                    </p>
                   </div>
                 </div>
               ),
@@ -318,7 +410,10 @@ export function ProductDetailClient({ product, reviews: initialReviews, relatedP
       <RecentlyViewed excludeId={product.id} />
 
       {/* Size Guide Modal */}
-      <SizeGuideModal isOpen={showSizeGuide} onClose={() => setShowSizeGuide(false)} />
+      <SizeGuideModal
+        isOpen={showSizeGuide}
+        onClose={() => setShowSizeGuide(false)}
+      />
     </div>
   );
 }

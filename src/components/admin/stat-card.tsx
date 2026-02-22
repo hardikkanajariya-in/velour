@@ -1,29 +1,43 @@
-import type { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface StatCardProps {
   title: string;
   value: string | number;
   change?: string;
-  changeType?: 'positive' | 'negative' | 'neutral';
+  changeType?: "positive" | "negative" | "neutral";
   icon?: ReactNode;
   className?: string;
 }
 
-export function StatCard({ title, value, change, changeType = 'neutral', icon, className }: StatCardProps) {
+export function StatCard({
+  title,
+  value,
+  change,
+  changeType = "neutral",
+  icon,
+  className,
+}: StatCardProps) {
   return (
-    <div className={cn('p-4 sm:p-6 bg-background border border-border rounded-card', className)}>
+    <div
+      className={cn(
+        "p-4 sm:p-6 bg-background border border-border rounded-card",
+        className,
+      )}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs sm:text-sm text-muted-foreground">{title}</p>
-          <p className="text-xl sm:text-2xl font-heading font-bold mt-1 truncate">{value}</p>
+          <p className="text-xl sm:text-2xl font-heading font-bold mt-1 truncate">
+            {value}
+          </p>
           {change && (
             <p
               className={cn(
-                'text-xs mt-1',
-                changeType === 'positive' && 'text-green-600',
-                changeType === 'negative' && 'text-red-600',
-                changeType === 'neutral' && 'text-muted-foreground'
+                "text-xs mt-1",
+                changeType === "positive" && "text-green-600",
+                changeType === "negative" && "text-red-600",
+                changeType === "neutral" && "text-muted-foreground",
               )}
             >
               {change}

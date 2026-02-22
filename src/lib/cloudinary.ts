@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -8,13 +8,11 @@ cloudinary.config({
 
 export async function uploadImage(
   file: string,
-  folder: string = 'velour'
+  folder: string = "velour",
 ): Promise<{ url: string; publicId: string }> {
   const result = await cloudinary.uploader.upload(file, {
     folder,
-    transformation: [
-      { quality: 'auto', fetch_format: 'auto' },
-    ],
+    transformation: [{ quality: "auto", fetch_format: "auto" }],
   });
 
   return {

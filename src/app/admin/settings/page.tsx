@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { siteConfig } from '@/lib/site';
-import { Button } from '@/components/ui/button';
-import toast from 'react-hot-toast';
+import { siteConfig } from "@/lib/site";
+import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 export default function AdminSettingsPage() {
   return (
@@ -23,15 +23,20 @@ export default function AdminSettingsPage() {
           </div>
           <div>
             <p className="text-muted-foreground">Currency</p>
-            <p className="font-medium">{siteConfig.currency.code} ({siteConfig.currency.symbol})</p>
+            <p className="font-medium">
+              {siteConfig.currency.code} ({siteConfig.currency.symbol})
+            </p>
           </div>
           <div>
             <p className="text-muted-foreground">Free Shipping Threshold</p>
-            <p className="font-medium">₹{siteConfig.shipping.freeShippingThreshold}</p>
+            <p className="font-medium">
+              ₹{siteConfig.shipping.freeShippingThreshold}
+            </p>
           </div>
         </div>
         <p className="text-xs text-muted-foreground">
-          Store settings are configured in site.config.ts. Edit the file to change these values.
+          Store settings are configured in site.config.ts. Edit the file to
+          change these values.
         </p>
       </div>
 
@@ -40,10 +45,17 @@ export default function AdminSettingsPage() {
         <h2 className="text-lg font-heading font-bold">Features</h2>
         <div className="space-y-3">
           {Object.entries(siteConfig.features).map(([key, value]) => (
-            <div key={key} className="flex items-center justify-between text-sm">
-              <span className="capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
-              <span className={value ? 'text-green-600' : 'text-muted-foreground'}>
-                {value ? 'Enabled' : 'Disabled'}
+            <div
+              key={key}
+              className="flex items-center justify-between text-sm"
+            >
+              <span className="capitalize">
+                {key.replace(/([A-Z])/g, " $1")}
+              </span>
+              <span
+                className={value ? "text-green-600" : "text-muted-foreground"}
+              >
+                {value ? "Enabled" : "Disabled"}
               </span>
             </div>
           ))}
@@ -57,7 +69,7 @@ export default function AdminSettingsPage() {
           <Button
             variant="secondary"
             onClick={() => {
-              toast.success('Cache cleared (simulated)');
+              toast.success("Cache cleared (simulated)");
             }}
           >
             Clear Cache
@@ -65,7 +77,7 @@ export default function AdminSettingsPage() {
           <Button
             variant="secondary"
             onClick={() => {
-              window.open('/', '_blank');
+              window.open("/", "_blank");
             }}
           >
             View Store

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Modal } from '@/components/ui/modal';
-import { Spinner } from '@/components/ui/spinner';
-import { Plus, Trash2, GripVertical } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Modal } from "@/components/ui/modal";
+import { Spinner } from "@/components/ui/spinner";
+import { Plus, Trash2, GripVertical } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface Banner {
   id: string;
@@ -24,7 +24,12 @@ export default function AdminBannersPage() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [creating, setCreating] = useState(false);
-  const [form, setForm] = useState({ title: '', subtitle: '', image: '', link: '' });
+  const [form, setForm] = useState({
+    title: "",
+    subtitle: "",
+    image: "",
+    link: "",
+  });
 
   useEffect(() => {
     fetchBanners();
@@ -32,7 +37,7 @@ export default function AdminBannersPage() {
 
   async function fetchBanners() {
     try {
-      const res = await fetch('/api/admin/banners');
+      const res = await fetch("/api/admin/banners");
       if (res.ok) {
         const data = await res.json();
         setBanners(data.banners ?? []);
@@ -47,47 +52,51 @@ export default function AdminBannersPage() {
   async function handleCreate() {
     setCreating(true);
     try {
-      const res = await fetch('/api/admin/banners', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/admin/banners", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
       if (res.ok) {
-        toast.success('Banner created');
+        toast.success("Banner created");
         setShowModal(false);
-        setForm({ title: '', subtitle: '', image: '', link: '' });
+        setForm({ title: "", subtitle: "", image: "", link: "" });
         fetchBanners();
       }
     } catch {
-      toast.error('Failed to create');
+      toast.error("Failed to create");
     } finally {
       setCreating(false);
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this banner?')) return;
+    if (!confirm("Delete this banner?")) return;
     try {
-      const res = await fetch(`/api/admin/banners?id=${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/admin/banners?id=${id}`, {
+        method: "DELETE",
+      });
       if (res.ok) {
         setBanners((prev) => prev.filter((b) => b.id !== id));
-        toast.success('Deleted');
+        toast.success("Deleted");
       }
     } catch {
-      toast.error('Failed');
+      toast.error("Failed");
     }
   }
 
   async function toggleActive(id: string, isActive: boolean) {
     try {
       await fetch(`/api/admin/banners`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, isActive: !isActive }),
       });
-      setBanners((prev) => prev.map((b) => (b.id === id ? { ...b, isActive: !isActive } : b)));
+      setBanners((prev) =>
+        prev.map((b) => (b.id === id ? { ...b, isActive: !isActive } : b)),
+      );
     } catch {
-      toast.error('Failed');
+      toast.error("Failed");
     }
   }
 
@@ -110,27 +119,49 @@ export default function AdminBannersPage() {
 
       <div className="space-y-4">
         {banners.length === 0 ? (
-          <p className="text-center text-muted-foreground py-12">No banners yet</p>
+          <p className="text-center text-muted-foreground py-12">
+            No banners yet
+          </p>
         ) : (
           banners.map((banner) => (
-            <div key={banner.id} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 border border-border rounded-card">
+            <div
+              key={banner.id}
+              className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 border border-border rounded-card"
+            >
               <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                 <GripVertical className="w-5 h-5 text-muted-foreground cursor-grab hidden sm:block" />
                 <div className="w-24 sm:w-32 h-14 sm:h-16 rounded overflow-hidden bg-muted flex-shrink-0">
-                  {banner.image && <img src={banner.image} alt="" className="w-full h-full object-cover" />}
+                  {banner.image && (
+                    <img
+                      src={banner.image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium truncate text-sm sm:text-base">{banner.title}</p>
-                  {banner.subtitle && <p className="text-xs sm:text-sm text-muted-foreground truncate">{banner.subtitle}</p>}
+                  <p className="font-medium truncate text-sm sm:text-base">
+                    {banner.title}
+                  </p>
+                  {banner.subtitle && (
+                    <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                      {banner.subtitle}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-auto">
-                <button onClick={() => toggleActive(banner.id, banner.isActive)}>
-                  <Badge variant={banner.isActive ? 'success' : 'default'}>
-                    {banner.isActive ? 'Active' : 'Hidden'}
+                <button
+                  onClick={() => toggleActive(banner.id, banner.isActive)}
+                >
+                  <Badge variant={banner.isActive ? "success" : "default"}>
+                    {banner.isActive ? "Active" : "Hidden"}
                   </Badge>
                 </button>
-                <button onClick={() => handleDelete(banner.id)} className="text-red-600 hover:bg-red-50 p-2 rounded">
+                <button
+                  onClick={() => handleDelete(banner.id)}
+                  className="text-red-600 hover:bg-red-50 p-2 rounded"
+                >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -139,17 +170,39 @@ export default function AdminBannersPage() {
         )}
       </div>
 
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="Add Banner">
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Add Banner"
+      >
         <div className="space-y-4">
-          <Input label="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          <Input label="Subtitle" value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
-          <Input label="Image URL" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} />
-          <Input label="Link (optional)" value={form.link} onChange={(e) => setForm({ ...form, link: e.target.value })} />
+          <Input
+            label="Title"
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+          />
+          <Input
+            label="Subtitle"
+            value={form.subtitle}
+            onChange={(e) => setForm({ ...form, subtitle: e.target.value })}
+          />
+          <Input
+            label="Image URL"
+            value={form.image}
+            onChange={(e) => setForm({ ...form, image: e.target.value })}
+          />
+          <Input
+            label="Link (optional)"
+            value={form.link}
+            onChange={(e) => setForm({ ...form, link: e.target.value })}
+          />
           <div className="flex gap-3 pt-2">
             <Button onClick={handleCreate} disabled={creating}>
-              {creating ? <Spinner size="sm" /> : 'Create'}
+              {creating ? <Spinner size="sm" /> : "Create"}
             </Button>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Cancel
+            </Button>
           </div>
         </div>
       </Modal>

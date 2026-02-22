@@ -1,33 +1,37 @@
-'use client';
+"use client";
 
-import { useSession } from 'next-auth/react';
-import { useRouter, usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { Spinner } from '@/components/ui/spinner';
-import { cn } from '@/lib/utils';
-import { User, ShoppingBag, MapPin, Heart, LogOut } from 'lucide-react';
-import { signOut } from 'next-auth/react';
+import { useSession } from "next-auth/react";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
+import { useEffect } from "react";
+import { Spinner } from "@/components/ui/spinner";
+import { cn } from "@/lib/utils";
+import { User, ShoppingBag, MapPin, Heart, LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 const accountNav = [
-  { label: 'My Account', href: '/account', icon: User },
-  { label: 'My Orders', href: '/account/orders', icon: ShoppingBag },
-  { label: 'Addresses', href: '/account/addresses', icon: MapPin },
-  { label: 'Wishlist', href: '/account/wishlist', icon: Heart },
+  { label: "My Account", href: "/account", icon: User },
+  { label: "My Orders", href: "/account/orders", icon: ShoppingBag },
+  { label: "Addresses", href: "/account/addresses", icon: MapPin },
+  { label: "Wishlist", href: "/account/wishlist", icon: Heart },
 ];
 
-export function AccountLayoutClient({ children }: { children: React.ReactNode }) {
+export function AccountLayoutClient({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/auth/login?callbackUrl=/account');
+    if (status === "unauthenticated") {
+      router.push("/auth/login?callbackUrl=/account");
     }
   }, [status, router]);
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Spinner size="lg" />
@@ -39,7 +43,9 @@ export function AccountLayoutClient({ children }: { children: React.ReactNode })
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-4 sm:py-6">
-      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mb-5 sm:mb-8">My Account</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold mb-5 sm:mb-8">
+        My Account
+      </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
         <nav className="flex lg:flex-col gap-1 overflow-x-auto scrollbar-none -mx-4 px-4 lg:mx-0 lg:px-0">
@@ -51,10 +57,10 @@ export function AccountLayoutClient({ children }: { children: React.ReactNode })
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm transition-colors whitespace-nowrap min-h-[44px]',
+                  "flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm transition-colors whitespace-nowrap min-h-[44px]",
                   isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'hover:bg-muted'
+                    ? "bg-primary text-primary-foreground"
+                    : "hover:bg-muted",
                 )}
               >
                 <Icon className="w-4 h-4" />
@@ -63,7 +69,7 @@ export function AccountLayoutClient({ children }: { children: React.ReactNode })
             );
           })}
           <button
-            onClick={() => signOut({ callbackUrl: '/' })}
+            onClick={() => signOut({ callbackUrl: "/" })}
             className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm text-red-600 hover:bg-red-50 w-full transition-colors whitespace-nowrap min-h-[44px]"
           >
             <LogOut className="w-4 h-4" />

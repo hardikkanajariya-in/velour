@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { ProductCard } from './product-card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { EmptyState } from '@/components/ui/empty-state';
-import { PackageOpen } from 'lucide-react';
-import type { ProductListItem } from '@/types/product';
+import { ProductCard } from "./product-card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/ui/empty-state";
+import { PackageOpen } from "lucide-react";
+import type { ProductListItem } from "@/types/product";
 
 interface ProductGridProps {
   products: ProductListItem[];
@@ -13,11 +13,16 @@ interface ProductGridProps {
   onQuickView?: (product: ProductListItem) => void;
 }
 
-export function ProductGrid({ products, loading, columns = 4, onQuickView }: ProductGridProps) {
+export function ProductGrid({
+  products,
+  loading,
+  columns = 4,
+  onQuickView,
+}: ProductGridProps) {
   const gridCols = {
-    2: 'grid-cols-2',
-    3: 'grid-cols-2 md:grid-cols-3',
-    4: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+    2: "grid-cols-2",
+    3: "grid-cols-2 md:grid-cols-3",
+    4: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
   };
 
   if (loading) {
@@ -50,7 +55,11 @@ export function ProductGrid({ products, loading, columns = 4, onQuickView }: Pro
   return (
     <div className={`grid ${gridCols[columns]} gap-3 sm:gap-4 md:gap-6`}>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} onQuickView={onQuickView} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          onQuickView={onQuickView}
+        />
       ))}
     </div>
   );

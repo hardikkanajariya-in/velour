@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { type ReactNode } from 'react';
-import { cn } from '@/lib/utils';
-import { Button } from './button';
+import { type ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "./button";
 
 interface EmptyStateProps {
   icon?: ReactNode;
@@ -24,17 +24,26 @@ export function EmptyState({
   className,
 }: EmptyStateProps) {
   return (
-    <div className={cn('flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 text-center', className)}>
+    <div
+      className={cn(
+        "flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 text-center",
+        className,
+      )}
+    >
       {icon && <div className="mb-4 text-neutral-300">{icon}</div>}
-      <h3 className="text-base sm:text-lg font-semibold text-brand-primary mb-2">{heading}</h3>
+      <h3 className="text-base sm:text-lg font-semibold text-brand-primary mb-2">
+        {heading}
+      </h3>
       {description && (
-        <p className="text-sm text-neutral-500 max-w-sm sm:max-w-md mb-6 leading-relaxed">{description}</p>
+        <p className="text-sm text-neutral-500 max-w-sm sm:max-w-md mb-6 leading-relaxed">
+          {description}
+        </p>
       )}
       {actionLabel && (
         <Button
           variant="primary"
           onClick={onAction}
-          {...(actionHref ? { as: 'a' as const, href: actionHref } : {})}
+          {...(actionHref ? { as: "a" as const, href: actionHref } : {})}
         >
           {actionLabel}
         </Button>

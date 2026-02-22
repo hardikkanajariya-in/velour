@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Star } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import toast from 'react-hot-toast';
+import { useState } from "react";
+import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 interface ReviewFormProps {
   productId: string;
@@ -14,38 +14,40 @@ interface ReviewFormProps {
 export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [title, setTitle] = useState('');
-  const [comment, setComment] = useState('');
+  const [title, setTitle] = useState("");
+  const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (rating === 0) {
-      toast.error('Please select a rating');
+      toast.error("Please select a rating");
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/reviews', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId, rating, title, comment }),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error ?? 'Failed to submit review');
+        throw new Error(data.error ?? "Failed to submit review");
       }
 
-      toast.success('Review submitted successfully!');
+      toast.success("Review submitted successfully!");
       setRating(0);
-      setTitle('');
-      setComment('');
+      setTitle("");
+      setComment("");
       onSuccess?.();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to submit review');
+      toast.error(
+        error instanceof Error ? error.message : "Failed to submit review",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -67,10 +69,10 @@ export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
             >
               <Star
                 className={cn(
-                  'h-6 w-6 transition-colors',
+                  "h-6 w-6 transition-colors",
                   (hoverRating || rating) >= star
-                    ? 'fill-yellow-400 text-yellow-400'
-                    : 'text-border'
+                    ? "fill-yellow-400 text-yellow-400"
+                    : "text-border",
                 )}
               />
             </button>
@@ -79,7 +81,10 @@ export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
       </div>
 
       <div>
-        <label htmlFor="review-title" className="block text-sm font-medium mb-1.5">
+        <label
+          htmlFor="review-title"
+          className="block text-sm font-medium mb-1.5"
+        >
           Title
         </label>
         <input
@@ -94,7 +99,10 @@ export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
       </div>
 
       <div>
-        <label htmlFor="review-comment" className="block text-sm font-medium mb-1.5">
+        <label
+          htmlFor="review-comment"
+          className="block text-sm font-medium mb-1.5"
+        >
           Review
         </label>
         <textarea

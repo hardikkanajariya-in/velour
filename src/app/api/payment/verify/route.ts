@@ -1,39 +1,57 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/lib/auth';
-import { verifyRazorpaySignature } from '@/lib/razorpay';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { verifyRazorpaySignature } from "@/lib/razorpay";
 
 export async function POST(request: NextRequest) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { orderId, razorpayOrderId, razorpayPaymentId, razorpaySignature } = await request.json();
+    const { orderId, razorpayOrderId, razorpayPaymentId, razorpaySignature } =
+      await request.json();
 
     // Verify signature
-    const isValid = verifyRazorpaySignature(razorpayOrderId, razorpayPaymentId, razorpaySignature);
+    const isValid = verifyRazorpaySignature(
+      razorpayOrderId,
+      razorpayPaymentId,
+      razorpaySignature,
+    );
 
     if (!isValid) {
       await prisma.order.update({
         where: { id: orderId },
         data: {
-          paymentStatus: 'FAILED',
-          timeline: { create: { status: 'PENDING', message: 'Payment verification failed' } },
+          paymentStatus: "FAILED",
+          timeline: {
+            create: {
+              status: "PENDING",
+              message: "Payment verification failed",
+            },
+          },
         },
       });
-      return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Payment verification failed" },
+        { status: 400 },
+      );
     }
 
     // Update order
     const order = await prisma.order.update({
       where: { id: orderId },
       data: {
-        paymentStatus: 'PAID',
-        status: 'CONFIRMED',
+        paymentStatus: "PAID",
+        status: "CONFIRMED",
         razorpayPaymentId,
-        timeline: { create: { status: 'CONFIRMED', message: 'Payment received, order confirmed' } },
+        timeline: {
+          create: {
+            status: "CONFIRMED",
+            message: "Payment received, order confirmed",
+          },
+        },
       },
     });
 
@@ -60,7 +78,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, orderNumber: order.orderNumber });
   } catch (error) {
-    console.error('Payment verify error:', error);
-    return NextResponse.json({ error: 'Failed to verify payment' }, { status: 500 });
+    console.error("Payment verify error:", error);
+    return NextResponse.json(
+      { error: "Failed to verify payment" },
+      { status: 500 },
+    );
   }
 }

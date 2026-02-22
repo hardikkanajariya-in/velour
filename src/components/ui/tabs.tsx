@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, type ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { useState, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface Tab {
   label: string;
@@ -32,11 +32,11 @@ export function Tabs({ tabs, defaultValue, className, onChange }: TabsProps) {
             key={tab.value}
             onClick={() => handleTabChange(tab.value)}
             className={cn(
-              'px-4 sm:px-5 py-3 text-sm font-medium whitespace-nowrap transition-colors min-h-[48px]',
-              'border-b-2 -mb-px',
+              "px-4 sm:px-5 py-3 text-sm font-medium whitespace-nowrap transition-colors min-h-[48px]",
+              "border-b-2 -mb-px",
               activeTab === tab.value
-                ? 'border-brand-accent text-brand-primary'
-                : 'border-transparent text-neutral-500 hover:text-brand-primary hover:border-neutral-300'
+                ? "border-brand-accent text-brand-primary"
+                : "border-transparent text-neutral-500 hover:text-brand-primary hover:border-neutral-300",
             )}
           >
             {tab.label}

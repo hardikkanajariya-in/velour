@@ -1,42 +1,49 @@
-'use client';
+"use client";
 
-import { useEffect, useCallback, type ReactNode } from 'react';
-import { X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useEffect, useCallback, type ReactNode } from "react";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
   title?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  size?: "sm" | "md" | "lg" | "xl" | "full";
   className?: string;
 }
 
 const sizeStyles = {
-  sm: 'max-w-md',
-  md: 'max-w-lg',
-  lg: 'max-w-2xl',
-  xl: 'max-w-4xl',
-  full: 'max-w-[95vw] max-h-[95vh]',
+  sm: "max-w-md",
+  md: "max-w-lg",
+  lg: "max-w-2xl",
+  xl: "max-w-4xl",
+  full: "max-w-[95vw] max-h-[95vh]",
 };
 
-export function Modal({ isOpen, onClose, children, title, size = 'md', className }: ModalProps) {
+export function Modal({
+  isOpen,
+  onClose,
+  children,
+  title,
+  size = "md",
+  className,
+}: ModalProps) {
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     },
-    [onClose]
+    [onClose],
   );
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
     }
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = '';
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "";
     };
   }, [isOpen, handleEscape]);
 
@@ -50,17 +57,19 @@ export function Modal({ isOpen, onClose, children, title, size = 'md', className
       />
       <div
         className={cn(
-          'relative w-full bg-white shadow-lg overflow-hidden',
-          'rounded-t-2xl sm:rounded-xl',
-          'animate-[fadeUp_0.2s_ease-out]',
-          'max-h-[90vh] sm:max-h-[85vh]',
+          "relative w-full bg-white shadow-lg overflow-hidden",
+          "rounded-t-2xl sm:rounded-xl",
+          "animate-[fadeUp_0.2s_ease-out]",
+          "max-h-[90vh] sm:max-h-[85vh]",
           sizeStyles[size],
-          className
+          className,
         )}
       >
         {title && (
           <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-neutral-200 shrink-0">
-            <h2 className="text-base sm:text-lg font-semibold text-brand-primary pr-2">{title}</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-brand-primary pr-2">
+              {title}
+            </h2>
             <button
               onClick={onClose}
               className="p-1.5 rounded-md hover:bg-neutral-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
@@ -77,7 +86,9 @@ export function Modal({ isOpen, onClose, children, title, size = 'md', className
             <X className="h-5 w-5" />
           </button>
         )}
-        <div className="overflow-y-auto max-h-[calc(90vh-4rem)] sm:max-h-[calc(85vh-4rem)] p-4 sm:p-6">{children}</div>
+        <div className="overflow-y-auto max-h-[calc(90vh-4rem)] sm:max-h-[calc(85vh-4rem)] p-4 sm:p-6">
+          {children}
+        </div>
       </div>
     </div>
   );

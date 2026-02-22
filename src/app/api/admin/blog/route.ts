@@ -1,15 +1,18 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 // GET /api/admin/blog
 export async function GET() {
   try {
     const posts = await prisma.blogPost.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(posts);
   } catch {
-    return NextResponse.json({ error: 'Failed to fetch blog posts' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch blog posts" },
+      { status: 500 },
+    );
   }
 }
 
@@ -19,8 +22,8 @@ export async function POST(request: Request) {
     const body = await request.json();
     const slug = body.title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
 
     const post = await prisma.blogPost.create({
       data: {
@@ -28,17 +31,20 @@ export async function POST(request: Request) {
         slug,
         excerpt: body.excerpt,
         content: body.content,
-        coverImage: body.coverImage || '',
-        author: body.author || 'Admin',
+        coverImage: body.coverImage || "",
+        author: body.author || "Admin",
         tags: body.tags || [],
-        category: body.category || 'Fashion',
+        category: body.category || "Fashion",
         isPublished: body.isPublished || false,
         publishedAt: body.isPublished ? new Date() : null,
       },
     });
     return NextResponse.json(post);
   } catch {
-    return NextResponse.json({ error: 'Failed to create post' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create post" },
+      { status: 500 },
+    );
   }
 }
 
@@ -58,7 +64,10 @@ export async function PATCH(request: Request) {
     });
     return NextResponse.json(post);
   } catch {
-    return NextResponse.json({ error: 'Failed to update post' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update post" },
+      { status: 500 },
+    );
   }
 }
 
@@ -69,6 +78,9 @@ export async function DELETE(request: Request) {
     await prisma.blogPost.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch {
-    return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete post" },
+      { status: 500 },
+    );
   }
 }

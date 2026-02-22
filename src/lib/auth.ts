@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import Google from 'next-auth/providers/google';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import bcrypt from 'bcryptjs';
-import { prisma } from '@/lib/prisma';
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import bcrypt from "bcryptjs";
+import { prisma } from "@/lib/prisma";
 
 // Only include Google provider if credentials are configured
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,10 +17,10 @@ const providers: any[] = [
       ]
     : []),
   Credentials({
-    name: 'credentials',
+    name: "credentials",
     credentials: {
-      email: { label: 'Email', type: 'email' },
-      password: { label: 'Password', type: 'password' },
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
       if (!credentials?.email || !credentials?.password) return null;
@@ -34,7 +34,7 @@ const providers: any[] = [
 
         const isValid = await bcrypt.compare(
           credentials.password as string,
-          user.password
+          user.password,
         );
 
         if (!isValid) return null;
@@ -47,7 +47,7 @@ const providers: any[] = [
           role: user.role,
         };
       } catch (error) {
-        console.error('[auth] Credentials authorize error:', error);
+        console.error("[auth] Credentials authorize error:", error);
         return null;
       }
     },
@@ -56,17 +56,17 @@ const providers: any[] = [
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  session: { strategy: 'jwt' },
+  session: { strategy: "jwt" },
   pages: {
-    signIn: '/auth/login',
-    error: '/auth/login',
+    signIn: "/auth/login",
+    error: "/auth/login",
   },
   providers,
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = (user as { role?: string }).role || 'CUSTOMER';
+        token.role = (user as { role?: string }).role || "CUSTOMER";
       }
       return token;
     },
@@ -78,10 +78,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
     async signIn({ user, account }) {
-      if (account?.provider === 'google') {
+      if (account?.provider === "google") {
         return true;
       }
-      if (account?.provider === 'credentials') {
+      if (account?.provider === "credentials") {
         return !!user;
       }
       return true;

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface Column<T> {
   key: string;
@@ -22,8 +22,8 @@ interface DataTableProps<T> {
 export function DataTable<T extends Record<string, any> = Record<string, any>>({
   columns,
   data,
-  keyField = 'id',
-  emptyMessage = 'No data found',
+  keyField = "id",
+  emptyMessage = "No data found",
   onRowClick,
   className,
 }: DataTableProps<T>) {
@@ -36,7 +36,12 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   }
 
   return (
-    <div className={cn('overflow-x-auto border border-border rounded-card -mx-4 sm:mx-0', className)}>
+    <div
+      className={cn(
+        "overflow-x-auto border border-border rounded-card -mx-4 sm:mx-0",
+        className,
+      )}
+    >
       <table className="w-full text-sm min-w-[600px]">
         <thead>
           <tr className="border-b border-border bg-surface">
@@ -44,8 +49,8 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
               <th
                 key={col.key}
                 className={cn(
-                  'text-left px-3 sm:px-4 py-2.5 sm:py-3 font-medium text-muted-foreground text-xs sm:text-sm whitespace-nowrap',
-                  col.className
+                  "text-left px-3 sm:px-4 py-2.5 sm:py-3 font-medium text-muted-foreground text-xs sm:text-sm whitespace-nowrap",
+                  col.className,
                 )}
               >
                 {col.label}
@@ -58,13 +63,16 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
             <tr
               key={item[keyField] as string}
               className={cn(
-                'border-b border-border last:border-0 hover:bg-muted/50 transition-colors',
-                onRowClick && 'cursor-pointer'
+                "border-b border-border last:border-0 hover:bg-muted/50 transition-colors",
+                onRowClick && "cursor-pointer",
               )}
               onClick={() => onRowClick?.(item)}
             >
               {columns.map((col) => (
-                <td key={col.key} className={cn('px-3 sm:px-4 py-2.5 sm:py-3', col.className)}>
+                <td
+                  key={col.key}
+                  className={cn("px-3 sm:px-4 py-2.5 sm:py-3", col.className)}
+                >
                   {col.render
                     ? col.render(item)
                     : (item[col.key] as React.ReactNode)}

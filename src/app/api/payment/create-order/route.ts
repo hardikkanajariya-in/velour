@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/lib/auth';
-import { createRazorpayOrder } from '@/lib/razorpay';
-import { getShippingCost } from '@/lib/site';
-import { GST_RATE } from '@/lib/constants';
-import { generateOrderNumber } from '@/lib/utils';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { createRazorpayOrder } from "@/lib/razorpay";
+import { getShippingCost } from "@/lib/site";
+import { GST_RATE } from "@/lib/constants";
+import { generateOrderNumber } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { shippingAddress, couponCode } = await request.json();
@@ -22,13 +22,14 @@ export async function POST(request: NextRequest) {
     });
 
     if (cartItems.length === 0) {
-      return NextResponse.json({ error: 'Cart is empty' }, { status: 400 });
+      return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
     }
 
     const subtotal = cartItems.reduce(
-      (sum: number, item: typeof cartItems[number]) =>
-        sum + (item.product.basePrice + item.variant.additionalPrice) * item.quantity,
-      0
+      (sum: number, item: (typeof cartItems)[number]) =>
+        sum +
+        (item.product.basePrice + item.variant.additionalPrice) * item.quantity,
+      0,
     );
 
     let discount = 0;
@@ -37,13 +38,17 @@ export async function POST(request: NextRequest) {
         where: { code: couponCode, isActive: true },
       });
       if (coupon) {
-        discount = coupon.type === 'PERCENTAGE'
-          ? Math.min((subtotal * coupon.value) / 100, coupon.maxDiscount ?? Infinity)
-          : coupon.value;
+        discount =
+          coupon.type === "PERCENTAGE"
+            ? Math.min(
+                (subtotal * coupon.value) / 100,
+                coupon.maxDiscount ?? Infinity,
+              )
+            : coupon.value;
       }
     }
 
-    const shipping = getShippingCost(subtotal, 'standard');
+    const shipping = getShippingCost(subtotal, "standard");
     const tax = Math.round((subtotal - discount) * GST_RATE);
     const total = subtotal - discount + shipping + tax;
 
@@ -63,12 +68,12 @@ export async function POST(request: NextRequest) {
         shippingCost: shipping,
         tax,
         total,
-        paymentMethod: 'ONLINE',
-        paymentStatus: 'PENDING',
-        status: 'PENDING',
+        paymentMethod: "ONLINE",
+        paymentStatus: "PENDING",
+        status: "PENDING",
         razorpayOrderId: razorpayOrder.id,
         items: {
-          create: cartItems.map((item: typeof cartItems[number]) => ({
+          create: cartItems.map((item: (typeof cartItems)[number]) => ({
             productId: item.productId,
             variantId: item.variantId,
             quantity: item.quantity,
@@ -76,11 +81,14 @@ export async function POST(request: NextRequest) {
             productName: item.product.name,
             size: item.variant.size,
             color: item.variant.color,
-            image: item.product.images?.[0]?.url ?? '',
+            image: item.product.images?.[0]?.url ?? "",
           })),
         },
         timeline: {
-          create: { status: 'PENDING', message: 'Order created, payment pending' },
+          create: {
+            status: "PENDING",
+            message: "Order created, payment pending",
+          },
         },
       },
     });
@@ -92,7 +100,10 @@ export async function POST(request: NextRequest) {
       currency: razorpayOrder.currency,
     });
   } catch (error) {
-    console.error('Payment create-order error:', error);
-    return NextResponse.json({ error: 'Failed to create payment order' }, { status: 500 });
+    console.error("Payment create-order error:", error);
+    return NextResponse.json(
+      { error: "Failed to create payment order" },
+      { status: 500 },
+    );
   }
 }

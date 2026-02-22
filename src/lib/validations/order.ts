@@ -1,11 +1,13 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const orderSchema = z.object({
-  items: z.array(z.object({
-    productId: z.string(),
-    variantId: z.string(),
-    quantity: z.number().int().positive(),
-  })),
+  items: z.array(
+    z.object({
+      productId: z.string(),
+      variantId: z.string(),
+      quantity: z.number().int().positive(),
+    }),
+  ),
   shippingAddress: z.object({
     fullName: z.string(),
     phone: z.string(),
@@ -14,11 +16,13 @@ export const orderSchema = z.object({
     city: z.string(),
     state: z.string(),
     pincode: z.string(),
-    country: z.string().default('India'),
+    country: z.string().default("India"),
   }),
-  paymentMethod: z.enum(['RAZORPAY', 'COD']),
+  paymentMethod: z.enum(["RAZORPAY", "COD"]),
   couponCode: z.string().optional(),
-  shippingMethod: z.enum(['standard', 'express', 'sameday']).default('standard'),
+  shippingMethod: z
+    .enum(["standard", "express", "sameday"])
+    .default("standard"),
   guestEmail: z.string().email().optional(),
   guestName: z.string().optional(),
   guestPhone: z.string().optional(),
@@ -27,8 +31,14 @@ export const orderSchema = z.object({
 
 export const orderStatusUpdateSchema = z.object({
   status: z.enum([
-    'PENDING', 'CONFIRMED', 'PROCESSING', 'SHIPPED',
-    'DELIVERED', 'CANCELLED', 'RETURN_REQUESTED', 'RETURNED',
+    "PENDING",
+    "CONFIRMED",
+    "PROCESSING",
+    "SHIPPED",
+    "DELIVERED",
+    "CANCELLED",
+    "RETURN_REQUESTED",
+    "RETURNED",
   ]),
   message: z.string().optional(),
   trackingNumber: z.string().optional(),

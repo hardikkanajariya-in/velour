@@ -1,17 +1,27 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import Image from 'next/image';
-import { X, Heart, ShoppingBag, Minus, Plus, Star, Truck, RotateCcw, Shield } from 'lucide-react';
-import { Modal } from '@/components/ui/modal';
-import { Button } from '@/components/ui/button';
-import { VariantSelector } from './variant-selector';
-import { useCartStore } from '@/store/cart.store';
-import { useWishlistStore } from '@/store/wishlist.store';
-import { formatPrice, getDiscountPercentage } from '@/lib/utils';
-import { cn } from '@/lib/utils';
-import type { ProductListItem, ProductVariant } from '@/types/product';
-import Link from 'next/link';
+import { useState, useCallback } from "react";
+import Image from "next/image";
+import {
+  X,
+  Heart,
+  ShoppingBag,
+  Minus,
+  Plus,
+  Star,
+  Truck,
+  RotateCcw,
+  Shield,
+} from "lucide-react";
+import { Modal } from "@/components/ui/modal";
+import { Button } from "@/components/ui/button";
+import { VariantSelector } from "./variant-selector";
+import { useCartStore } from "@/store/cart.store";
+import { useWishlistStore } from "@/store/wishlist.store";
+import { formatPrice, getDiscountPercentage } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import type { ProductListItem, ProductVariant } from "@/types/product";
+import Link from "next/link";
 
 interface QuickViewModalProps {
   product: ProductListItem | null;
@@ -19,8 +29,14 @@ interface QuickViewModalProps {
   onClose: () => void;
 }
 
-export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps) {
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
+export function QuickViewModal({
+  product,
+  isOpen,
+  onClose,
+}: QuickViewModalProps) {
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
+    null,
+  );
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCartStore();
   const { items: wishlist, toggleItem: toggleWishlist } = useWishlistStore();
@@ -28,12 +44,15 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
   if (!product) return null;
 
   const isWishlisted = wishlist.includes(product.id);
-  const primaryImage = product.images?.[0]?.url ?? '/placeholder-product.png';
+  const primaryImage = product.images?.[0]?.url ?? "/placeholder-product.png";
   const price = selectedVariant
     ? product.basePrice + selectedVariant.additionalPrice
     : product.basePrice;
-  const hasCompare = product.comparePrice !== null && product.comparePrice > price;
-  const discount = hasCompare ? getDiscountPercentage(product.comparePrice!, price) : 0;
+  const hasCompare =
+    product.comparePrice !== null && product.comparePrice > price;
+  const discount = hasCompare
+    ? getDiscountPercentage(product.comparePrice!, price)
+    : 0;
 
   function handleAddToCart() {
     if (!selectedVariant || !product) return;
@@ -80,8 +99,12 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
           {product.averageRating > 0 && (
             <div className="flex items-center gap-1 mb-3">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="text-sm font-medium">{product.averageRating.toFixed(1)}</span>
-              <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
+              <span className="text-sm font-medium">
+                {product.averageRating.toFixed(1)}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                ({product.reviewCount})
+              </span>
             </div>
           )}
 
@@ -92,7 +115,9 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
                 <span className="text-sm text-muted-foreground line-through">
                   {formatPrice(product.comparePrice!)}
                 </span>
-                <span className="text-xs font-semibold text-green-600">-{discount}%</span>
+                <span className="text-xs font-semibold text-green-600">
+                  -{discount}%
+                </span>
               </>
             )}
           </div>
@@ -116,7 +141,9 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
               >
                 <Minus className="h-3.5 w-3.5" />
               </button>
-              <span className="w-10 text-center text-sm font-medium">{quantity}</span>
+              <span className="w-10 text-center text-sm font-medium">
+                {quantity}
+              </span>
               <button
                 onClick={() => setQuantity((q) => q + 1)}
                 className="p-2 hover:bg-muted transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
@@ -131,17 +158,24 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
             <Button
               className="flex-1"
               onClick={handleAddToCart}
-              disabled={!selectedVariant || (selectedVariant && selectedVariant.stock === 0)}
+              disabled={
+                !selectedVariant ||
+                (selectedVariant && selectedVariant.stock === 0)
+              }
               leftIcon={<ShoppingBag className="h-4 w-4" />}
             >
-              {selectedVariant?.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
+              {selectedVariant?.stock === 0 ? "Out of Stock" : "Add to Bag"}
             </Button>
             <Button
-              variant={isWishlisted ? 'danger' : 'secondary'}
+              variant={isWishlisted ? "danger" : "secondary"}
               onClick={() => toggleWishlist(product.id)}
-              aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+              aria-label={
+                isWishlisted ? "Remove from wishlist" : "Add to wishlist"
+              }
             >
-              <Heart className={cn('h-4 w-4', isWishlisted && 'fill-current')} />
+              <Heart
+                className={cn("h-4 w-4", isWishlisted && "fill-current")}
+              />
             </Button>
           </div>
 

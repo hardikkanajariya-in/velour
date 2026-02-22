@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/lib/auth';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -9,8 +9,8 @@ interface Params {
 export async function PATCH(request: NextRequest, { params }: Params) {
   try {
     const session = await auth();
-    if (!session?.user?.id || session.user.role !== 'ADMIN') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!session?.user?.id || session.user.role !== "ADMIN") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { id } = await params;
@@ -28,13 +28,16 @@ export async function PATCH(request: NextRequest, { params }: Params) {
         },
       },
       include: {
-        timeline: { orderBy: { createdAt: 'desc' } },
+        timeline: { orderBy: { createdAt: "desc" } },
       },
     });
 
     return NextResponse.json({ order });
   } catch (error) {
-    console.error('Admin order PATCH error:', error);
-    return NextResponse.json({ error: 'Failed to update order' }, { status: 500 });
+    console.error("Admin order PATCH error:", error);
+    return NextResponse.json(
+      { error: "Failed to update order" },
+      { status: 500 },
+    );
   }
 }

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, type ReactNode } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState, type ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface AccordionItem {
   title: string;
@@ -15,7 +15,11 @@ interface AccordionProps {
   className?: string;
 }
 
-export function Accordion({ items, allowMultiple = false, className }: AccordionProps) {
+export function Accordion({
+  items,
+  allowMultiple = false,
+  className,
+}: AccordionProps) {
   const [openItems, setOpenItems] = useState<Set<number>>(new Set());
 
   const toggle = (index: number) => {
@@ -31,7 +35,12 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
   };
 
   return (
-    <div className={cn('divide-y divide-neutral-200 border-y border-neutral-200', className)}>
+    <div
+      className={cn(
+        "divide-y divide-neutral-200 border-y border-neutral-200",
+        className,
+      )}
+    >
       {items.map((item, index) => {
         const isOpen = openItems.has(index);
         return (
@@ -43,12 +52,12 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
               <span className="flex-1">{item.title}</span>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-neutral-500 transition-transform duration-300',
-                  isOpen && 'rotate-180'
+                  "h-4 w-4 text-neutral-500 transition-transform duration-300",
+                  isOpen && "rotate-180",
                 )}
               />
             </button>
-            <div className={cn('accordion-content', isOpen && 'open')}>
+            <div className={cn("accordion-content", isOpen && "open")}>
               <div>
                 <div className="px-1 pb-4 text-sm text-neutral-600 leading-relaxed">
                   {item.content}

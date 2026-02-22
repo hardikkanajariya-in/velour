@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-import { useCartStore } from '@/store/cart.store';
-import { formatPrice } from '@/lib/utils';
+import Image from "next/image";
+import Link from "next/link";
+import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import { useCartStore } from "@/store/cart.store";
+import { formatPrice } from "@/lib/utils";
 
 export function CartItems() {
   const { items, updateQuantity, removeItem } = useCartStore();
@@ -14,7 +14,10 @@ export function CartItems() {
   return (
     <div className="divide-y border rounded-card">
       {items.map((item) => (
-        <div key={item.variantId} className="flex gap-3 sm:gap-4 p-3 sm:p-4 md:p-6">
+        <div
+          key={item.variantId}
+          className="flex gap-3 sm:gap-4 p-3 sm:p-4 md:p-6"
+        >
           <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 rounded-card overflow-hidden bg-muted">
             {item.product.images[0] ? (
               <Image
@@ -42,7 +45,7 @@ export function CartItems() {
                 </Link>
                 <p className="text-sm text-muted-foreground mt-0.5">
                   {item.variant.size && `Size: ${item.variant.size}`}
-                  {item.variant.size && item.variant.color && ' · '}
+                  {item.variant.size && item.variant.color && " · "}
                   {item.variant.color && `Color: ${item.variant.color}`}
                 </p>
               </div>
@@ -58,22 +61,33 @@ export function CartItems() {
             <div className="flex items-center justify-between mt-3">
               <div className="flex items-center border border-border rounded-button">
                 <button
-                  onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                  onClick={() =>
+                    updateQuantity(item.variantId, item.quantity - 1)
+                  }
                   className="p-2 hover:bg-muted transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
                   aria-label="Decrease quantity"
                 >
                   <Minus className="h-3.5 w-3.5" />
                 </button>
-                <span className="w-10 text-center text-sm font-medium">{item.quantity}</span>
+                <span className="w-10 text-center text-sm font-medium">
+                  {item.quantity}
+                </span>
                 <button
-                  onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                  onClick={() =>
+                    updateQuantity(item.variantId, item.quantity + 1)
+                  }
                   className="p-2 hover:bg-muted transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
                   aria-label="Increase quantity"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <p className="font-semibold">{formatPrice((item.product.basePrice + item.variant.additionalPrice) * item.quantity)}</p>
+              <p className="font-semibold">
+                {formatPrice(
+                  (item.product.basePrice + item.variant.additionalPrice) *
+                    item.quantity,
+                )}
+              </p>
             </div>
           </div>
         </div>

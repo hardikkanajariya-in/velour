@@ -1,13 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { Search, X, TrendingUp, Clock } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useUIStore } from '@/store/ui.store';
-import { useDebounce } from '@/hooks/use-debounce';
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { Search, X, TrendingUp, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useUIStore } from "@/store/ui.store";
+import { useDebounce } from "@/hooks/use-debounce";
 
-const popularSearches = ['Dresses', 'Jeans', 'T-Shirts', 'Kurtas', 'Sneakers', 'Jackets'];
+const popularSearches = [
+  "Dresses",
+  "Jeans",
+  "T-Shirts",
+  "Kurtas",
+  "Sneakers",
+  "Jackets",
+];
 
 export function SearchOverlay() {
   const router = useRouter();
@@ -23,15 +30,15 @@ export function SearchOverlay() {
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeSearch();
+      if (e.key === "Escape") closeSearch();
     };
     if (searchOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
     }
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = '';
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "";
     };
   }, [searchOpen, closeSearch]);
 
@@ -51,7 +58,10 @@ export function SearchOverlay() {
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={closeSearch} />
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={closeSearch}
+      />
       <div className="relative bg-white w-full shadow-lg">
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-4 sm:py-6">
           <form onSubmit={handleSubmit} className="relative mb-4 sm:mb-6">

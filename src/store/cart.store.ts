@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import type { CartItemData } from '@/types/cart';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type { CartItemData } from "@/types/cart";
 
 interface CartStore {
   items: CartItemData[];
@@ -36,7 +36,7 @@ export const useCartStore = create<CartStore>()(
             items: items.map((i) =>
               i.variantId === item.variantId
                 ? { ...i, quantity: i.quantity + item.quantity }
-                : i
+                : i,
             ),
           });
         } else {
@@ -55,7 +55,7 @@ export const useCartStore = create<CartStore>()(
         }
         set({
           items: get().items.map((i) =>
-            i.variantId === variantId ? { ...i, quantity } : i
+            i.variantId === variantId ? { ...i, quantity } : i,
           ),
         });
       },
@@ -66,27 +66,30 @@ export const useCartStore = create<CartStore>()(
       setLoading: (loading) => set({ isLoading: loading }),
       setItems: (items) => set({ items }),
 
-      totalItems: () => get().items.reduce((sum, item) => sum + item.quantity, 0),
+      totalItems: () =>
+        get().items.reduce((sum, item) => sum + item.quantity, 0),
       subtotal: () =>
         get().items.reduce(
           (sum, item) =>
-            sum + (item.product.basePrice + item.variant.additionalPrice) * item.quantity,
-          0
+            sum +
+            (item.product.basePrice + item.variant.additionalPrice) *
+              item.quantity,
+          0,
         ),
     }),
     {
-      name: 'velour-cart',
+      name: "velour-cart",
       storage: createJSONStorage(() =>
-        typeof window !== 'undefined'
+        typeof window !== "undefined"
           ? localStorage
           : {
               getItem: () => null,
               setItem: () => {},
               removeItem: () => {},
-            }
+            },
       ),
       partialize: (state) => ({ items: state.items }),
       skipHydration: true,
-    }
-  )
+    },
+  ),
 );

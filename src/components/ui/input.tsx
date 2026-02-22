@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type InputHTMLAttributes, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -12,8 +12,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, helperText, leftIcon, rightIcon, id, ...props }, ref) => {
-    const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
+  (
+    { className, label, error, helperText, leftIcon, rightIcon, id, ...props },
+    ref,
+  ) => {
+    const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
 
     return (
       <div className="w-full">
@@ -35,15 +38,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              'w-full rounded-input border border-neutral-200 bg-white px-3 py-2.5 text-sm text-brand-primary placeholder:text-neutral-400',
-              'transition-colors duration-200',
-              'focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent',
-              'min-h-[44px]',
-              leftIcon && 'pl-10',
-              rightIcon && 'pr-10',
-              error && 'border-error focus:ring-error/50 focus:border-error',
-              props.disabled && 'bg-neutral-50 cursor-not-allowed opacity-60',
-              className
+              "w-full rounded-input border border-neutral-200 bg-white px-3 py-2.5 text-sm text-brand-primary placeholder:text-neutral-400",
+              "transition-colors duration-200",
+              "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent",
+              "min-h-[44px]",
+              leftIcon && "pl-10",
+              rightIcon && "pr-10",
+              error && "border-error focus:ring-error/50 focus:border-error",
+              props.disabled && "bg-neutral-50 cursor-not-allowed opacity-60",
+              className,
             )}
             {...props}
           />
@@ -59,7 +62,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
-Input.displayName = 'Input';
+Input.displayName = "Input";
