@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       fullUrl: false,
     },
   },
-  serverExternalPackages: ['@neondatabase/serverless', '@prisma/adapter-neon'],
+  serverExternalPackages: ['@neondatabase/serverless', '@prisma/adapter-neon', '@prisma/client', '.prisma/client'],
   images: {
     remotePatterns: [
       {
