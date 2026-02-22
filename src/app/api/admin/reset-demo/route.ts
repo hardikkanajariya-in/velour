@@ -4,8 +4,17 @@ import { hash } from "bcryptjs";
 import { Role, ProductGender } from "@prisma/client";
 
 // POST /api/admin/reset-demo
+// GET  /api/admin/reset-demo  (also supported for easy browser access)
 // Open endpoint to wipe and re-seed the database for demo purposes.
 export async function POST() {
+  return resetAndSeed();
+}
+
+export async function GET() {
+  return resetAndSeed();
+}
+
+async function resetAndSeed() {
   try {
     // ── 1. Delete everything (order matters for FK constraints) ──
     await prisma.$transaction([
