@@ -19,6 +19,13 @@ export const metadata: Metadata = {
     "premium fashion",
     "VELOUR",
   ],
+  authors: [
+    {
+      name: "Hardik Kanajariya",
+      url: "https://www.hardikkanajariya.in",
+    },
+  ],
+  creator: "Hardik Kanajariya",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ),

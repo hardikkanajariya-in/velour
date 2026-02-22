@@ -111,6 +111,27 @@ export default function AboutPage() {
           </div>
         ))}
       </div>
+
+      {/* Developer Credit */}
+      <div className="border-t border-border pt-8 sm:pt-12 mt-4 sm:mt-8 text-center">
+        <p className="text-xs text-muted-foreground">
+          Platform designed &amp; developed by{" "}
+          <a
+            href="https://www.hardikkanajariya.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-primary font-semibold hover:underline"
+          >
+            Hardik Kanajariya
+          </a>{" "}
+          — Full Stack Developer &amp; Digital Solutions Expert.
+          This project is source-available for demo purposes only.{" "}
+          <a href="/terms" className="text-brand-primary hover:underline">
+            View terms
+          </a>
+          .
+        </p>
+      </div>
     </div>
   );
 }

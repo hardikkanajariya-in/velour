@@ -85,16 +85,75 @@ export default function PrivacyPolicyPage() {
           </h2>
           <p>
             You have the right to access, correct, or delete your personal
-            information. Contact us at hello@velour.in for any privacy-related
-            requests.
+            information. Contact us at{" "}
+            <a
+              href="mailto:hardik@hardikkanajariya.in"
+              className="text-brand-primary underline"
+            >
+              hardik@hardikkanajariya.in
+            </a>{" "}
+            for any privacy-related requests.
           </p>
         </section>
 
         <section>
           <h2 className="text-lg font-heading font-bold text-foreground">
-            7. Contact
+            7. Intellectual Property & License
           </h2>
-          <p>For questions about this policy, contact us at hello@velour.in.</p>
+          <p>
+            This website and all its source code, design, and content are the
+            exclusive property of{" "}
+            <a
+              href="https://www.hardikkanajariya.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-primary underline"
+            >
+              Hardik Kanajariya
+            </a>
+            . The code is source-available for demonstration purposes only.
+            Commercial use without written authorization is prohibited. See
+            our{" "}
+            <a href="/terms" className="text-brand-primary underline">
+              Terms & Conditions
+            </a>{" "}
+            for full details.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-heading font-bold text-foreground">
+            8. Contact
+          </h2>
+          <p>
+            For questions about this policy, contact:
+          </p>
+          <ul className="mt-2 space-y-1">
+            <li>
+              <strong>Hardik Kanajariya</strong>
+            </li>
+            <li>
+              Email:{" "}
+              <a
+                href="mailto:hardik@hardikkanajariya.in"
+                className="text-brand-primary underline"
+              >
+                hardik@hardikkanajariya.in
+              </a>
+            </li>
+            <li>
+              Web:{" "}
+              <a
+                href="https://www.hardikkanajariya.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-primary underline"
+              >
+                hardikkanajariya.in
+              </a>
+            </li>
+            <li>Phone: +91 6353485415</li>
+          </ul>
         </section>
       </div>
     </div>

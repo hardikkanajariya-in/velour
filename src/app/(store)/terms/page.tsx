@@ -83,8 +83,38 @@ export default function TermsPage() {
             6. Intellectual Property
           </h2>
           <p>
-            All content on this website is the property of VELOUR and is
-            protected by copyright laws. Unauthorized use is prohibited.
+            All content on this website — including but not limited to source
+            code, design, images, text, logos, and brand assets — is the
+            exclusive property of{" "}
+            <a
+              href="https://www.hardikkanajariya.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-primary underline"
+            >
+              Hardik Kanajariya
+            </a>{" "}
+            and is protected under applicable copyright and intellectual
+            property laws.
+          </p>
+          <p className="mt-2">
+            This project is <strong>source-available for demonstration
+            purposes only</strong>. You may view the code and run it locally
+            for personal evaluation, but you may not use, copy, modify,
+            distribute, deploy, or sell this software or any part of it
+            without prior written authorization from the owner.
+          </p>
+          <p className="mt-2">
+            Using this code for commercial purposes or deploying it without
+            express permission constitutes a violation of this license and
+            applicable law. For licensing inquiries, contact{" "}
+            <a
+              href="mailto:hardik@hardikkanajariya.in"
+              className="text-brand-primary underline"
+            >
+              hardik@hardikkanajariya.in
+            </a>
+            .
           </p>
         </section>
 
@@ -93,19 +123,56 @@ export default function TermsPage() {
             7. Limitation of Liability
           </h2>
           <p>
-            VELOUR shall not be liable for any indirect, incidental, or
-            consequential damages arising from the use of our website or
-            products.
+            VELOUR and its owner shall not be liable for any indirect,
+            incidental, or consequential damages arising from the use of
+            our website, products, or source code.
           </p>
         </section>
 
         <section>
           <h2 className="text-lg font-heading font-bold text-foreground">
-            8. Contact
+            8. Governing Law
           </h2>
           <p>
-            For questions regarding these terms, contact us at hello@velour.in.
+            These terms shall be governed by the laws of India. Any disputes
+            arising under these terms shall be subject to the exclusive
+            jurisdiction of the courts in Gujarat, India.
           </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-heading font-bold text-foreground">
+            9. Contact
+          </h2>
+          <p>
+            For questions regarding these terms or licensing inquiries:
+          </p>
+          <ul className="mt-2 space-y-1">
+            <li>
+              <strong>Hardik Kanajariya</strong>
+            </li>
+            <li>
+              Email:{" "}
+              <a
+                href="mailto:hardik@hardikkanajariya.in"
+                className="text-brand-primary underline"
+              >
+                hardik@hardikkanajariya.in
+              </a>
+            </li>
+            <li>
+              Web:{" "}
+              <a
+                href="https://www.hardikkanajariya.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-primary underline"
+              >
+                hardikkanajariya.in
+              </a>
+            </li>
+            <li>Phone: +91 6353485415</li>
+          </ul>
         </section>
       </div>
     </div>

@@ -100,10 +100,21 @@ export const siteConfig = {
     showSizeGuide: true,
     showGiftCards: true,
   },
+  owner: {
+    name: "Hardik Kanajariya",
+    title: "Full Stack Developer & Digital Solutions Expert",
+    website: "https://www.hardikkanajariya.in",
+    email: "hardik@hardikkanajariya.in",
+    phone: "+91 6353485415",
+    github: "https://github.com/hardik-kanajariya",
+    linkedin: "https://www.linkedin.com/in/hardik-kanajariya/",
+    twitter: "https://x.com/hardik_web",
+    instagram: "https://www.instagram.com/kanajariyahardik/",
+  },
   footer: {
     credit: {
-      text: "Crafted by",
-      url: "https://hardikkanajariya.in",
+      text: "Designed & Developed by",
+      url: "https://www.hardikkanajariya.in",
       companyName: "hardikkanajariya.in",
     },
   },

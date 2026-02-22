@@ -228,7 +228,10 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-white/50 text-center md:text-left">
             <p>
               &copy; {new Date().getFullYear()} {siteConfig.brand.name}. All
-              rights reserved. {siteConfig.footer.credit.text}{" "}
+              rights reserved.
+            </p>
+            <p className="mt-1">
+              {siteConfig.footer.credit.text}{" "}
               <a
                 href={siteConfig.footer.credit.url}
                 target="_blank"
@@ -236,6 +239,13 @@ export function Footer() {
                 className="text-brand-accent hover:underline"
               >
                 {siteConfig.footer.credit.companyName}
+              </a>
+              {" "}·{" "}
+              <a
+                href="/terms"
+                className="hover:text-white transition-colors"
+              >
+                Source-available for demo only
               </a>
             </p>
             <div className="flex items-center gap-4">
