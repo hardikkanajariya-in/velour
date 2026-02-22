@@ -3,6 +3,8 @@ import { Footer } from '@/components/layout/footer';
 import { CartDrawer } from '@/components/store/cart/cart-drawer';
 import { BackToTop } from '@/components/ui/back-to-top';
 
+export const dynamic = 'force-dynamic';
+
 export default function StoreLayout({
   children,
 }: {

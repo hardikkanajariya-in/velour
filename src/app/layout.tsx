@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { headingFont, bodyFont, monoFont } from "@/lib/fonts";
+import { playfairDisplay, dmSans, dmMono } from "@/lib/fonts";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${headingFont.variable} ${bodyFont.variable} ${monoFont.variable} font-body antialiased`}
+        className={`${playfairDisplay.variable} ${dmSans.variable} ${dmMono.variable} font-body antialiased`}
       >
         <SessionProvider>
           {children}

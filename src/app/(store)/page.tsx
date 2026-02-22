@@ -19,7 +19,7 @@ async function getHomeData() {
     }),
     prisma.category.findMany({
       where: { isActive: true, parentId: null },
-      orderBy: { order: 'asc' },
+      orderBy: { displayOrder: 'asc' },
       take: 6,
     }),
     prisma.product.findMany({
@@ -69,7 +69,7 @@ export default async function HomePage() {
         {banners[0] ? (
           <>
             <Image
-              src={banners[0].imageUrl}
+              src={banners[0].image}
               alt={banners[0].title}
               fill
               className="object-cover"
@@ -86,7 +86,7 @@ export default async function HomePage() {
                   <h1 className="text-4xl md:text-6xl font-heading font-bold text-white leading-tight mb-4">
                     {banners[0].title}
                   </h1>
-                  <p className="text-white/80 text-lg mb-6">{banners[0].description}</p>
+                  <p className="text-white/80 text-lg mb-6">{banners[0].subtitle}</p>
                   <div className="flex gap-3">
                     <Link href={banners[0].link ?? '/products'}>
                       <Button className="bg-white text-brand-primary hover:bg-white/90" size="lg">

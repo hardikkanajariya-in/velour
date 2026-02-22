@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
       subtitle: body.subtitle || null,
       image: body.image,
       link: body.link || null,
+      position: body.position || 'hero',
       order: count,
       isActive: true,
     },

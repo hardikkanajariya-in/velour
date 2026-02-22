@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
   const address = await prisma.address.create({
     data: {
       userId: session.user.id,
+      label: body.label ?? 'Home',
       fullName: body.fullName,
       phone: body.phone,
       line1: body.line1,

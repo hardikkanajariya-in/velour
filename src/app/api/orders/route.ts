@@ -24,7 +24,6 @@ export async function GET() {
             variant: { select: { size: true, color: true } },
           },
         },
-        address: true,
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -44,13 +43,15 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { addressId, paymentMethod, couponCode } = body;
+    const { shippingAddress, paymentMethod, couponCode } = body;
 
     // Get cart items
     const cartItems = await prisma.cartItem.findMany({
       where: { userId: session.user.id },
       include: {
-        product: true,
+        product: {
+          include: { images: { take: 1 } },
+        },
         variant: true,
       },
     });
@@ -103,14 +104,14 @@ export async function POST(request: NextRequest) {
         data: {
           orderNumber: generateOrderNumber(),
           userId: session.user!.id!,
-          addressId,
+          shippingAddress: body.shippingAddress ?? {},
           subtotal,
           discount,
-          shipping,
+          shippingCost: shipping,
           tax,
           total,
           paymentMethod: paymentMethod ?? 'ONLINE',
-          paymentStatus: paymentMethod === 'cod' ? 'PENDING' : 'PENDING',
+          paymentStatus: 'PENDING',
           status: 'PENDING',
           items: {
             create: cartItems.map((item: typeof cartItems[number]) => ({
@@ -118,7 +119,10 @@ export async function POST(request: NextRequest) {
               variantId: item.variantId,
               quantity: item.quantity,
               price: item.product.basePrice + item.variant.additionalPrice,
-              total: (item.product.basePrice + item.variant.additionalPrice) * item.quantity,
+              productName: item.product.name,
+              size: item.variant.size,
+              color: item.variant.color,
+              image: item.product.images?.[0]?.url ?? '',
             })),
           },
           timeline: {

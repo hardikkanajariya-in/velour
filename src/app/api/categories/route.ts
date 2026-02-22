@@ -12,7 +12,7 @@ export async function GET() {
         },
         _count: { select: { products: { where: { isActive: true } } } },
       },
-      orderBy: { order: 'asc' },
+      orderBy: { displayOrder: 'asc' },
     });
 
     return NextResponse.json({ categories });

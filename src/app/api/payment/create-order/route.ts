@@ -13,12 +13,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { addressId, couponCode } = await request.json();
+    const { shippingAddress, couponCode } = await request.json();
 
     // Get cart items
     const cartItems = await prisma.cartItem.findMany({
       where: { userId: session.user.id },
-      include: { product: true, variant: true },
+      include: { product: { include: { images: { take: 1 } } }, variant: true },
     });
 
     if (cartItems.length === 0) {
@@ -57,10 +57,10 @@ export async function POST(request: NextRequest) {
       data: {
         orderNumber,
         userId: session.user.id,
-        addressId,
+        shippingAddress: shippingAddress ?? {},
         subtotal,
         discount,
-        shipping,
+        shippingCost: shipping,
         tax,
         total,
         paymentMethod: 'ONLINE',
@@ -73,7 +73,10 @@ export async function POST(request: NextRequest) {
             variantId: item.variantId,
             quantity: item.quantity,
             price: item.product.basePrice + item.variant.additionalPrice,
-            total: (item.product.basePrice + item.variant.additionalPrice) * item.quantity,
+            productName: item.product.name,
+            size: item.variant.size,
+            color: item.variant.color,
+            image: item.product.images?.[0]?.url ?? '',
           })),
         },
         timeline: {

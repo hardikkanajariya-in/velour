@@ -34,7 +34,7 @@ export async function GET() {
       }),
       prisma.order.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
       prisma.order.count({ where: { createdAt: { gte: previousThirtyDays, lt: thirtyDaysAgo } } }),
-      prisma.user.count({ where: { role: 'USER' } }),
+      prisma.user.count({ where: { role: 'CUSTOMER' } }),
       prisma.product.count({ where: { isActive: true } }),
       prisma.order.findMany({
         orderBy: { createdAt: 'desc' },

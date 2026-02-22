@@ -28,10 +28,11 @@ export async function POST(request: NextRequest) {
       code: body.code,
       type: body.type,
       value: body.value,
-      minOrderAmount: body.minOrderAmount ?? 0,
+      minOrderValue: body.minOrderAmount ?? 0,
       maxDiscount: body.maxDiscount ?? null,
       usageLimit: body.usageLimit ?? null,
-      expiresAt: body.expiresAt ? new Date(body.expiresAt) : null,
+      validFrom: new Date(),
+      validUntil: body.expiresAt ? new Date(body.expiresAt) : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
     },
   });
 

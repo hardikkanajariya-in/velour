@@ -18,9 +18,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid or expired coupon' }, { status: 400 });
     }
 
-    if (coupon.minOrderAmount && subtotal < coupon.minOrderAmount) {
+    if (coupon.minOrderValue && subtotal < coupon.minOrderValue) {
       return NextResponse.json(
-        { error: `Minimum order of ₹${coupon.minOrderAmount} required` },
+        { error: `Minimum order of ₹${coupon.minOrderValue} required` },
         { status: 400 }
       );
     }
@@ -46,7 +46,6 @@ export async function POST(request: NextRequest) {
         code: coupon.code,
         type: coupon.type,
         value: coupon.value,
-        description: coupon.description,
       },
     });
   } catch (error) {

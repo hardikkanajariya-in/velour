@@ -34,7 +34,6 @@ export async function GET(request: NextRequest) {
         include: {
           user: { select: { name: true, email: true } },
           items: { include: { product: { select: { name: true } } } },
-          address: true,
           timeline: { orderBy: { createdAt: 'desc' } },
         },
       }),

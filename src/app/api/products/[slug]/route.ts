@@ -19,7 +19,7 @@ export async function GET(request: NextRequest, { params }: Params) {
         reviews: {
           where: { isApproved: true },
           include: {
-            user: { select: { id: true, name: true, image: true } },
+            user: { select: { id: true, name: true, avatar: true } },
           },
           orderBy: { createdAt: 'desc' },
           take: 10,
