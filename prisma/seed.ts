@@ -1,8 +1,45 @@
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config({ path: ".env.production" });
 import { PrismaClient, Role, ProductGender } from "@prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { neonConfig } from "@neondatabase/serverless";
 import ws from "ws";
 import { hash } from "bcryptjs";
+import dns from "dns";
+
+// Workaround: local DNS (WSL/VPN) refuses neon.tech lookups
+// Override dns.lookup globally to use Google DNS for neon.tech domains
+const resolver = new dns.Resolver();
+resolver.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
+
+const origLookup = dns.lookup;
+const customLookup: typeof dns.lookup = function (hostname: any, ...args: any[]) {
+  let options: any = {};
+  let callback: any;
+  if (typeof args[0] === "function") {
+    callback = args[0];
+  } else {
+    options = args[0] || {};
+    callback = args[1];
+  }
+  if (typeof hostname === "string" && hostname.includes("neon.tech")) {
+    resolver.resolve4(hostname, (err, addresses) => {
+      if (err || !addresses || addresses.length === 0) {
+        return origLookup(hostname, options, callback);
+      }
+      if (options.all) {
+        callback(null, addresses.map((a: string) => ({ address: a, family: 4 })));
+      } else {
+        callback(null, addresses[0], 4);
+      }
+    });
+  } else {
+    origLookup(hostname, options, callback);
+  }
+} as any;
+
+dns.lookup = customLookup;
 
 neonConfig.webSocketConstructor = ws;
 
@@ -201,8 +238,128 @@ async function main() {
     { name: "Cream", hex: "#FFFDD0" },
     { name: "Dusty Rose", hex: "#DCAE96" },
   ];
-  const placeholderImage =
-    "https://placehold.co/800x1000/1A1A1A/C4A882?text=VELOUR";
+  const unsplash = (id: string, w = 800, h = 1000) =>
+    `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop&q=80`;
+
+  // Unsplash image pools per sub-category
+  const imagePool: Record<string, string[]> = {
+    [subCats[0].id]: [
+      // Men's T-Shirts
+      unsplash("photo-1521572163474-6864f9cf17ab"),
+      unsplash("photo-1583743814966-8936f5b7be1a"),
+      unsplash("photo-1618354691373-d851c5c3a990"),
+      unsplash("photo-1576566588028-4147f3842f27"),
+      unsplash("photo-1562157873-818bc0726f68"),
+      unsplash("photo-1529374255404-311a2a4f1fd9"),
+      unsplash("photo-1523381294911-8d3cead13475"),
+      unsplash("photo-1523381210434-271e8be1f52b"),
+    ],
+    [subCats[1].id]: [
+      // Men's Shirts
+      unsplash("photo-1596755094514-f87e34085b2c"),
+      unsplash("photo-1602810318383-e386cc2a3ccf"),
+      unsplash("photo-1598033129183-c4f50c736c10"),
+      unsplash("photo-1589310243389-96a5483213a8"),
+      unsplash("photo-1620012253295-c15cc3e65df4"),
+      unsplash("photo-1603252109303-2751441dd157"),
+    ],
+    [subCats[2].id]: [
+      // Men's Jeans
+      unsplash("photo-1542272604-787c3835535d"),
+      unsplash("photo-1541099649105-f69ad21f3246"),
+      unsplash("photo-1475178626620-a4d074967452"),
+      unsplash("photo-1582552938357-32b906df40cb"),
+      unsplash("photo-1604176354204-9268737828e4"),
+      unsplash("photo-1565084888279-aca5eced0256"),
+    ],
+    [subCats[3].id]: [
+      // Men's Jackets
+      unsplash("photo-1551028719-00167b16eac5"),
+      unsplash("photo-1591047139829-d91aecb6caea"),
+      unsplash("photo-1548883354-94bcfe321cbb"),
+      unsplash("photo-1520975954732-35dd22299614"),
+      unsplash("photo-1544923246-77307dd270cb"),
+      unsplash("photo-1559551409-dadc959f76b8"),
+    ],
+    [subCats[4].id]: [
+      // Men's Trousers
+      unsplash("photo-1473966968600-fa801b869a1a"),
+      unsplash("photo-1624378439575-d8705ad7ae80"),
+      unsplash("photo-1506629082955-511b1aa562c8"),
+    ],
+    [subCats[5].id]: [
+      // Women's Dresses
+      unsplash("photo-1595777457583-95e059d581b8"),
+      unsplash("photo-1572804013309-59a88b7e92f1"),
+      unsplash("photo-1550639525-c97d455acf70"),
+      unsplash("photo-1496747611176-843222e1e57c"),
+      unsplash("photo-1515886657613-9f3515b0c78f"),
+      unsplash("photo-1612336307429-8a898d10e223"),
+      unsplash("photo-1539008835657-9e8e9680c956"),
+      unsplash("photo-1585487000160-6ebcfceb0d44"),
+    ],
+    [subCats[6].id]: [
+      // Women's Tops
+      unsplash("photo-1564257631407-4deb1f99d992"),
+      unsplash("photo-1485968579580-b6d095142e6e"),
+      unsplash("photo-1594938298603-c8148c4dae35"),
+      unsplash("photo-1525507119028-ed4c629a60a3"),
+      unsplash("photo-1518622358385-8ea7d0794bf6"),
+      unsplash("photo-1434389677669-e08b4cda3a7a"),
+    ],
+    [subCats[7].id]: [
+      // Women's Skirts
+      unsplash("photo-1583496661160-fb5886a0aaaa"),
+      unsplash("photo-1577900232427-18219b9166a0"),
+      unsplash("photo-1592301933927-35b597393c0a"),
+    ],
+    [subCats[8].id]: [
+      // Women's Jeans
+      unsplash("photo-1541099649105-f69ad21f3246"),
+      unsplash("photo-1604176354204-9268737828e4"),
+      unsplash("photo-1582418702059-97ebafb35d09"),
+      unsplash("photo-1475178626620-a4d074967452"),
+      unsplash("photo-1584370848010-d7fe6bc767ec"),
+      unsplash("photo-1565084888279-aca5eced0256"),
+    ],
+    [subCats[9].id]: [
+      // Women's Kurtas
+      unsplash("photo-1610030469983-98e550d6193c"),
+      unsplash("photo-1583391733956-6c78276477e2"),
+      unsplash("photo-1570382667048-23b581258ab6"),
+      unsplash("photo-1614093302611-8efc4de30f10"),
+    ],
+    [subCats[10].id]: [
+      // Kids Boys
+      unsplash("photo-1519238263530-99bdd11df2ea"),
+      unsplash("photo-1622290291468-a28f7a7dc6a8"),
+      unsplash("photo-1518831959646-742c3a14ebf7"),
+      unsplash("photo-1543459176-4426b37223ba"),
+      unsplash("photo-1471286174890-9c112ffca5b4"),
+      unsplash("photo-1519689680058-324335c77eba"),
+    ],
+    [subCats[11].id]: [
+      // Kids Girls
+      unsplash("photo-1518831959646-742c3a14ebf7"),
+      unsplash("photo-1622290291468-a28f7a7dc6a8"),
+      unsplash("photo-1543459176-4426b37223ba"),
+      unsplash("photo-1471286174890-9c112ffca5b4"),
+    ],
+  };
+
+  const imgCounter: Record<string, number> = {};
+  function getProductImages(categoryId: string): string[] {
+    const pool = imagePool[categoryId] || [
+      unsplash("photo-1441986300917-64674bd600d8"),
+    ];
+    const start = imgCounter[categoryId] || 0;
+    imgCounter[categoryId] = start + 3;
+    return [
+      pool[start % pool.length],
+      pool[(start + 1) % pool.length],
+      pool[(start + 2) % pool.length],
+    ];
+  }
 
   interface ProductSeed {
     name: string;
@@ -944,6 +1101,7 @@ async function main() {
   for (const def of productDefs) {
     prodIdx++;
     const skuPrefix = def.slug.substring(0, 8).toUpperCase().replace(/-/g, "");
+    const imgs = getProductImages(def.categoryId);
     const product = await prisma.product.upsert({
       where: { slug: def.slug },
       update: {},
@@ -968,19 +1126,19 @@ async function main() {
         images: {
           create: [
             {
-              url: placeholderImage,
+              url: imgs[0],
               altText: def.name,
               isPrimary: true,
               order: 0,
             },
             {
-              url: placeholderImage,
+              url: imgs[1],
               altText: `${def.name} - 2`,
               isPrimary: false,
               order: 1,
             },
             {
-              url: placeholderImage,
+              url: imgs[2],
               altText: `${def.name} - 3`,
               isPrimary: false,
               order: 2,
@@ -1062,9 +1220,9 @@ async function main() {
         title: "Summer Collection 2025",
         subtitle: "Up to 40% off on new arrivals",
         image:
-          "https://placehold.co/1920x700/1A1A1A/C4A882?text=Summer+Collection",
+          "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&h=700&fit=crop&q=80",
         mobileImage:
-          "https://placehold.co/800x600/1A1A1A/C4A882?text=Summer+Collection",
+          "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=600&fit=crop&q=80",
         link: "/products?tag=summer",
         position: "hero",
         order: 0,
@@ -1075,7 +1233,8 @@ async function main() {
       data: {
         title: "Premium Denim",
         subtitle: "Crafted from the finest selvedge",
-        image: "https://placehold.co/1920x700/333333/FFFFFF?text=Premium+Denim",
+        image:
+          "https://images.unsplash.com/photo-1542272604-787c3835535d?w=1920&h=700&fit=crop&q=80",
         link: "/category/men-jeans",
         position: "hero",
         order: 1,
@@ -1086,7 +1245,8 @@ async function main() {
       data: {
         title: "Free Shipping",
         subtitle: "On orders above ₹1,999",
-        image: "https://placehold.co/600x300/C4A882/1A1A1A?text=Free+Shipping",
+        image:
+          "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=300&fit=crop&q=80",
         link: "/products",
         position: "promo",
         order: 0,
@@ -1159,7 +1319,7 @@ async function main() {
         content:
           "A capsule wardrobe is a collection of essential, timeless clothing that can be mixed and matched to create a variety of outfits. The concept was popularized by Susie Faux in the 1970s and has become a cornerstone of sustainable fashion...",
         coverImage:
-          "https://placehold.co/1200x600/1A1A1A/C4A882?text=Capsule+Wardrobe",
+          "https://images.unsplash.com/photo-1558171813-01eda3b889de?w=1200&h=600&fit=crop&q=80",
         author: "VELOUR Editorial",
         tags: ["fashion", "capsule-wardrobe", "sustainable", "guide"],
         category: "Style Guide",
@@ -1178,7 +1338,7 @@ async function main() {
         content:
           "This season is all about embracing natural textures, earthy palettes, and relaxed fits. Think linen camp shirts, wide-leg trousers, and layered accessories that tell a story...",
         coverImage:
-          "https://placehold.co/1200x600/C4A882/1A1A1A?text=Summer+Trends",
+          "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&h=600&fit=crop&q=80",
         author: "VELOUR Editorial",
         tags: ["trends", "summer", "2025", "fashion"],
         category: "Trends",
@@ -1197,7 +1357,7 @@ async function main() {
         content:
           "Quality begins with the raw material. At VELOUR, we partner directly with fabric mills across India, Japan, and Italy to source the finest materials for our collections...",
         coverImage:
-          "https://placehold.co/1200x600/333333/FFFFFF?text=Behind+The+Stitch",
+          "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=600&fit=crop&q=80",
         author: "VELOUR Editorial",
         tags: ["behind-the-scenes", "fabric", "quality", "sourcing"],
         category: "Behind the Scenes",
