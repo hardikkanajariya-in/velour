@@ -7,57 +7,71 @@ import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/store/product/product-card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { siteConfig } from '@/lib/site';
-import { formatPrice } from '@/lib/utils';
 import type { ProductListItem } from '@/types/product';
 import { NewsletterForm } from '@/components/store/newsletter-form';
 
-async function getHomeData() {
-  const [banners, categories, featured, newArrivals, bestSellers] = await Promise.all([
-    prisma.banner.findMany({
-      where: { isActive: true },
-      orderBy: { order: 'asc' },
-      take: 5,
-    }),
-    prisma.category.findMany({
-      where: { isActive: true, parentId: null },
-      orderBy: { displayOrder: 'asc' },
-      take: 6,
-    }),
-    prisma.product.findMany({
-      where: { isActive: true, isFeatured: true },
-      include: {
-        images: { orderBy: { order: 'asc' } },
-        variants: true,
-        category: { select: { id: true, name: true, slug: true } },
-        brand: { select: { id: true, name: true, slug: true } },
-      },
-      take: 8,
-    }),
-    prisma.product.findMany({
-      where: { isActive: true, isNewArrival: true },
-      include: {
-        images: { orderBy: { order: 'asc' } },
-        variants: true,
-        category: { select: { id: true, name: true, slug: true } },
-        brand: { select: { id: true, name: true, slug: true } },
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 8,
-    }),
-    prisma.product.findMany({
-      where: { isActive: true, isBestSeller: true },
-      include: {
-        images: { orderBy: { order: 'asc' } },
-        variants: true,
-        category: { select: { id: true, name: true, slug: true } },
-        brand: { select: { id: true, name: true, slug: true } },
-      },
-      orderBy: { totalSold: 'desc' },
-      take: 4,
-    }),
-  ]);
+const productSelect = {
+  id: true,
+  name: true,
+  slug: true,
+  basePrice: true,
+  comparePrice: true,
+  gender: true,
+  isFeatured: true,
+  isNewArrival: true,
+  isBestSeller: true,
+  averageRating: true,
+  reviewCount: true,
+  images: {
+    select: { id: true, url: true, altText: true, isPrimary: true, order: true },
+    orderBy: { order: 'asc' as const },
+  },
+  variants: {
+    select: { id: true, size: true, color: true, colorHex: true, stock: true, additionalPrice: true, sku: true },
+  },
+  category: { select: { id: true, name: true, slug: true } },
+  brand: { select: { id: true, name: true, slug: true } },
+} as const;
 
-  return { banners, categories, featured, newArrivals, bestSellers };
+async function getHomeData() {
+  try {
+    const [banners, categories, featured, newArrivals, bestSellers] = await Promise.all([
+      prisma.banner.findMany({
+        where: { isActive: true },
+        select: { id: true, title: true, subtitle: true, image: true, mobileImage: true, link: true, position: true, order: true },
+        orderBy: { order: 'asc' },
+        take: 5,
+      }),
+      prisma.category.findMany({
+        where: { isActive: true, parentId: null },
+        select: { id: true, slug: true, name: true, image: true },
+        orderBy: { displayOrder: 'asc' },
+        take: 6,
+      }),
+      prisma.product.findMany({
+        where: { isActive: true, isFeatured: true },
+        select: productSelect,
+        take: 8,
+      }),
+      prisma.product.findMany({
+        where: { isActive: true, isNewArrival: true },
+        select: productSelect,
+        orderBy: { createdAt: 'desc' },
+        take: 8,
+      }),
+      prisma.product.findMany({
+        where: { isActive: true, isBestSeller: true },
+        select: productSelect,
+        orderBy: { totalSold: 'desc' },
+        take: 4,
+      }),
+    ]);
+
+    return { banners, categories, featured, newArrivals, bestSellers };
+  } catch (error) {
+    console.error('[getHomeData] Database query failed:', error);
+    return { banners: [], categories: [], featured: [], newArrivals: [], bestSellers: [] };
+  }
 }
 
 export default async function HomePage() {
@@ -151,7 +165,7 @@ export default async function HomePage() {
               <p className="text-muted-foreground mt-2">Explore our curated collections</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {categories.map((cat: { id: string; slug: string; name: string; image: string | null }) => (
+              {categories.map((cat) => (
                 <Link
                   key={cat.id}
                   href={`/category/${cat.slug}`}

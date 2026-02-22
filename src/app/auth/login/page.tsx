@@ -33,8 +33,14 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
+
+  function fillDemoCredentials(email: string, password: string) {
+    setValue('email', email, { shouldValidate: true });
+    setValue('password', password, { shouldValidate: true });
+  }
 
   async function onSubmit(data: LoginFormData) {
     setLoading(true);
@@ -146,6 +152,37 @@ function LoginForm() {
           Create one
         </Link>
       </p>
+
+      {/* Demo Credentials */}
+      <div className="mt-8 rounded-lg border border-dashed border-brand-primary/30 bg-brand-primary/5 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wider text-brand-primary mb-3 text-center">
+          Demo Credentials
+        </p>
+        <div className="space-y-2">
+          <button
+            type="button"
+            onClick={() => fillDemoCredentials('admin@velour.in', 'Admin@123')}
+            className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5"
+          >
+            <div>
+              <span className="font-medium text-foreground">Admin</span>
+              <span className="ml-2 text-muted-foreground">admin@velour.in</span>
+            </div>
+            <span className="text-xs text-muted-foreground">Click to fill</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => fillDemoCredentials('customer@test.com', 'Customer@123')}
+            className="w-full flex items-center justify-between rounded-md border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:border-brand-primary/50 hover:bg-brand-primary/5"
+          >
+            <div>
+              <span className="font-medium text-foreground">Customer</span>
+              <span className="ml-2 text-muted-foreground">customer@test.com</span>
+            </div>
+            <span className="text-xs text-muted-foreground">Click to fill</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
