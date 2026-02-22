@@ -11,14 +11,17 @@ import { DollarSign, ShoppingCart, Users, Package } from "lucide-react";
 import Link from "next/link";
 
 interface Analytics {
-  totalRevenue: number;
-  totalOrders: number;
-  totalCustomers: number;
-  totalProducts: number;
+  stats: {
+    revenue: number;
+    revenueGrowth: number;
+    orders: number;
+    ordersGrowth: number;
+    customers: number;
+    products: number;
+  };
   recentOrders: Array<Record<string, unknown>>;
+  topProducts: Array<Record<string, unknown>>;
   monthlyRevenue: Array<{ month: string; revenue: number }>;
-  revenueChange: number;
-  orderChange: number;
 }
 
 export default function AdminDashboard() {
@@ -63,26 +66,26 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Revenue"
-          value={formatPrice(data.totalRevenue)}
-          change={`${data.revenueChange >= 0 ? "+" : ""}${data.revenueChange.toFixed(1)}% from last month`}
-          changeType={data.revenueChange >= 0 ? "positive" : "negative"}
+          value={formatPrice(data.stats.revenue)}
+          change={`${data.stats.revenueGrowth >= 0 ? "+" : ""}${data.stats.revenueGrowth.toFixed(1)}% from last month`}
+          changeType={data.stats.revenueGrowth >= 0 ? "positive" : "negative"}
           icon={<DollarSign className="w-5 h-5" />}
         />
         <StatCard
           title="Total Orders"
-          value={data.totalOrders}
-          change={`${data.orderChange >= 0 ? "+" : ""}${data.orderChange.toFixed(1)}% from last month`}
-          changeType={data.orderChange >= 0 ? "positive" : "negative"}
+          value={data.stats.orders}
+          change={`${data.stats.ordersGrowth >= 0 ? "+" : ""}${data.stats.ordersGrowth.toFixed(1)}% from last month`}
+          changeType={data.stats.ordersGrowth >= 0 ? "positive" : "negative"}
           icon={<ShoppingCart className="w-5 h-5" />}
         />
         <StatCard
           title="Total Customers"
-          value={data.totalCustomers}
+          value={data.stats.customers}
           icon={<Users className="w-5 h-5" />}
         />
         <StatCard
           title="Total Products"
-          value={data.totalProducts}
+          value={data.stats.products}
           icon={<Package className="w-5 h-5" />}
         />
       </div>
