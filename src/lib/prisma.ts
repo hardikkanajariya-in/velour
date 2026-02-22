@@ -1,7 +1,10 @@
 import { PrismaClient } from '@/generated/prisma';
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
+import ws from 'ws';
 
+// Use the ws package for WebSocket support in Node.js (required for Node < 21)
+neonConfig.webSocketConstructor = ws;
 // Enable fetch-based connection cache for better reliability in Node.js / Turbopack
 neonConfig.fetchConnectionCache = true;
 
