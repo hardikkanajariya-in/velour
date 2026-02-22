@@ -5,8 +5,6 @@ import ws from 'ws';
 
 // Use the ws package for WebSocket support in Node.js (required for Node < 21)
 neonConfig.webSocketConstructor = ws;
-// Enable fetch-based connection cache for better reliability in Node.js / Turbopack
-neonConfig.fetchConnectionCache = true;
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -39,11 +37,11 @@ function createPrismaClient() {
   const pool = new Pool({ connectionString });
 
   // Prevent unhandled 'error' events on the pool from crashing the process
-  pool.on('error', (err) => {
+  pool.on('error', (err: unknown) => {
     console.error('[Prisma/Neon] Pool error:', toReadableError(err).message);
   });
 
-  const adapter = new PrismaNeon(pool);
+  const adapter = new PrismaNeon(pool as unknown as ConstructorParameters<typeof PrismaNeon>[0]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new PrismaClient({ adapter } as any);
 }
